@@ -1,0 +1,29 @@
+{
+    "name": "aad-api",
+    "description": "aad-api is a single table api.",
+    "addons": [
+        {
+          "plan": "heroku-postgresql:hobby-dev"
+        }
+    ],
+    "buildpacks": [
+        {
+          "url": "heroku/nodejs"
+        }
+    ],
+    "env": {
+    },
+    "environments": {
+      "review": {
+        "addons": ["heroku-postgresql:hobby-dev"],
+        "scripts": {
+          "postdeploy": "npm run db-deploy"
+        }
+      }
+    },
+    "formation": {
+    },
+    "scripts": {
+      "postdeploy": "npm run db-deploy"
+    }
+}
