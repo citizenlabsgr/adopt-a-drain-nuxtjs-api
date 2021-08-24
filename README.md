@@ -1,2 +1,2 @@
-# adopt-a-drain-nuxtjs-api
+# adopt-a-drain-hapi-api
 Api to support Adopt a Drain
