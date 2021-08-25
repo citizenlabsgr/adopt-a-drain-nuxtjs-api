@@ -66,5 +66,5 @@ jobs:
         uses: akhileshns/heroku-deploy@v3.12.12
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "aad-api-lgrow" #Must be unique in Heroku
+          heroku_app_name: "api-aad-lgrow" #Must be unique in Heroku
           heroku_email: "wilfongjt@gmail.com"
