@@ -1,0 +1,35 @@
+{
+  "name": "aad-api",
+  "version": "1.0.0",
+  "description": "simple",
+  "main": "server.js",
+  "scripts": {
+    "db-deploy": "node --trace-warnings models/db.deploy.js",
+    "dev": "nodemon ./server.js",
+    "start": "node server.js",
+    "db-test": "node models/db.test.js",
+    "test": "lab -v */*.test.js",
+    "lint1": "eslint '*/*.js'",
+    "lint": "eslint '**/*.js?(x)' ."
+  },
+  "author": "James Wilfong <wilfongjt@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "@hapi/hapi": "^20.1.5",
+    "@hapi/inert": "^6.0.3",
+    "@hapi/jwt": "^2.0.1",
+    "@hapi/vision": "^6.1.0",
+    "core-js": "^2.6.12",
+    "hapi-swagger": "^14.2.1",
+    "joi": "^17.4.1",
+    "pg": "^8.7.1",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@hapi/code": "^8.0.3",
+    "@hapi/lab": "^24.3.2",
+    "dotenv": "^10.0.0",
+    "eslint": "^7.32.0",
+    "nodemon": "^2.0.12"
+  }
+}
