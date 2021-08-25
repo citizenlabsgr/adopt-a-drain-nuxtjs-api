@@ -54,17 +54,17 @@ jobs:
           npm run build --if-present
       
       # Uncomment when heroku review, stageing, and production are available
-      #- name: Run tests 🧪
-      #  run: npm run test
-      #  env:
-      #    JWT_SECRET: ${{secrets.JWT_SECRET}}
-      #    API_TOKEN: ${{secrets.API_TOKEN}}
-      #    DATABASE_URL: ${{secrets.DATABASE_URL}}
-      #    HOST: "0.0.0.0"
+      - name: Run tests 🧪
+        run: npm run test
+        env:
+          JWT_SECRET: ${{secrets.JWT_SECRET}}
+          API_TOKEN: ${{secrets.API_TOKEN}}
+          DATABASE_URL: ${{secrets.DATABASE_URL}}
+          HOST: "0.0.0.0"
 
-      #- name: Heroku Deploy
-      #  uses: akhileshns/heroku-deploy@v3.12.12
-      #  with:
-      #    heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-      #    heroku_app_name: "aad-api" #Must be unique in Heroku
-      #    heroku_email: "wilfongjt@gmail.com"
+      - name: Heroku Deploy
+        uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "api-aad-lgrow" #Must be unique in Heroku
+          heroku_email: "wilfongjt@gmail.com"
