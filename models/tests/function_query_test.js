@@ -1,12 +1,14 @@
 'use strict';
 
 const Step = require('../../lib/runner/step');
-module.exports = class CreateFunctionQueryTest extends Step {
+module.exports = class FunctionQueryTest extends Step {
   constructor(kind, baseVersion) {
     // $lab:coverage:off$
     super(kind, baseVersion);
     this.name = 'query';
     this.name = `${this.kind}_${this.version}.${this.name}`;
+    this.criteria =  '{"sk": "const#ADOPTEE", "tk": "*", "mbr":{"west": 0.0, "east": 2.0, "north": 2.0, "south": 0.0}}';
+
     this.sql = `BEGIN;
     -- set the key after insert
     
@@ -16,9 +18,14 @@ module.exports = class CreateFunctionQueryTest extends Step {
     
     insert into ${this.kind}_${this.version}.one (pk,sk,form,owner) values ('username#query2@user.com', 'const#USER', '{"username":"query2@user.com","sk":"const#USER"}'::JSONB, 'query2Owner' );
     
+    insert into ${this.kind}_${this.version}.one (pk, sk, tk, form, owner) values ('one', 'const#ADOPTEE', 'one', '{"name":"One", "drain_id":"One","lat":1.0, "lon":1.0}'::JSONB, 'duckduckgoose'); 
+
+    insert into ${this.kind}_${this.version}.one (pk, sk, tk, form, owner) values ('two', 'const#ADOPTEE', 'two', '{"name":"Two", "drain_id":"Two","lat":2.0, "lon":2.0}'::JSONB, 'duckduckgoose'); 
+
+    insert into ${this.kind}_${this.version}.one (pk, sk, tk, form, owner) values ('three', 'const#ADOPTEE', 'three', '{"name":"Three", "drain_id":"Three","lat":3.0, "lon":3.0}'::JSONB, 'duckduckgoose'); 
+
     
-    
-      SELECT plan(15);
+      SELECT plan(16);
     
       -- 1
     
@@ -244,7 +251,21 @@ module.exports = class CreateFunctionQueryTest extends Step {
     
       );
 
+        
+      -- 16 MBR
     
+      SELECT is (
+        
+        ${this.kind}_${this.version}.query('${this.criteria}'::JSONB),
+    
+        '{"msg": "OK", "status": "200"}'::JSONB,
+    
+        'query pk="" sk="*" mbr 200 0_0_1'::TEXT
+    
+      );
+
+
+
       SELECT * FROM finish();
 
     ROLLBACK;

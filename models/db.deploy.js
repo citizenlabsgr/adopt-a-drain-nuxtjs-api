@@ -18,7 +18,10 @@ const CreateFunctionDelete = require('./db/function_create_delete.js');
 const CreateFunctionGetJwtClaims = require('./db/function_create_get_jwt_claims.js');
 const CreateFunctionGetJwtSecret = require('./db/function_create_get_jwt_secret.js');
 const CreateFunctionInsert = require('./db/function_create_insert.js');
-const CreateFunctionQuery = require('./db/function_create_query.js');
+// const CreateFunctionQuery = require('./db/function_create_query.js');
+const FunctionQuery001 = require('./db/function_query_001.js');
+const FunctionQuery002 = require('./db/function_query_002.js');
+
 const CreateFunctionSign = require('./db/function_create_sign.js');
 const CreateFunctionUpdate = require('./db/function_create_update.js');
 const CreateFunctionUrlDecode = require('./db/function_create_url_decode.js');
@@ -32,6 +35,8 @@ const CreateFunctionVerify = require('./db/function_create_verify.js');
 const CreateFunctionTime = require('./db/function_create_time.js');
 const CreateFunctionSignin = require('./db/function_create_signin.js');
 const CreateFunctionSignup = require('./db/function_create_signup.js');
+const CreateFunctionAdoptees = require('./db/function_create_adoptees.js');
+
 // const TestTable = require('./db/table_create_test.js');
 const BaseTests = require('./tests/test_base.js');
 const ApiTests = require('./tests/test_api.js');
@@ -111,7 +116,10 @@ const runner = new SqlRunner(DB_URL)
        .add(new CreateFunctionGetJwtClaims('base', baseVersion))
        .add(new CreateFunctionGetJwtSecret('base', baseVersion, process))
        .add(new CreateFunctionInsert('base', baseVersion))
-       .add(new CreateFunctionQuery('base', baseVersion))
+       // .add(new CreateFunctionQuery('base', baseVersion))
+       .add(new FunctionQuery001('base', baseVersion))
+       .add(new FunctionQuery002('base', baseVersion))
+
        .add(new CreateFunctionSign('base', baseVersion))
        .add(new CreateFunctionUpdate('base', baseVersion))
      
@@ -125,7 +133,9 @@ const runner = new SqlRunner(DB_URL)
        .add(new CreateFunctionTime('api', apiVersion))
        .add(new CreateFunctionSignup('api', apiVersion))
        .add(new CreateFunctionSignin('api', apiVersion))
+       // .add(new CreateFunctionAdoptees('api', apiVersion))
        ;
+       
 // [* Tests]
 if (testable) {
 

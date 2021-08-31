@@ -11,13 +11,14 @@ const CreateFunctionGetJwtClaimsTest = require('./function_create_get_jwt_claims
 /* $lab:coverage:off$ */
 const CreateFunctionGetJwtSecretTest = require('./function_create_get_jwt_secret_test.js'); 
 const CreateFunctionInsertTest = require('./function_create_insert_test.js'); 
-const CreateFunctionQueryTest = require('./function_create_query_test.js'); 
+// const CreateFunctionQueryTest = require('./function_create_query_test.js'); 
 const CreateFunctionUpdateTest = require('./function_create_update_test.js');
 /* $lab:coverage:on$ */
 const CreateFunctionValidateChelateTest = require('./function_create_validate_chelate_test.js'); 
 const CreateFunctionValidateCredentialsTest = require('./function_create_validate_credentials_test.js'); 
 const CreateFunctionValidateFormTest = require('./function_create_validate_form_test.js'); 
 const CreateFunctionValidateTokenTest = require('./function_create_validate_token_test.js'); 
+const FunctionQueryTest = require('./function_query_test.js'); 
 
 module.exports = class BaseTests extends Array {
   constructor(baseVersion) {
@@ -34,13 +35,16 @@ module.exports = class BaseTests extends Array {
     this.push(new CreateFunctionGetJwtClaimsTest('base', baseVersion));
     this.push(new CreateFunctionGetJwtSecretTest('base', baseVersion));
     this.push(new CreateFunctionInsertTest('base', baseVersion));
-    this.push(new CreateFunctionQueryTest('base', baseVersion));
+    // this.push(new CreateFunctionQueryTest('base', baseVersion));
 
     this.push(new CreateFunctionUpdateTest('base', baseVersion));
     this.push(new CreateFunctionValidateChelateTest('base', baseVersion));
     this.push(new CreateFunctionValidateCredentialsTest('base', baseVersion));
     this.push(new CreateFunctionValidateFormTest('base', baseVersion));
     this.push(new CreateFunctionValidateTokenTest('base', baseVersion));
+    // ALTER 
+    // this.push(new FunctionQueryTest('base', baseVersion));
+
     /* $lab:coverage:on$ */
 
   }    
