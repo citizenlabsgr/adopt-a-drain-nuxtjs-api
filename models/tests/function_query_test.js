@@ -7,7 +7,7 @@ module.exports = class FunctionQueryTest extends Step {
     super(kind, baseVersion);
     this.name = 'query';
     this.name = `${this.kind}_${this.version}.${this.name}`;
-    this.criteria =  '{"sk": "const#ADOPTEE", "tk": "*", "mbr":{"west": 0.0, "east": 2.0, "north": 2.0, "south": 0.0}}';
+    // this.criteria =  '{"sk": "const#ADOPTEE", "tk": "*", "mbr":{"west": 0.0, "east": 2.0, "north": 2.0, "south": 0.0}}';
 
     this.sql = `BEGIN;
     -- set the key after insert
@@ -40,16 +40,14 @@ module.exports = class FunctionQueryTest extends Step {
           'Function query (json) should exist'
     
       );
-    
+      
       -- 2 pk
-    
-    
     
       SELECT is (
     
         ${this.kind}_${this.version}.query('{"pk":"*"}'::JSONB),
     
-        '{"msg": "Bad Request", "extra": "42703", "status": "400"}'::JSONB,
+        '{"msg": "Bad Request", "extra": "C42703", "status": "400", "criteria": {"pk": "*"}}'::JSONB,
     
         'query pk=* 400 0_0_1'::TEXT
     
@@ -61,7 +59,7 @@ module.exports = class FunctionQueryTest extends Step {
     
         ${this.kind}_${this.version}.query('{"sk":"*"}'::JSONB),
     
-        '{"msg": "Bad Request", "extra": "42703", "status": "400"}'::JSONB,
+        '{"msg": "Bad Request", "extra": "C42703", "status": "400", "criteria": {"sk": "*"}}'::JSONB,
     
         'query sk=* 400 0_0_1'::TEXT
     
@@ -73,7 +71,7 @@ module.exports = class FunctionQueryTest extends Step {
     
         ${this.kind}_${this.version}.query('{"tk":"*"}'::JSONB),
     
-        '{"msg": "Bad Request", "extra": "42703", "status": "400"}'::JSONB,
+        '{"msg": "Bad Request", "extra": "C42703", "status": "400", "criteria": {"tk": "*"}}'::JSONB,
     
         'query tk=* 400 0_0_1'::TEXT
     
@@ -85,7 +83,7 @@ module.exports = class FunctionQueryTest extends Step {
     
         ${this.kind}_${this.version}.query('{"pk":""}'::JSONB),
     
-        '{"msg": "Bad Request", "extra": "42703", "status": "400"}'::JSONB,
+        '{"msg": "Bad Request", "extra": "C42703", "status": "400", "criteria": {"pk": ""}}'::JSONB,
     
         'query pk="" 400 0_0_1'::TEXT
     
@@ -97,7 +95,7 @@ module.exports = class FunctionQueryTest extends Step {
     
         ${this.kind}_${this.version}.query('{"sk":""}'::JSONB),
     
-        '{"msg": "Bad Request", "extra": "42703", "status": "400"}'::JSONB,
+        '{"msg": "Bad Request", "extra": "C42703", "status": "400", "criteria": {"sk": ""}}'::JSONB,
     
         'query sk="" 400 0_0_1'::TEXT
     
@@ -109,7 +107,7 @@ module.exports = class FunctionQueryTest extends Step {
     
         ${this.kind}_${this.version}.query('{"tk":""}'::JSONB),
     
-        '{"msg": "Bad Request", "extra": "42703", "status": "400"}'::JSONB,
+        '{"msg": "Bad Request", "extra": "C42703", "status": "400", "criteria": {"tk": ""}}'::JSONB,
     
         'query tk="" 400 0_0_1'::TEXT
     
@@ -251,25 +249,24 @@ module.exports = class FunctionQueryTest extends Step {
     
       );
 
-        
+      
       -- 16 MBR
     
       SELECT is (
         
-        ${this.kind}_${this.version}.query('${this.criteria}'::JSONB),
-    
+        (${this.kind}_${this.version}.query('{"sk": "const#ADOPTEE", "tk": "*", "mbr":{"west": 0.0, "east": 2.0, "north": 2.0, "south": 0.0}}'::JSONB)::JSONB - 'selection'),
         '{"msg": "OK", "status": "200"}'::JSONB,
-    
         'query pk="" sk="*" mbr 200 0_0_1'::TEXT
     
       );
-
+     
 
 
       SELECT * FROM finish();
 
     ROLLBACK;
     `;
+    // console.log(this.sql);
     // $lab:coverage:on$
   }    
 };

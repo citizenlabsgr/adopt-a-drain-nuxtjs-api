@@ -76,8 +76,8 @@ Details is a master list of useful project information.
 
     def main():
         # claim is same as POSTGRES_JWT_CLAIMS and JWT_CLAIMS
-        claim = {"aud":"lyttlebit-api", 
-                 "iss":"lyttlebit", 
+        claim = {"aud":"citizenlabs-api", 
+                 "iss":"citizenlabs", 
                  "sub":"client-api", 
                  "user":"guest", 
                  "scope":"api_guest", 
@@ -104,8 +104,8 @@ Details is a master list of useful project information.
 
     def main():
         # claim is same as POSTGRES_JWT_CLAIMS and JWT_CLAIMS
-        claim = {"aud":"lyttlebit-api", 
-                 "iss":"lyttlebit", 
+        claim = {"aud":"citizenlabs-api", 
+                 "iss":"citizenlabs", 
                  "sub":"client-api", 
                  "user":"guest", 
                  "scope":"api_guest", 

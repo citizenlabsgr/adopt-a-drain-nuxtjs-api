@@ -6,7 +6,7 @@ console.log('db.test');
 const Consts = require('../lib/constants/consts');
 const SqlRunner = require('../lib/runner/runner_sql.js');
 // const Comment = require('../lib/runner/comment.js');
-// const CreateExtension = require('./db/extension_create.js');
+// const CreateExtension = require('./db/extension.js');
 
 // const TestTable = require('./db/table_create_test.js');
 const BaseTests = require('./tests/test_base.js');

@@ -13,8 +13,8 @@ const UserTokenPayload = require('../lib/auth/token_payload_user');
 
 describe('User Token Payload', () => {
   const pl = {
-    aud: 'lyttlebit-api',
-    iss: 'lyttlebit',
+    aud: 'citizenlabs-api',
+    iss: 'citizenlabs',
     key: 'duckduckgoose',
     scope: 'api_user',
     sub: 'client-api',

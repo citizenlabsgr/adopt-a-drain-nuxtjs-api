@@ -13,8 +13,8 @@ const GuestTokenPayload = require('../lib/auth/token_payload_guest');
 
 describe('Guest Token Payload', () => {
   const pl = {
-    aud: 'lyttlebit-api',
-    iss: 'lyttlebit',
+    aud: 'citizenlabs-api',
+    iss: 'citizenlabs',
     sub: 'client-api',
     user: 'guest',
     scope: 'api_guest',

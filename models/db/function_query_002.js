@@ -33,7 +33,7 @@ module.exports = class FunctionQuery002 extends Step {
       if criteria is NULL then
     
         -- [Fail 400 when a parameter is NULL]
-        return format('{"status":"400","msg":"Bad Request", "extra":"A", "criteria":"%s"}',criteria)::JSONB;
+        return format('{"status":"400","msg":"Bad Request", "extra":"A", "criteria": %s}',criteria)::JSONB;
     
       end if;
     
@@ -164,7 +164,7 @@ module.exports = class FunctionQuery002 extends Step {
         else
     
           -- [Fail 400 when the Search Pattern is missing expected Keys]
-          return format('{"status:"400","msg":"Bad Request", "extra":"B%s", "criteria": "%s"}', sqlstate, _criteria::TEXT)::JSONB;
+          return format('{"status:"400","msg":"Bad Request", "extra":"B%s", "criteria": %s}', sqlstate, _criteria)::JSONB;
     
         end if;
     
@@ -173,7 +173,7 @@ module.exports = class FunctionQuery002 extends Step {
           when others then
     
             --Raise Notice 'query EXCEPTION out';
-            return format('{"status":"400","msg":"Bad Request", "extra":"C%s","criteria": "%s"}',sqlstate, _criteria::TEXT)::JSONB;
+            return format('{"status":"400","msg":"Bad Request", "extra":"C%s","criteria": %s}',sqlstate, _criteria)::JSONB;
     
       END;
     
@@ -185,7 +185,7 @@ module.exports = class FunctionQuery002 extends Step {
       end if;
    
       -- [Return {status,msg,selection}]
-      return format('{"status":"200", "msg":"OK", "selection":%s}', _result)::JSONB;
+      return format('{"status":"200", "msg":"OK", "selection": %s}', _result)::JSONB;
     
     END;
     
