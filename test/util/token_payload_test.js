@@ -6,45 +6,45 @@ module.exports = class TestTokenPayload {
 
   // user post payload
 
-  badIss_TokenPayload() {
+  badIssTokenPayload() {
     return new TokenPayload()
                  .iss('bad-iss-claim-value')
                  .payload();
   }
-  missingIss_TokenPayload() {
+  missingIssTokenPayload() {
     return new TokenPayload()
                  .remove('iss')
                  .payload();
   }
-  badAud_TokenPayload() {
+  badAudTokenPayload() {
     return new TokenPayload()
                  .aud('bad-aud-claim-value')
                  .payload();
   }
-  missingAud_TokenPayload() {
+  missingAudTokenPayload() {
     return (new TokenPayload())
                  .remove('aud')
                  .payload();
   }
-  guest_TokenPayload() {
+  guestTokenPayload() {
     return new TokenPayload()
                  .payload();
   }
-  fake_guest_TokenPayload() {
+  fakeGuestTokenPayload() {
     return new TokenPayload()
                  .payload();
   }
-  missingUser_TokenPayload() {
+  missingUserTokenPayload() {
     return new TokenPayload()
                  .remove('user')
                  .payload();
   }
-  missingScope_TokenPayload() {
+  missingScopeTokenPayload() {
     return new TokenPayload()
                  .remove('scope')
                  .payload();
   }
-  user_TokenPayload(username, key, scope) {
+  userTokenPayload(username, key, scope) {
     if (!username){
       throw 'user_TokenPayload is requires a username';
     }
@@ -63,7 +63,7 @@ module.exports = class TestTokenPayload {
                  .scope_(scope)
                  .payload();
   }
-  admin_TokenPayload(username, key) {
+  adminTokenPayload(username, key) {
     if (!username){
       throw 'admin_TokenPayload is requires a username';
     }

@@ -42,9 +42,11 @@ services:
     environment:
       - NODE_ENV=${NODE_ENV}
       - HOST=${HOST}
-      - PORT=${PORT}      
+      - PORT=${PORT}
       - DATABASE_URL=${DATABASE_URL}
       - API_TOKEN=${API_TOKEN}
       - JWT_SECRET=${JWT_SECRET}
       - JWT_CLAIMS=${JWT_CLAIMS}
+    depends_on:
+      - db  
  

@@ -6,39 +6,44 @@ console.log('db.deploy');
 // const Consts = require('../lib/constants/consts');
 const SqlRunner = require('../lib/runner/runner_sql.js');
 const Comment = require('../lib/runner/comment.js');
-const CreateExtension = require('./db/extension_create.js');
-const CreateSchema = require('./db/schema_create.js');
+const Extension = require('./db/extension.js');
+const Schema = require('./db/schema.js');
 
-const CreateTable = require('./db/table_create.js');
+const Table001 = require('./db/table_001.js');
 
-const CreateFunctionAlgorithmSign = require('./db/function_create_algorithm_sign.js');
-const CreateFunctionChangedKey = require('./db/function_create_changed_key.js');
-const CreateFunctionChelate = require('./db/function_create_chelate.js');
-const CreateFunctionDelete = require('./db/function_create_delete.js');
-const CreateFunctionGetJwtClaims = require('./db/function_create_get_jwt_claims.js');
-const CreateFunctionGetJwtSecret = require('./db/function_create_get_jwt_secret.js');
-const CreateFunctionInsert = require('./db/function_create_insert.js');
-const CreateFunctionQuery = require('./db/function_create_query.js');
-const CreateFunctionSign = require('./db/function_create_sign.js');
-const CreateFunctionUpdate = require('./db/function_create_update.js');
-const CreateFunctionUrlDecode = require('./db/function_create_url_decode.js');
-const CreateFunctionUrlEncode = require('./db/function_create_url_encode.js');
-const CreateFunctionValidateChelate = require('./db/function_create_validate_chelate.js');
-const CreateFunctionValidateCredentials = require('./db/function_create_validate_credentials.js');
-const CreateFunctionValidateCriteria = require('./db/function_create_validate_criteria.js');
-const CreateFunctionValidateForm = require('./db/function_create_validate_form.js');
-const CreateFunctionValidateToken = require('./db/function_create_validate_token.js');
-const CreateFunctionVerify = require('./db/function_create_verify.js');
-const CreateFunctionTime = require('./db/function_create_time.js');
-const CreateFunctionSignin = require('./db/function_create_signin.js');
-const CreateFunctionSignup = require('./db/function_create_signup.js');
-// const TestTable = require('./db/table_create_test.js');
+const FunctionAlgorithmSign001 = require('./db/function_algorithm_sign_001.js');
+const FunctionChangedKey001 = require('./db/function_changed_key_001.js');
+const FunctionChelate001 = require('./db/function_chelate_001.js');
+const FunctionDelete001 = require('./db/function_delete_001.js');
+const FunctionGetJwtClaims001 = require('./db/function_get_jwt_claims_001.js');
+const FunctionGetJwtSecret001 = require('./db/function_get_jwt_secret_001.js');
+const FunctionInsert001 = require('./db/function_insert_001.js');
+// const FunctionQuery001 = require('./db/function_query_001.js');
+const FunctionQuery001 = require('./db/function_query_001.js');
+const FunctionQuery002 = require('./db/function_query_002.js');
+
+const FunctionSign001 = require('./db/function_sign_001.js');
+const FunctionUpdate001 = require('./db/function_update_001.js');
+const FunctionUrlDecode001 = require('./db/function_url_decode_001.js');
+const FunctionUrlEncode001 = require('./db/function_url_encode_001.js');
+const FunctionValidateChelate001 = require('./db/function_validate_chelate_001.js');
+const FunctionValidateCredentials001 = require('./db/function_validate_credentials_001.js');
+const FunctionValidateCriteria001 = require('./db/function_validate_criteria_001.js');
+const FunctionValidateForm001 = require('./db/function_validate_form_001.js');
+const FunctionValidateToken001 = require('./db/function_validate_token_001.js');
+const FunctionVerify001 = require('./db/function_verify_001.js');
+const FunctionTime001 = require('./db/function_time_001.js');
+const FunctionSignin001 = require('./db/function_signin_001.js');
+const FunctionSignup001 = require('./db/function_signup_001.js');
+const FunctionAdoptees001 = require('./db/function_adoptees_001.js');
+
+// const TestTable = require('./db/table_test_001.js');
 const BaseTests = require('./tests/test_base.js');
 const ApiTests = require('./tests/test_api.js');
 const DatabaseUrl = require('../lib/plugins/postgres/database_url.js');
 
 // run all scripts
-// Creates have an order
+// s have an order
 // Add new or alters to end
 // Make new class for alters
 // [* set the verson ]
@@ -94,38 +99,43 @@ if (process.env.DATABASE_URL === DB_URL) {
 // [* support multiple versions]
 const runner = new SqlRunner(DB_URL)
        .add(new Comment('-- Load Extensions --'))
-       .add(new CreateExtension('pgcrypto','public'))
-       .add(new CreateExtension('"uuid-ossp"','public'))
-       .add(new Comment('-- Create Schema --'))
-       .add(new CreateSchema('base', baseVersion))
-       .add(new CreateSchema('api', apiVersion))
-       .add(new Comment('-- Create Base Schema Table --'))
-       .add(new CreateTable('base',baseVersion))
-       .add(new Comment('-- Create Base Schema Functions --'))
-       .add(new CreateFunctionUrlDecode('base', baseVersion))
-       .add(new CreateFunctionUrlEncode('base', baseVersion))
-       .add(new CreateFunctionAlgorithmSign('base', baseVersion))
-       .add(new CreateFunctionChangedKey('base', baseVersion))
-       .add(new CreateFunctionChelate('base', baseVersion))
-       .add(new CreateFunctionDelete('base', baseVersion))
-       .add(new CreateFunctionGetJwtClaims('base', baseVersion))
-       .add(new CreateFunctionGetJwtSecret('base', baseVersion, process))
-       .add(new CreateFunctionInsert('base', baseVersion))
-       .add(new CreateFunctionQuery('base', baseVersion))
-       .add(new CreateFunctionSign('base', baseVersion))
-       .add(new CreateFunctionUpdate('base', baseVersion))
+       .add(new Extension('pgcrypto','public'))
+       .add(new Extension('"uuid-ossp"','public'))
+       .add(new Comment('--  Schema --'))
+       .add(new Schema('base', baseVersion))
+       .add(new Schema('api', apiVersion))
+       .add(new Comment('--  Base Schema Table --'))
+       .add(new Table001('base',baseVersion))
+       .add(new Comment('--  Base Schema Functions --'))
+       .add(new FunctionUrlDecode001('base', baseVersion))
+       .add(new FunctionUrlEncode001('base', baseVersion))
+       .add(new FunctionAlgorithmSign001('base', baseVersion))
+       .add(new FunctionChangedKey001('base', baseVersion))
+       .add(new FunctionChelate001('base', baseVersion))
+       .add(new FunctionDelete001('base', baseVersion))
+       .add(new FunctionGetJwtClaims001('base', baseVersion))
+       .add(new FunctionGetJwtSecret001('base', baseVersion, process))
+       .add(new FunctionInsert001('base', baseVersion))
+       // .add(new FunctionQuery001('base', baseVersion))
+       .add(new FunctionQuery001('base', baseVersion))
+       .add(new FunctionQuery002('base', baseVersion))
+
+       .add(new FunctionSign001('base', baseVersion))
+       .add(new FunctionUpdate001('base', baseVersion))
      
-       .add(new CreateFunctionValidateChelate('base', baseVersion))
-       .add(new CreateFunctionValidateCredentials('base', baseVersion))
-       .add(new CreateFunctionValidateCriteria('base', baseVersion))
-       .add(new CreateFunctionValidateForm('base', baseVersion))
-       .add(new CreateFunctionValidateToken('base', baseVersion))
-       .add(new CreateFunctionVerify('base', baseVersion))
-       .add(new Comment('-- Create Api Schema Functions --'))
-       .add(new CreateFunctionTime('api', apiVersion))
-       .add(new CreateFunctionSignup('api', apiVersion))
-       .add(new CreateFunctionSignin('api', apiVersion))
+       .add(new FunctionValidateChelate001('base', baseVersion))
+       .add(new FunctionValidateCredentials001('base', baseVersion))
+       .add(new FunctionValidateCriteria001('base', baseVersion))
+       .add(new FunctionValidateForm001('base', baseVersion))
+       .add(new FunctionValidateToken001('base', baseVersion))
+       .add(new FunctionVerify001('base', baseVersion))
+       .add(new Comment('--  Api Schema Functions --'))
+       .add(new FunctionTime001('api', apiVersion))
+       .add(new FunctionSignup001('api', apiVersion))
+       .add(new FunctionSignin001('api', apiVersion))
+       .add(new FunctionAdoptees001('api', apiVersion, baseVersion))
        ;
+       
 // [* Tests]
 if (testable) {
 
