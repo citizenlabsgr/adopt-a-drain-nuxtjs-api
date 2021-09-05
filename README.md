@@ -152,6 +152,10 @@ open -a safari https://lyb-api.herokuapp.com/documentation
   * route.signin.post.test.js
   * route.signup.post.test.js
 
+Usage 
+  Headers
+    'Accept', 'Authorization', 'Content-Type', 'If-None-Match', 'Content-Profile'  
+
 ## History
 
 1. add eslint and cleanup code
@@ -167,3 +171,4 @@ open -a safari https://lyb-api.herokuapp.com/documentation
     * extensions, 
     * table, 
     * functions
+1. Add CORS Access-Control-Allow-Origin header

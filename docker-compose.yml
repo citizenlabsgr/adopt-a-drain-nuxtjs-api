@@ -7,12 +7,12 @@ services:
   db:
     image: postgres
     restart: always
-    build:
-        context: ./aad_db
-        dockerfile: dockerfile-db
+    #build:
+    #    context: ./aad_db
+    #    dockerfile: dockerfile-db
 
-    ports:
-      - "5432:5432"
+    #ports:
+    #  - "5432:5432"
 
     environment:
       - POSTGRES_DB=${POSTGRES_DB}
@@ -28,13 +28,21 @@ services:
       # Uncomment this if you want to persist the data.
       #- "~/.data/aad_db/pgdata:/var/lib/postgresql/data"
 
+  #######    
+  #  sh -c "npm install && npm install nodemon && npm run db-deploy && npm run dev"
+  #       sh -c "npm install nodemon && npm run db-deploy && npm run dev"
+  #      sh -c "npm install nodemon && npm run db-deploy && npm run dev"
+  #      sh -c "npm run db-deploy && npm run dev"
+
+  #######
   db-api:
-    image: dev-swagger-hapi-api
-    #image: wilfongjt/db-api
+    image: citizenlabsgr/adopt-a-drain-hapi-api
+
     build:
       context: .
     command: >
-      sh -c "npm install && npm install nodemon && npm run db-deploy && npm run dev"
+      sh -c "npm run db-deploy && npm run dev"
+    # facilitate develpment with volumes
     volumes:
       - .:/usr/src/api
     ports:

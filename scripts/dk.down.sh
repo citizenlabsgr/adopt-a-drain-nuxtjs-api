@@ -1,0 +1,6 @@
+
+cd ..
+
+docker-compose down
+
+
