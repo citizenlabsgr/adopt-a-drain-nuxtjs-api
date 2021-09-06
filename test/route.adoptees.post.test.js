@@ -33,45 +33,53 @@ describe('Adoptees Route ', () => {
   let server = null;
 
   before(async () => {
-    server = await init();
+    if (process.env.NODE_ENV === 'developement' || process.env.NODE_ENV === 'test') {
+      server = await init();
+    }
   });
 
   after(async () => {
     // console.log('restricted server stop');
     // delete test user
-    await server.stop();
+    if (process.env.NODE_ENV === 'developement' || process.env.NODE_ENV === 'test') {
+
+      await server.stop();
+    }
     // delete record
   });
 
   // adoptees 
   it('/adoptees Not Found: 404', async () => {
-    const payload = new TestTokenPayload().guestTokenPayload();
-    const secret = process.env.JWT_SECRET;
+    if (process.env.NODE_ENV === 'developement' || process.env.NODE_ENV === 'test') {
 
-    let token = Jwt.token.generate(payload, secret);
+      const payload = new TestTokenPayload().guestTokenPayload();
+      const secret = process.env.JWT_SECRET;
 
-    token = `Bearer ${token}`;
-    // console.log('process.env.JWT_SECRET', process.env.JWT_SECRET);
-    // console.log('token', token);
+      let token = Jwt.token.generate(payload, secret);
 
-    const res = await server.inject({
-      method: 'post',
-      url: '/adoptees',
-      headers: {
-        authorization: token,
-        rollback: true,
-      },
-      payload: {
-        "west": 0.0, "east": 2.0, "north": 2.0, "south": 0.0
-      },
-    });
-    // console.log('test adoptee', res.result);
-    // expect(res.statusCode).to.equal(200);
-    expect(res.result.status).to.equal('404');
-    expect(res.result.criteria).to.exist();
-    expect(res.result.criteria.sk).to.equal('const#ADOPTEE');
+      token = `Bearer ${token}`;
+      // console.log('process.env.JWT_SECRET', process.env.JWT_SECRET);
+      // console.log('token', token);
 
-    // expect(res.result.token).toBeDefined();
+      const res = await server.inject({
+        method: 'post',
+        url: '/adoptees',
+        headers: {
+          authorization: token,
+          rollback: true,
+        },
+        payload: {
+          "west": 0.0, "east": 2.0, "north": 2.0, "south": 0.0
+        },
+      });
+      // console.log('test adoptee', res.result);
+      // expect(res.statusCode).to.equal(200);
+      expect(res.result.status).to.equal('404');
+      expect(res.result.criteria).to.exist();
+      expect(res.result.criteria.sk).to.equal('const#ADOPTEE');
+
+      // expect(res.result.token).toBeDefined();
+    }
   });
 });
 
