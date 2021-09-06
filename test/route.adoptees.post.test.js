@@ -33,7 +33,7 @@ describe('Adoptees Route ', () => {
   let server = null;
 
   before(async () => {
-    if (process.env.NODE_ENV === 'developement' || process.env.NODE_ENV === 'test') {
+    if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'staging') {
       server = await init();
     }
   });
@@ -41,7 +41,7 @@ describe('Adoptees Route ', () => {
   after(async () => {
     // console.log('restricted server stop');
     // delete test user
-    if (process.env.NODE_ENV === 'developement' || process.env.NODE_ENV === 'test') {
+    if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'staging') {
 
       await server.stop();
     }
@@ -50,35 +50,35 @@ describe('Adoptees Route ', () => {
 
   // adoptees 
   it('/adoptees Not Found: 404', async () => {
-    if (process.env.NODE_ENV === 'developement' || process.env.NODE_ENV === 'test') {
+    if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'staging') {
 
-      const payload = new TestTokenPayload().guestTokenPayload();
-      const secret = process.env.JWT_SECRET;
+    const payload = new TestTokenPayload().guestTokenPayload();
+    const secret = process.env.JWT_SECRET;
 
-      let token = Jwt.token.generate(payload, secret);
+    let token = Jwt.token.generate(payload, secret);
 
-      token = `Bearer ${token}`;
-      // console.log('process.env.JWT_SECRET', process.env.JWT_SECRET);
-      // console.log('token', token);
+    token = `Bearer ${token}`;
+    // console.log('process.env.JWT_SECRET', process.env.JWT_SECRET);
+    // console.log('token', token);
 
-      const res = await server.inject({
-        method: 'post',
-        url: '/adoptees',
-        headers: {
-          authorization: token,
-          rollback: true,
-        },
-        payload: {
-          "west": 0.0, "east": 2.0, "north": 2.0, "south": 0.0
-        },
-      });
-      // console.log('test adoptee', res.result);
-      // expect(res.statusCode).to.equal(200);
-      expect(res.result.status).to.equal('404');
-      expect(res.result.criteria).to.exist();
-      expect(res.result.criteria.sk).to.equal('const#ADOPTEE');
+    const res = await server.inject({
+      method: 'post',
+      url: '/adoptees',
+      headers: {
+        authorization: token,
+        rollback: true,
+      },
+      payload: {
+        "west": 0.0, "east": 2.0, "north": 2.0, "south": 0.0
+      },
+    });
+    // console.log('test adoptee', res.result);
+    // expect(res.statusCode).to.equal(200);
+    expect(res.result.status).to.equal('404');
+    expect(res.result.criteria).to.exist();
+    expect(res.result.criteria.sk).to.equal('const#ADOPTEE');
 
-      // expect(res.result.token).toBeDefined();
+    // expect(res.result.token).toBeDefined();
     }
   });
 });
