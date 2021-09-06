@@ -1,6 +1,6 @@
 
 cd ..
 
-docker-compose down
+docker-compose down  --remove-orphans
 
 

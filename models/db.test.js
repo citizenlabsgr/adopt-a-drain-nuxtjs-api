@@ -1,6 +1,6 @@
 'use strict';
 /* eslint-disable no-undef */
-console.log('db.test');
+// console.log('db.test');
 
 // const process = require('process');
 const Consts = require('../lib/constants/consts');

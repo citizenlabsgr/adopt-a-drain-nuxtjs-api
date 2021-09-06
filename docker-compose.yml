@@ -7,12 +7,6 @@ services:
   db:
     image: postgres
     restart: always
-    #build:
-    #    context: ./aad_db
-    #    dockerfile: dockerfile-db
-
-    #ports:
-    #  - "5432:5432"
 
     environment:
       - POSTGRES_DB=${POSTGRES_DB}

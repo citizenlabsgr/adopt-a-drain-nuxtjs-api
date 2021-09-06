@@ -1,10 +1,10 @@
 /* eslint-disable dot-notation */
 /* eslint-disable no-multi-assign */
-/*
+
 
 // This test has trouble connecting to database
 // test manually with swagger
-
+/*
 'use strict';
 
 const Lab = require('@hapi/lab');
@@ -24,38 +24,39 @@ const { init } = require('../lib/server');
 
 const TestTokenPayload = require('./util/token_payload_test');
 
+// * States
+// * Fail on configuration error
+// * 404 when no points are Not Found
+// * 200 when point found 
+
 describe('Adoptees Route ', () => {
   let server = null;
 
   before(async () => {
-    server = await init();
+      server = await init();
+    
   });
 
   after(async () => {
     // console.log('restricted server stop');
     // delete test user
-    await server.stop();
+
+      await server.stop();
+    
     // delete record
   });
 
-  // adoptees
-  it('/adoptees : 200', async () => {
-    // Goal: Create an application user
-    // Strategy: only guest token can signin
-    //           set validation in route route.options.auth
-    // const username = 'new@user.com';
+  // adoptees 
+  it('/adoptees Not Found: 404', async () => {
+
     const payload = new TestTokenPayload().guestTokenPayload();
     const secret = process.env.JWT_SECRET;
-
-    // var db = request.server.plugins['hapi-sequelized'].models;
-
-    // const JWT = server.plugins['Jwt'];
-    // const token = `Bearer ${Jwt.token.generate(payload, secret)}`;
-    // const token = `Bearer ${JWT.token.generate(payload, secret)}`;
 
     let token = Jwt.token.generate(payload, secret);
 
     token = `Bearer ${token}`;
+    // console.log('process.env.JWT_SECRET', process.env.JWT_SECRET);
+    // console.log('token', token);
 
     const res = await server.inject({
       method: 'post',
@@ -68,11 +69,14 @@ describe('Adoptees Route ', () => {
         "west": 0.0, "east": 2.0, "north": 2.0, "south": 0.0
       },
     });
-    console.log('test adoptee', res.result);
-    expect(res.statusCode).to.equal(200);
-    expect(res.result.status).to.equal('200');
+    // console.log('test adoptee', res.result);
+    // expect(res.statusCode).to.equal(200);
+    expect(res.result.status).to.equal('404');
+    expect(res.result.criteria).to.exist();
+    expect(res.result.criteria.sk).to.equal('const#ADOPTEE');
 
     // expect(res.result.token).toBeDefined();
+    
   });
 });
 */
