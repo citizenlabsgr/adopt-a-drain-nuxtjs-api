@@ -7,7 +7,9 @@ services:
   db:
     image: postgres
     restart: always
-
+    # use ports when you want to connect with a db client
+    ports: 
+      - 5432:5432
     environment:
       - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_USER=${POSTGRES_USER}
