@@ -7,7 +7,7 @@ module.exports = class FunctionQueryTest extends Step {
     super(kind, baseVersion);
     this.name = 'query';
     this.name = `${this.kind}_${this.version}.${this.name}`;
-    // this.criteria =  '{"sk": "const#ADOPTEE", "tk": "*", "mbr":{"west": 0.0, "east": 2.0, "north": 2.0, "south": 0.0}}';
+    // this.chelate =  '{"sk": "const#ADOPTEE", "tk": "*", "mbr":{"west": 0.0, "east": 2.0, "north": 2.0, "south": 0.0}}';
 
     this.sql = `BEGIN;
     -- set the key after insert
@@ -47,7 +47,7 @@ module.exports = class FunctionQueryTest extends Step {
     
         ${this.kind}_${this.version}.query('{"pk":"*"}'::JSONB),
     
-        '{"msg": "Bad Request", "extra": "C42703", "status": "400", "criteria": {"pk": "*"}}'::JSONB,
+        '{"msg": "Bad Request", "extra": "C42703", "status": "400", "chelate": {"pk": "*"}}'::JSONB,
     
         'query pk=* 400 0_0_1'::TEXT
     
@@ -59,7 +59,7 @@ module.exports = class FunctionQueryTest extends Step {
     
         ${this.kind}_${this.version}.query('{"sk":"*"}'::JSONB),
     
-        '{"msg": "Bad Request", "extra": "C42703", "status": "400", "criteria": {"sk": "*"}}'::JSONB,
+        '{"msg": "Bad Request", "extra": "C42703", "status": "400", "chelate": {"sk": "*"}}'::JSONB,
     
         'query sk=* 400 0_0_1'::TEXT
     
@@ -71,7 +71,7 @@ module.exports = class FunctionQueryTest extends Step {
     
         ${this.kind}_${this.version}.query('{"tk":"*"}'::JSONB),
     
-        '{"msg": "Bad Request", "extra": "C42703", "status": "400", "criteria": {"tk": "*"}}'::JSONB,
+        '{"msg": "Bad Request", "extra": "C42703", "status": "400", "chelate": {"tk": "*"}}'::JSONB,
     
         'query tk=* 400 0_0_1'::TEXT
     
@@ -83,7 +83,7 @@ module.exports = class FunctionQueryTest extends Step {
     
         ${this.kind}_${this.version}.query('{"pk":""}'::JSONB),
     
-        '{"msg": "Bad Request", "extra": "C42703", "status": "400", "criteria": {"pk": ""}}'::JSONB,
+        '{"msg": "Bad Request", "extra": "C42703", "status": "400", "chelate": {"pk": ""}}'::JSONB,
     
         'query pk="" 400 0_0_1'::TEXT
     
@@ -95,7 +95,7 @@ module.exports = class FunctionQueryTest extends Step {
     
         ${this.kind}_${this.version}.query('{"sk":""}'::JSONB),
     
-        '{"msg": "Bad Request", "extra": "C42703", "status": "400", "criteria": {"sk": ""}}'::JSONB,
+        '{"msg": "Bad Request", "extra": "C42703", "status": "400", "chelate": {"sk": ""}}'::JSONB,
     
         'query sk="" 400 0_0_1'::TEXT
     
@@ -107,7 +107,7 @@ module.exports = class FunctionQueryTest extends Step {
     
         ${this.kind}_${this.version}.query('{"tk":""}'::JSONB),
     
-        '{"msg": "Bad Request", "extra": "C42703", "status": "400", "criteria": {"tk": ""}}'::JSONB,
+        '{"msg": "Bad Request", "extra": "C42703", "status": "400", "chelate": {"tk": ""}}'::JSONB,
     
         'query tk="" 400 0_0_1'::TEXT
     
@@ -118,9 +118,7 @@ module.exports = class FunctionQueryTest extends Step {
       SELECT is (
     
         ${this.kind}_${this.version}.query('{"pk":"","sk":"*"}'::JSONB),
-    
-        '{"msg": "Not Found", "status": "404", "criteria": {"pk": "", "sk": "*"}}'::JSONB,
-    
+        '{"msg": "OK", "status": "200", "selection": []}'::JSONB,    
         'query pk="" sk="*" 404 0_0_1'::TEXT
     
       );
@@ -130,9 +128,7 @@ module.exports = class FunctionQueryTest extends Step {
       SELECT is (
     
         ${this.kind}_${this.version}.query('{"sk":"","tk":""}'::JSONB),
-    
-        '{"msg": "Not Found", "status": "404", "criteria": {"sk": "", "tk": ""}}'::JSONB,
-    
+        '{"msg": "OK", "status": "200", "selection": []}'::JSONB,     
         'query sk="" tk="" 404 0_0_1'::TEXT
     
       );
@@ -217,11 +213,9 @@ module.exports = class FunctionQueryTest extends Step {
     
         (${this.kind}_${this.version}.query('{
     
-          "xk":"const#USER",
-    
+          "xk":"const#USER",    
           "yk": ""}'::JSONB)::JSONB ),
-    
-        '{"msg": "Not Found", "status": "404", "criteria": {"xk": "const#USER", "yk": ""}}'::JSONB,
+          '{"msg": "OK", "status": "200", "selection": []}'::JSONB, 
     
         'query xk yk bad 404 0_0_1'::TEXT
     
@@ -231,7 +225,7 @@ module.exports = class FunctionQueryTest extends Step {
     
       -- 15 xk yk=*
     
-      -- where tk = criteria ->> 'xk'
+      -- where tk = chelate ->> 'xk'
     
     
     

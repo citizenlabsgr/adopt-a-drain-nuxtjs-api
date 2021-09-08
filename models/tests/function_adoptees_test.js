@@ -50,8 +50,7 @@ module.exports = class FunctionAdopteesTest extends Step {
           '${this.mbr_empty}'::JSON
     
         )::JSONB - 'criteria'),
-    
-        '{"msg":"Not Found","status":"404"}'::JSONB,
+        '{"msg": "OK", "status": "200", "selection": []}',
     
         '${this.name} 404 0_0_1'::TEXT
     
