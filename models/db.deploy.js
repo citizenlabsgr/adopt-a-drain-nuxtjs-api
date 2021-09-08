@@ -19,8 +19,9 @@ const FunctionGetJwtClaims001 = require('./db/function_get_jwt_claims_001.js');
 const FunctionGetJwtSecret001 = require('./db/function_get_jwt_secret_001.js');
 const FunctionInsert001 = require('./db/function_insert_001.js');
 // const FunctionQuery001 = require('./db/function_query_001.js');
-const FunctionQuery001 = require('./db/function_query_001.js');
-const FunctionQuery002 = require('./db/function_query_002.js');
+// const FunctionQuery001 = require('./db/function_query_001.js');
+// const FunctionQuery002 = require('./db/function_query_002.js');
+const FunctionQuery003 = require('./db/function_query_003.js');
 
 const FunctionSign001 = require('./db/function_sign_001.js');
 const FunctionUpdate001 = require('./db/function_update_001.js');
@@ -35,7 +36,7 @@ const FunctionVerify001 = require('./db/function_verify_001.js');
 const FunctionTime001 = require('./db/function_time_001.js');
 const FunctionSignin001 = require('./db/function_signin_001.js');
 const FunctionSignup001 = require('./db/function_signup_001.js');
-const FunctionAdoptees001 = require('./db/function_adoptees_001.js');
+const FunctionAdoptees002 = require('./db/function_adoptees_002.js');
 
 // const TestTable = require('./db/table_test_001.js');
 const BaseTests = require('./tests/test_base.js');
@@ -117,9 +118,9 @@ const runner = new SqlRunner(DB_URL)
        .add(new FunctionGetJwtSecret001('base', baseVersion, process))
        .add(new FunctionInsert001('base', baseVersion))
        // .add(new FunctionQuery001('base', baseVersion))
-       .add(new FunctionQuery001('base', baseVersion))
-       .add(new FunctionQuery002('base', baseVersion))
-
+       // .add(new FunctionQuery001('base', baseVersion))
+       // .add(new FunctionQuery002('base', baseVersion))
+       .add(new FunctionQuery003('base', baseVersion))
        .add(new FunctionSign001('base', baseVersion))
        .add(new FunctionUpdate001('base', baseVersion))
      
@@ -133,7 +134,7 @@ const runner = new SqlRunner(DB_URL)
        .add(new FunctionTime001('api', apiVersion))
        .add(new FunctionSignup001('api', apiVersion))
        .add(new FunctionSignin001('api', apiVersion))
-       .add(new FunctionAdoptees001('api', apiVersion, baseVersion))
+       .add(new FunctionAdoptees002('api', apiVersion, baseVersion))
        ;
        
 // [* Tests]
