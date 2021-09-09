@@ -58,7 +58,7 @@ jobs:
           npm run db-deploy
         env:
           NODE_ENV: staging
-
+          JWT_SECRET: ${{secrets.JWT_SECRET}}
 
       # Uncomment when heroku review, stageing, and production are available
       - name: Run tests 🧪

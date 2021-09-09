@@ -57,9 +57,9 @@ if (!process.env.NODE_ENV) {
 }
 
 if (!process.env.JWT_SECRET) {
-  console.log('process.env', process.env);
+  // console.log('process.env', process.env);
   // [* Stop when NODE_ENV is not available.]
-  throw new Error('Improper Environment, POSTGRES_JWT_SECRET is not set!');
+  throw new Error('Improper Environment, JWT_SECRET is not set!');
 }
 if (!process.env.DATABASE_URL) {
   // [* Stop when DATABASE_URL is not available.]
