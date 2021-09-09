@@ -56,6 +56,9 @@ jobs:
       - name: Deploy database
         run: |
           npm run db-deploy
+        env:
+          NODE_ENV: staging
+
 
       # Uncomment when heroku review, stageing, and production are available
       - name: Run tests 🧪
