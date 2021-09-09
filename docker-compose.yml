@@ -51,6 +51,7 @@ services:
       - API_TOKEN=${API_TOKEN}
       - JWT_SECRET=${JWT_SECRET}
       - JWT_CLAIMS=${JWT_CLAIMS}
+      - ACCEPTED_ORIGINS=${ACCEPTED_ORIGINS}
     depends_on:
       - db  
  
