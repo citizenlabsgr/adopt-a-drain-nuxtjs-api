@@ -138,18 +138,18 @@ const runner = new SqlRunner(DB_URL)
        .add(new FunctionSignup001('api', apiVersion))
        .add(new FunctionSignin001('api', apiVersion))
        .add(new FunctionAdoptees002('api', apiVersion, baseVersion))
+       // [Tests, Unit and Integration]
+       .load(new BaseTests(baseVersion))
+       .load(new ApiTests(apiVersion, baseVersion))
        ;
        
 // [* Tests]
-runner
-  .load(new BaseTests(baseVersion));
-  
-if (testable) {
 
-    runner
-      .load(new ApiTests(apiVersion, baseVersion));
-
-}
+// if (testable) {
+//  runner
+//  .load(new BaseTests(baseVersion))
+//  .load(new ApiTests(apiVersion, baseVersion));
+// }
 
 runner.run();
 
