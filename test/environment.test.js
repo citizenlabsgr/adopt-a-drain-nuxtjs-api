@@ -21,7 +21,7 @@ describe('Environment', () => {
       process.env.DEPLOY_ENV = '';
       // [* Call dotenv only on local install aka !production]
       if (!(process.env.NPM_CONFIG_PRODUCTION !== undefined)) {
-        console.log('server dotenv load local');
+        console.log('server dotenv load local NODE_ENV',process.env.NODE_ENV);
         // eslint-disable-next-line global-require
         const path = require('path');
         // eslint-disable-next-line
