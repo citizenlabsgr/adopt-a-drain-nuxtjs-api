@@ -31,6 +31,7 @@ for (let env in process.env) {
     DB_URL=process.env[env];
   }
 }
+/*
 let testable = false;
 if (process.env.DATABASE_URL === DB_URL) {
   // [* No testing in Heroku staging]
@@ -40,18 +41,22 @@ if (process.env.DATABASE_URL === DB_URL) {
   if (process.env.NODE_ENV === 'developmemt') {
     testable = true;
   }
+  if (process.env.NODE_ENV === 'staging') {
+    testable = true;
+  }
 }
+*/
 
 // [* Build database]
 // [* support multiple versions]
 // [* Tests]
-if (testable) {
+// if (testable) {
 
   new SqlRunner(DB_URL)
     .load(new BaseTests(baseVersion))
     .load(new ApiTests(apiVersion, baseVersion))
     .run();
-}
+// }
 // $lab:coverage:on$
 
 
