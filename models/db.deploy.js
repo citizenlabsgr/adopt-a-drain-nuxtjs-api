@@ -141,10 +141,11 @@ const runner = new SqlRunner(DB_URL)
        ;
        
 // [* Tests]
+runner
+  .load(new BaseTests(baseVersion))
 if (testable) {
 
     runner
-      .load(new BaseTests(baseVersion))
       .load(new ApiTests(apiVersion, baseVersion));
 
 }

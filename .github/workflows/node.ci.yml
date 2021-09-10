@@ -61,7 +61,7 @@ jobs:
       #    DATABASE_URL: ${{secrets.DATABASE_URL}}
 
       # Uncomment when heroku review, stageing, and production are available
-      - name: Run tests 🧪
+      - name: Run unit tests 🧪
         run: npm run test
         env:
           JWT_CLAIMS: ${{secrets.JWT_CLAIMS}}
