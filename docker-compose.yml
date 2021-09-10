@@ -49,10 +49,13 @@ services:
       - HOST=${HOST}
       - PORT=${PORT}
       - DATABASE_URL=${DATABASE_URL}
-      - API_TOKEN=${API_TOKEN}
+      # - API_TOKEN=${API_TOKEN}
       - JWT_SECRET=${JWT_SECRET}
       - JWT_CLAIMS=${JWT_CLAIMS}
       - ACCEPTED_ORIGINS=${ACCEPTED_ORIGINS}
+      # In dev, the HEROKU_API_KEY can be set to anything
+      # In GitHub secrets, set HEROKU_API_KEY to actual value from heroku
+      - HEROKU_API_KEY=${HEROKU_API_KEY}
     depends_on:
       - db  
  

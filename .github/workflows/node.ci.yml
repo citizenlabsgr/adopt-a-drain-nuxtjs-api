@@ -70,6 +70,7 @@ jobs:
           DATABASE_URL: ${{secrets.DATABASE_URL}}
           HOST: "0.0.0.0"
           ACCEPTED_ORIGINS: ${{secrets.ACCEPTED_ORIGINS}}
+          HEROKU_API_KEY: ${{secrets.HEROKU_API_KEY}}
 
       - name: Heroku Deploy
         uses: akhileshns/heroku-deploy@v3.12.12

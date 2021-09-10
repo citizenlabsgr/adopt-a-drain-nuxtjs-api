@@ -56,18 +56,28 @@ const baseVersion='0_0_1';
 const apiVersion='0_0_1';
 if (!process.env.NODE_ENV) {
   // [* Stop when NODE_ENV is not available.]
-  throw new Error('Improper Environment, NODE_ENV is not set!');
+  throw new Error('Improper Environment, NODE_ENV is not set! (.env or gh secrets)');
 }
-
 if (!process.env.JWT_SECRET) {
   // console.log('process.env', process.env);
   // [* Stop when NODE_ENV is not available.]
-  throw new Error('Improper Environment, JWT_SECRET is not set!');
+  throw new Error('Improper Environment, JWT_SECRET is not set! (.env or gh secrets)');
 }
 if (!process.env.DATABASE_URL) {
   // [* Stop when DATABASE_URL is not available.]
-  throw new Error('Improper Environment, DATABASE_URL is not set!');
+  throw new Error('Improper Environment, DATABASE_URL is not set! (.env or gh secrets)');
 }
+
+if (!process.env.ACCEPTED_ORIGINS) {
+  // [* Stop when DATABASE_URL is not available.]
+  throw new Error('Improper Environment, ACCEPTED_ORIGINS is not set! (.env or gh secrets)');
+}
+
+if (!process.env.HEROKU_API_KEY) {
+  // [* Stop when DATABASE_URL is not available.]
+  throw new Error('Improper Environment, HEROKU_API_KEY is not set! (.env or gh secrets)');
+}
+
 // [* Switch to heroku color url when available]
 const databaseUrl = new DatabaseUrl(process);
 const DB_URL = databaseUrl.db_url; 
@@ -138,14 +148,14 @@ const runner = new SqlRunner(DB_URL)
        .add(new FunctionSignup001('api', apiVersion))
        .add(new FunctionSignin001('api', apiVersion))
        .add(new FunctionAdoptees002('api', apiVersion, baseVersion))
-       // [Tests, Unit and Integration]
-       // .load(new BaseTests(baseVersion))
-       // .load(new ApiTests(apiVersion, baseVersion))
+       .add(new Comment('--  Database Testing --'))
+       .load(new BaseTests(baseVersion))
+       .load(new ApiTests(apiVersion, baseVersion))
        ;
        
 // [* Tests]
 
-// if (testable) {
+// if (process.env.NODE_ENV === 'development') {
 //  runner
 //  .load(new BaseTests(baseVersion))
 //  .load(new ApiTests(apiVersion, baseVersion));

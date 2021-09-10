@@ -35,21 +35,15 @@ describe('Environment', () => {
     expect(process.env.NODE_ENV).to.exists();
   });
 
-  /*
-  //it('Environment JWT_ CLAIMS', () => {
-  //  expect(process.env.JWT_ CLAIMS).to.exists();
-  //})
-  */
-
   it('Environment JWT_SECRET', () => {
     // console.log('process.env.JWT_SECRET', process.env.JWT_SECRET);
     expect(process.env.JWT_SECRET).to.exists();
   });
 
-  it('Environment API_TOKEN', () => {
-    // console.log('Environment process.env.API_TOKEN', process.env.API_TOKEN);
-    expect(process.env.API_TOKEN).to.exists();
-  });
+  // it('Environment API_TOKEN', () => {
+  //  // console.log('Environment process.env.API_TOKEN', process.env.API_TOKEN);
+  //  expect(process.env.API_TOKEN).to.exists();
+  // });
 
   it('Environment HOST', () => {
     // console.log('process.env.HOST', process.env.HOST);
