@@ -15,7 +15,7 @@ const { before, describe, it } = exports.lab = Lab.script();
 describe('Environment', () => {
   // Initialize
   before(async () => {
-    if (process.env.NODE_ENV !== 'production') {
+    if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'staging') {
       // [* Load Environment variables when not in production]
       // console.log('process.env.DEPLOY_ENV', process.env.DEPLOY_ENV);
       process.env.DEPLOY_ENV = '';
