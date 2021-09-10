@@ -142,7 +142,8 @@ const runner = new SqlRunner(DB_URL)
        
 // [* Tests]
 runner
-  .load(new BaseTests(baseVersion))
+  .load(new BaseTests(baseVersion));
+  
 if (testable) {
 
     runner
