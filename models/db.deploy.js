@@ -9,6 +9,7 @@ const SqlRunner = require('../lib/runner/runner_sql.js');
 const Comment = require('../lib/runner/comment.js');
 const Extension = require('./db/extension.js');
 
+
 const Schema = require('./db/schema.js');
 
 const Table001 = require('./db/table_001.js');
