@@ -71,7 +71,7 @@ if (!process.env.DATABASE_URL) {
 // [* Switch to heroku color url when available]
 const databaseUrl = new DatabaseUrl(process);
 const DB_URL = databaseUrl.db_url; 
-const testable = databaseUrl.testable;
+// const testable = databaseUrl.testable;
 /*
 if (process.env.DATABASE_URL === DB_URL) {
   // [* No testing in Heroku staging]
