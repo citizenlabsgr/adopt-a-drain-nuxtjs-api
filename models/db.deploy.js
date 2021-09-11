@@ -113,7 +113,7 @@ if (process.env.DATABASE_URL === DB_URL) {
 // [* support multiple versions]
 const runner = new SqlRunner(DB_URL)
        .add(new Comment('-- Load Extensions --'))
-       .add(new Extension('pgcrypto','public'))
+       // .add(new Extension('pgcrypto','public'))
        .add(new Extension('"uuid-ossp"','public'))
        .add(new Comment('--  Schema --'))
        .add(new Schema('base', baseVersion))
