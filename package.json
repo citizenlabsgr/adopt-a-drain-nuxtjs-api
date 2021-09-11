@@ -10,6 +10,7 @@
     "dev": "nodemon",
     "start": "node server.js",
     "test": "lab -v */*.test.unit.js",
+    "test-integration": "lab -v */*.test.integration.js",
     "lint": "eslint '**/*.js?(x)' ."
   },
   "author": "James Wilfong <wilfongjt@gmail.com>",
