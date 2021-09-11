@@ -1,3 +1,7 @@
+# GitHub Secrets
+Setup variables in GitHub
+* apply to Git Actions
+
 # Heroku
 
 ## Environment Variables
@@ -14,3 +18,6 @@ brew doctor
 brew update
 brew install libpq
 ```
+## Docker 
+Enable a Heroku like local testing environment 
+* Persist the Postgres database

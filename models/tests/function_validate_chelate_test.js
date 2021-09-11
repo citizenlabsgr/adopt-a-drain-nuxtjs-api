@@ -22,7 +22,7 @@ module.exports = class FunctionValidateChelateTest extends Step {
     
           ARRAY[ 'JSONB', 'TEXT' ],
     
-          'Function validate_chelate(jsonb, TEXT) exists'
+          'DB Function validate_chelate(jsonb, TEXT) exists'
     
       );
       -- 2
@@ -36,7 +36,7 @@ module.exports = class FunctionValidateChelateTest extends Step {
     
         )::JSONB is not NULL,
     
-        'validate_chelate (chelate JSONB, expected TEXT) 0_0_1'::TEXT
+        'DB validate_chelate (chelate JSONB, expected TEXT) 0_0_1'::TEXT
     
       );
 
@@ -71,7 +71,7 @@ module.exports = class FunctionValidateChelateTest extends Step {
     
         )::JSONB is not NULL,
     
-        'validate_chelate (chelate JSONB, expected TEXT) 0_0_1'::TEXT
+        'DB validate_chelate (chelate JSONB, expected TEXT) 0_0_1'::TEXT
     
       );
     

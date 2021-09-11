@@ -10,9 +10,9 @@ module.exports = class CreateTableTest extends Step {
     
     SELECT plan(2);
     -- 1
-    SELECT has_table('${this.kind}_${this.version}', 'one', 'Table exists');
+    SELECT has_table('${this.kind}_${this.version}', 'one', 'DB Table exists');
     -- 2
-    SELECT hasnt_pk('${this.kind}_${this.version}', 'one', 'Primary key exists');
+    SELECT hasnt_pk('${this.kind}_${this.version}', 'one', 'DB Table Primary key exists');
 
     SELECT * FROM finish();
     ROLLBACK;

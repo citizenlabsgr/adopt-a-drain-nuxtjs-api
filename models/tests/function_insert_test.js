@@ -21,7 +21,7 @@ module.exports = class FunctionInsertTest extends Step {
     
           ARRAY[ 'JSONB','TEXT' ],
     
-          'Function Insert (_chelate JSONB, text) exists'
+          'DB Function Insert (_chelate JSONB, text) exists'
     
       );
     
@@ -47,7 +47,7 @@ module.exports = class FunctionInsertTest extends Step {
     
           '{"msg": "OK", "status": "200"}'::JSONB,
     
-          'insert sk form good 0_0_1'::TEXT
+          'DB insert sk form good 0_0_1'::TEXT
     
       );
     
@@ -77,7 +77,7 @@ module.exports = class FunctionInsertTest extends Step {
     
           'OK'::TEXT,
     
-          'insert pk sk form good 0_0_1'::TEXT
+          'DB insert pk sk form good 0_0_1'::TEXT
     
       );
     
@@ -107,7 +107,7 @@ module.exports = class FunctionInsertTest extends Step {
     
           '{"msg": "OK", "status": "200"}'::JSONB,
     
-          'insert pk sk form good 0_0_1'::TEXT
+          'DB insert pk sk form good 0_0_1'::TEXT
     
       );
     
@@ -135,7 +135,7 @@ module.exports = class FunctionInsertTest extends Step {
     
           'OK'::TEXT,
     
-          'insert sk tk form good  0_0_1'::TEXT
+          'DB insert sk tk form good  0_0_1'::TEXT
     
       );
     
@@ -155,7 +155,7 @@ module.exports = class FunctionInsertTest extends Step {
           'insert4Owner'::TEXT)::JSONB - '{"form","insertion"}'::TEXT[],
     
           '{"msg": "OK", "status": "200"}'::JSONB,
-          'insert pk sk tk form good  0_0_1'::TEXT
+          'DB insert pk sk tk form good  0_0_1'::TEXT
     
       );
     
@@ -185,7 +185,7 @@ module.exports = class FunctionInsertTest extends Step {
     
           'Duplicate'::TEXT,
     
-          'insert sk tk form, sk tk duplicte error  0_0_1'::TEXT
+          'DB insert sk tk form, sk tk duplicte error  0_0_1'::TEXT
     
       );
     
@@ -209,7 +209,7 @@ module.exports = class FunctionInsertTest extends Step {
     
           'Bad Request'::TEXT,
     
-          'insert missing keys form good  0_0_1'::TEXT
+          'DB insert missing keys form good  0_0_1'::TEXT
     
       );
     
@@ -227,7 +227,7 @@ module.exports = class FunctionInsertTest extends Step {
           }'::JSONB,
           'insert4Owner')::JSONB ->> 'msg',
           'Bad Request'::TEXT,
-          'insert pk sk tk BADform   0_0_1'::TEXT
+          'DB insert pk sk tk BADform   0_0_1'::TEXT
       );
     
       SELECT * FROM finish();

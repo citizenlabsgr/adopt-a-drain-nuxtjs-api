@@ -15,7 +15,7 @@ module.exports = class FunctionGetJwtClaimsTest extends Step {
         '${this.kind}_${this.version}',
         'get_jwt_claims',
         ARRAY[ 'TEXT', 'TEXT', 'TEXT' ],
-        'Function get_jwt_claims(user, scope, key)'
+        'DB Function get_jwt_claims(user, scope, key)'
     );
   
     -- 2 
@@ -30,7 +30,7 @@ module.exports = class FunctionGetJwtClaimsTest extends Step {
   
       '{"aud": "citizenlabs-api", "iss": "citizenlabs", "key": "0", "sub": "client-api", "user": "claims@claims.com", "scope": "api_guest"}'::JSONB,
   
-      'get_jwt_claims (user, scope, key)'::TEXT
+      'DB get_jwt_claims (user, scope, key)'::TEXT
   
     );
     -- 3 
@@ -44,7 +44,7 @@ module.exports = class FunctionGetJwtClaimsTest extends Step {
   
       '{"aud": "citizenlabs-api", "iss": "citizenlabs", "key": "duckduckgoose", "sub": "client-api", "user": "claims@claims.com", "scope": "api_user"}'::JSONB,
   
-      'get_jwt_claims (user, scope, key)'::TEXT
+      'DB get_jwt_claims (user, scope, key)'::TEXT
   
     );
   

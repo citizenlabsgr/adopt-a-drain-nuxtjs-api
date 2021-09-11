@@ -20,7 +20,7 @@ module.exports = class FunctionValidateFormTest extends Step {
             'TEXT[]', 
             'JSONB' 
           ],
-          'Function validate_form(text[], jsonb) exists'
+          'DB Function validate_form(text[], jsonb) exists'
       );
     
       SELECT * FROM finish();

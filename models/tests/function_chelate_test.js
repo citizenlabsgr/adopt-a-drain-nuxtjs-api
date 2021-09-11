@@ -21,7 +21,7 @@ module.exports = class FunctionChelateTest extends Step {
   
         ARRAY[ 'JSONB', 'JSONB' ],
   
-        'Function chelate(jsonb, jsonb) exists'
+        'DB Function chelate(jsonb, jsonb) exists'
   
     );
   
@@ -47,7 +47,7 @@ module.exports = class FunctionChelateTest extends Step {
   
       )::JSONB ->> 'pk' = 'a#v1',
   
-      'chelate (keys JSONB, form JSONB) 0_0_1'::TEXT
+      'DB chelate (keys JSONB, form JSONB) 0_0_1'::TEXT
   
     );
   

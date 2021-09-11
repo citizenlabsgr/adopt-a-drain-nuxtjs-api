@@ -22,7 +22,8 @@ services:
       # anything in initdb directory is created in the database
       # - "./aad_db/sql-current:/docker-entrypoint-initdb.d"
       # Uncomment this if you want to persist the data.
-      #- "~/.data/aad_db/pgdata:/var/lib/postgresql/data"
+      # Uncomment if you want to simulate heroku environment
+      # - "~/.data/aad_db/pgdata:/var/lib/postgresql/data"
 
   #######    
   #  sh -c "npm install && npm install nodemon && npm run db-deploy && npm run dev"
@@ -38,6 +39,7 @@ services:
       context: .
     command: >
       sh -c "npm run dev"
+    #  sh -c "npm run db-deploy && npm run test && npm run dev"
     # sh -c "npm run db-deploy && npm run dev"
     # facilitate develpment with volumes
     volumes:

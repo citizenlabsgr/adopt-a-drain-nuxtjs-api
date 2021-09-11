@@ -11,11 +11,11 @@ const Password = require('../lib/auth/password');
 
 describe('Password', () => {
   // Initialize
-  it('new Password', () => {
+  it('API new Password', () => {
     expect(new Password()).to.exist();
   });
 
-  it('Hash Password', () => {
+  it('API Hash Password', () => {
     const form = {
       username: 'abc@xyz.com',
       displayname: 'abc',
@@ -30,7 +30,7 @@ describe('Password', () => {
     expect(form.password.salt).to.exist();
   });
 
-  it('Verify Hashed Password', () => {
+  it('API Verify Hashed Password', () => {
     const mypass = 'a1A!aaaa';
     const form = {
       username: 'abc@xyz.com',

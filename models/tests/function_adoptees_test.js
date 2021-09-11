@@ -36,7 +36,7 @@ module.exports = class FunctionAdopteesTest extends Step {
     
           ARRAY[ 'TEXT', 'JSON' ],
     
-          'Function ${this.name} (text, json) should exist'
+          'DB Function ${this.name} (text, json) should exist'
     
       );
 
@@ -52,7 +52,7 @@ module.exports = class FunctionAdopteesTest extends Step {
         )::JSONB - 'criteria'),
         '{"msg": "OK", "status": "200", "selection": []}',
     
-        '${this.name} 404 0_0_1'::TEXT
+        'DB ${this.name} 404 0_0_1'::TEXT
     
       );
 
@@ -69,7 +69,7 @@ module.exports = class FunctionAdopteesTest extends Step {
     
         '{"msg":"OK","status":"200"}'::JSONB,
     
-        '${this.name} 200 0_0_1'::TEXT
+        'DB ${this.name} 200 0_0_1'::TEXT
     
       );
 

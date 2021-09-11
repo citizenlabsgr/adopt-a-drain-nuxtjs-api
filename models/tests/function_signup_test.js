@@ -32,7 +32,7 @@ module.exports = class FunctionSignupTest extends Step {
   
         ARRAY[ 'TEXT', 'JSON', 'TEXT' ],
   
-        'Function Signup Insert (text, jsonb, text) exists'
+        'DB Function Signup Insert (text, jsonb, text) exists'
   
     );
   
@@ -50,7 +50,7 @@ module.exports = class FunctionSignupTest extends Step {
   
       true::Boolean,
   
-      'Signup Insert (NULL,NULL) 403 0_0_1'::TEXT
+      'DB Signup Insert (NULL,NULL) 403 0_0_1'::TEXT
   
     );
   
@@ -62,7 +62,7 @@ module.exports = class FunctionSignupTest extends Step {
       NULL::JSON
     )::JSONB,
     '{"msg": "Bad Request", "status": "400"}'::JSONB,
-    'Signup Insert (guest_token,NULL) 400 0_0_1'::TEXT
+    'DB Signup Insert (guest_token,NULL) 400 0_0_1'::TEXT
   );
   
     -- 4
@@ -79,7 +79,7 @@ module.exports = class FunctionSignupTest extends Step {
   
       '{"msg": "Bad Request", "status": "400"}'::JSONB,
   
-      'Signup Insert (guest_token,NULL) 400 0_0_1'::TEXT
+      'DB Signup Insert (guest_token,NULL) 400 0_0_1'::TEXT
   
     );
   
@@ -97,7 +97,7 @@ module.exports = class FunctionSignupTest extends Step {
   
        '{"msg": "Bad Request", "status": "400"}'::JSONB,
   
-      'Signup Insert (guest_token,NULL) 400 0_0_1'::TEXT
+      'DB Signup Insert (guest_token,NULL) 400 0_0_1'::TEXT
   
     );
   
@@ -115,7 +115,7 @@ module.exports = class FunctionSignupTest extends Step {
   
       '{"msg":"OK","status":"200"}'::JSONB,
   
-      'Signup Insert OK 200 0_0_1'::TEXT
+      'DB Signup Insert OK 200 0_0_1'::TEXT
   
     );
   
@@ -133,7 +133,7 @@ module.exports = class FunctionSignupTest extends Step {
   
       '{"msg":"Duplicate","status":"409"}'::JSONB,
   
-      'Signup Insert duplicate 409 0_0_1'::TEXT
+      'DB Signup Insert duplicate 409 0_0_1'::TEXT
   
     );
   
@@ -151,7 +151,7 @@ module.exports = class FunctionSignupTest extends Step {
   
       '{"msg":"Bad Request","status":"400"}'::JSONB,
   
-      'Signup Insert 400 0_0_1'::TEXT
+      'DB Signup Insert 400 0_0_1'::TEXT
   
     );
   
@@ -169,7 +169,7 @@ module.exports = class FunctionSignupTest extends Step {
   
       true::Boolean,
   
-      'Signup Insert 400 0_0_1'::TEXT
+      'DB Signup Insert 400 0_0_1'::TEXT
   
     );
   
@@ -187,7 +187,7 @@ module.exports = class FunctionSignupTest extends Step {
   
       '{"msg":"OK","status":"200"}'::JSONB,
   
-      'Signup Insert  200 0_0_1'::TEXT
+      'DB Signup Insert  200 0_0_1'::TEXT
   
     );
   
@@ -207,7 +207,7 @@ module.exports = class FunctionSignupTest extends Step {
   
       '{"msg":"OK","status":"200"}'::JSONB,
   
-      'Signup Insert 200 0_0_1'::TEXT
+      'DB Signup Insert 200 0_0_1'::TEXT
   
     );
   
@@ -225,7 +225,7 @@ module.exports = class FunctionSignupTest extends Step {
   
       '{"msg": "OK", "status": "200"}'::JSONB,
   
-      'Signup Insert 401 0_0_1'::TEXT
+      'DB Signup Insert 401 0_0_1'::TEXT
   
     );
 

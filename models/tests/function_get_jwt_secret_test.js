@@ -15,7 +15,7 @@ module.exports = class FunctiongetJwtSecretTest extends Step {
     SELECT has_function(
         '${this.kind}_${this.version}',
         'get_jwt_secret',
-        'Function get_jwt_secret()'
+        'DB Function get_jwt_secret()'
     );
   
     -- 2 
@@ -26,7 +26,7 @@ module.exports = class FunctiongetJwtSecretTest extends Step {
   
       true::Boolean,
   
-      'get_jwt_secret > 32'::TEXT
+      'DB get_jwt_secret > 32'::TEXT
   
     );
   

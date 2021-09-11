@@ -42,8 +42,8 @@ const FunctionSignup001 = require('./db/function_signup_001.js');
 const FunctionAdoptees002 = require('./db/function_adoptees_002.js');
 
 // const TestTable = require('./db/table_test_001.js');
-const BaseTests = require('./tests/test_base.js');
-const ApiTests = require('./tests/test_api.js');
+// const BaseTests = require('./tests/test_base.js');
+// const ApiTests = require('./tests/test_api.js');
 const DatabaseUrl = require('../lib/plugins/postgres/database_url.js');
 
 // run all scripts
@@ -148,10 +148,8 @@ const runner = new SqlRunner(DB_URL)
        .add(new FunctionSignup001('api', apiVersion))
        .add(new FunctionSignin001('api', apiVersion))
        .add(new FunctionAdoptees002('api', apiVersion, baseVersion))
-       .add(new Comment('--  Database Testing --'))
-       .load(new BaseTests(baseVersion))
-       .load(new ApiTests(apiVersion, baseVersion))
        ;
+       
        
 // [* Tests]
 

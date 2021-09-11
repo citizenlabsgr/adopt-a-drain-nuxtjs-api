@@ -45,7 +45,7 @@ describe('Adoptees Route ', () => {
     
     // delete record
   });
-  it('environment variables ', async () => {
+  it('API environment variables ', async () => {
     expect(process.env.NODE_ENV).to.exists();
     expect(process.env.DATABASE_URL).to.exists();
     expect(process.env.JWT_SECRET).to.exists();
@@ -58,7 +58,7 @@ describe('Adoptees Route ', () => {
   // API_TOKEN: ${{secrets.API_TOKEN}}
   // HOST: "0.0.0.0"
   // adoptees 
-  it('/adoptees Not Found: 200', async () => {
+  it('API /adoptees Not Found: 200', async () => {
 
     const payload = new TestTokenPayload().guestTokenPayload();
     const secret = process.env.JWT_SECRET;

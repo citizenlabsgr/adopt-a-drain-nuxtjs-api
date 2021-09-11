@@ -38,7 +38,7 @@ module.exports = class FunctionSigninTest extends Step {
     
           ARRAY[ 'TEXT', 'JSON' ],
     
-          'Function signin (text, json) should exist'
+          'DB Function signin (text, json) should exist'
     
       );
     
@@ -56,7 +56,7 @@ module.exports = class FunctionSigninTest extends Step {
     
         'Forbidden'::TEXT,
     
-        'signin NO token, NO credentials, Forbidden 0_0_1'::TEXT
+        'DB signin NO token, NO credentials, Forbidden 0_0_1'::TEXT
     
       );
     
@@ -74,7 +74,7 @@ module.exports = class FunctionSigninTest extends Step {
     
         'Forbidden'::TEXT,
     
-        'signin token BAD, NO credentials, Forbidden 0_0_1'::TEXT
+        'DB signin token BAD, NO credentials, Forbidden 0_0_1'::TEXT
     
       );
     
@@ -94,7 +94,7 @@ module.exports = class FunctionSigninTest extends Step {
     
         '{"msg": "Forbidden", "status": "403"}'::JSONB,
     
-        'signin NO token, GOOD credentials,  Forbidden 403 0_0_1'::TEXT
+        'DB signin NO token, GOOD credentials,  Forbidden 403 0_0_1'::TEXT
     
       );
     
@@ -110,7 +110,7 @@ module.exports = class FunctionSigninTest extends Step {
         )::JSONB - '{"extra","credentials"}'::TEXT[],
         '{"msg":"Not Found","status":"404"}'::JSONB,
     
-        'signin GOOD token Bad Username Credentials 0_0_1'::TEXT
+        'DB signin GOOD token Bad Username Credentials 0_0_1'::TEXT
     
       );
     
@@ -128,7 +128,7 @@ module.exports = class FunctionSigninTest extends Step {
     
           '{"msg": "Not Found", "status": "404"}'::JSONB,
     
-          'signin GOOD token BAD Password Credentials 404 0_0_1'::TEXT
+          'DB signin GOOD token BAD Password Credentials 404 0_0_1'::TEXT
     
       );
     
@@ -146,7 +146,7 @@ module.exports = class FunctionSigninTest extends Step {
     
         '{"msg": "OK", "token": "********", "status": "200"}'::JSONB,
     
-        'signin GOOD token GOOD Credentials 200 0_0_1'::TEXT
+        'DB signin GOOD token GOOD Credentials 200 0_0_1'::TEXT
     
       );
     
