@@ -58,6 +58,7 @@ jobs:
         env:
           ACCEPTED_ORIGINS: ${{secrets.ACCEPTED_ORIGINS}}
           DATABASE_URL: ${{secrets.DATABASE_URL}}
+          HEROKU_API_KEY: ${{secrets.HEROKU_API_KEY}}
           HOST: "0.0.0.0"
           JWT_CLAIMS: ${{secrets.JWT_CLAIMS}}
           JWT_SECRET: ${{secrets.JWT_SECRET}}
