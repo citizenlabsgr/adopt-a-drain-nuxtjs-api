@@ -159,7 +159,9 @@ const runner = new SqlRunner(DB_URL)
 //  .load(new ApiTests(apiVersion, baseVersion));
 // }
 
-runner.run();
+runner.run().catch((err) => {
+  console.log('db.deploy', err);
+});
 
 
 
