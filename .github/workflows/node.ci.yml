@@ -63,30 +63,31 @@ jobs:
           JWT_CLAIMS: ${{secrets.JWT_CLAIMS}}
           JWT_SECRET: ${{secrets.JWT_SECRET}}
           NODE_ENV: staging
-
-      - name: Database Unit Tests
-        run: npm run db-unit-test
-        env:
-          ACCEPTED_ORIGINS: ${{secrets.ACCEPTED_ORIGINS}}
-          API_TOKEN: ${{secrets.API_TOKEN}}
-          DATABASE_URL: ${{secrets.DATABASE_URL}}
-          HEROKU_API_KEY: ${{secrets.HEROKU_API_KEY}}
-          HOST: "0.0.0.0"
-          JWT_CLAIMS: ${{secrets.JWT_CLAIMS}}
-          JWT_SECRET: ${{secrets.JWT_SECRET}}
-          NODE_ENV: staging
-
-      # Uncomment when heroku review, stageing, and production are available
-      #- name: Run database unit tests 🧪
-      #  run: npm run test
+      # At this time, pgtap is not available for testing SQL
+      # Although, you may use to test locally
+      #- name: Database Unit Tests
+      #  run: npm run db-unit-test
       #  env:
-      #    JWT_CLAIMS: ${{secrets.JWT_CLAIMS}}
-      #    JWT_SECRET: ${{secrets.JWT_SECRET}}
+      #    ACCEPTED_ORIGINS: ${{secrets.ACCEPTED_ORIGINS}}
       #    API_TOKEN: ${{secrets.API_TOKEN}}
       #    DATABASE_URL: ${{secrets.DATABASE_URL}}
-      #    HOST: "0.0.0.0"
-      #    ACCEPTED_ORIGINS: ${{secrets.ACCEPTED_ORIGINS}}
       #    HEROKU_API_KEY: ${{secrets.HEROKU_API_KEY}}
+      #    HOST: "0.0.0.0"
+      #    JWT_CLAIMS: ${{secrets.JWT_CLAIMS}}
+      #    JWT_SECRET: ${{secrets.JWT_SECRET}}
+      #    NODE_ENV: staging
+
+      # Uncomment when heroku review, stageing, and production are available
+      - name: Run API Unit Tests 🧪
+        run: npm run test
+        env:
+          JWT_CLAIMS: ${{secrets.JWT_CLAIMS}}
+          JWT_SECRET: ${{secrets.JWT_SECRET}}
+          API_TOKEN: ${{secrets.API_TOKEN}}
+          DATABASE_URL: ${{secrets.DATABASE_URL}}
+          HOST: "0.0.0.0"
+          ACCEPTED_ORIGINS: ${{secrets.ACCEPTED_ORIGINS}}
+          HEROKU_API_KEY: ${{secrets.HEROKU_API_KEY}}
 
       - name: Heroku Deploy
         uses: akhileshns/heroku-deploy@v3.12.12
