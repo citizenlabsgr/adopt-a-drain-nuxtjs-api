@@ -64,8 +64,8 @@ jobs:
           JWT_SECRET: ${{secrets.JWT_SECRET}}
           NODE_ENV: staging
 
-      - name: Database unit Tests
-        run: npm run db-test
+      - name: Database Unit Tests
+        run: npm run db-unit-test
         env:
           ACCEPTED_ORIGINS: ${{secrets.ACCEPTED_ORIGINS}}
           API_TOKEN: ${{secrets.API_TOKEN}}
