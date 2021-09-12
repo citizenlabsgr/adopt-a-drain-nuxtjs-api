@@ -11,7 +11,7 @@ const ChelatePattern = require('../lib/chelates/chelate_pattern.js');
 describe('ChelatePattern', () => {
   // Initialize
   // 1
-  it('ChelatePattern No Change', () => {
+  it('API ChelatePattern No Change', () => {
     const chelate = {
       pk: 'username#abc@xyz.com',
       sk: 'const#USER',
@@ -30,7 +30,7 @@ describe('ChelatePattern', () => {
     expect(pattern).to.equal({ pk: { att: 'username' }, sk: { const: 'USER' }, tk: { guid: '520a5bd9-e669-41d4-b917-81212bc184a3' } });
   });
   // 2
-  it('ChelatePattern Form Change', () => {
+  it('API ChelatePattern Form Change', () => {
     const chelate = {
       pk: 'username#abc@xyz.com',
       sk: 'const#USER',
@@ -52,7 +52,7 @@ describe('ChelatePattern', () => {
     expect(pattern.hasKeyChange()).to.be.false();
   });
   // 3
-  it('ChelatePattern PK SK Change', () => {
+  it('API ChelatePattern PK SK Change', () => {
     const chelate = {
       pk: 'username#abc@xyz.com',
       sk: 'displayname#abc',
@@ -78,7 +78,7 @@ describe('ChelatePattern', () => {
 
   // 4
 
-  it('ChelatePattern SK TK Change', () => {
+  it('API ChelatePattern SK TK Change', () => {
     const chelate = {
       sk: 'displayname#abc',
       tk: 'guid#520a5bd9-e669-41d4-b917-81212bc184a3',
@@ -99,7 +99,7 @@ describe('ChelatePattern', () => {
 
   // 5
 
-  it('ChelatePattern getKeyMap', () => {
+  it('API ChelatePattern getKeyMap', () => {
     const chelate = {
       pk: 'username#abc@xyz.com',
       sk: 'const#USER',

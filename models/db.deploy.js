@@ -5,8 +5,11 @@ console.log('db.deploy');
 // const process = require('process');
 // const Consts = require('../lib/constants/consts');
 const SqlRunner = require('../lib/runner/runner_sql.js');
+
 const Comment = require('../lib/runner/comment.js');
 const Extension = require('./db/extension.js');
+
+
 const Schema = require('./db/schema.js');
 
 const Table001 = require('./db/table_001.js');
@@ -39,8 +42,8 @@ const FunctionSignup001 = require('./db/function_signup_001.js');
 const FunctionAdoptees002 = require('./db/function_adoptees_002.js');
 
 // const TestTable = require('./db/table_test_001.js');
-const BaseTests = require('./tests/test_base.js');
-const ApiTests = require('./tests/test_api.js');
+// const BaseTests = require('./tests/test_base.js');
+// const ApiTests = require('./tests/test_api.js');
 const DatabaseUrl = require('../lib/plugins/postgres/database_url.js');
 
 // run all scripts
@@ -53,22 +56,32 @@ const baseVersion='0_0_1';
 const apiVersion='0_0_1';
 if (!process.env.NODE_ENV) {
   // [* Stop when NODE_ENV is not available.]
-  throw new Error('Improper Environment, NODE_ENV is not set!');
+  throw new Error('Improper Environment, NODE_ENV is not set! (.env or gh secrets)');
 }
-
 if (!process.env.JWT_SECRET) {
-  console.log('process.env', process.env);
+  // console.log('process.env', process.env);
   // [* Stop when NODE_ENV is not available.]
-  throw new Error('Improper Environment, POSTGRES_JWT_SECRET is not set!');
+  throw new Error('Improper Environment, JWT_SECRET is not set! (.env or gh secrets)');
 }
 if (!process.env.DATABASE_URL) {
   // [* Stop when DATABASE_URL is not available.]
-  throw new Error('Improper Environment, DATABASE_URL is not set!');
+  throw new Error('Improper Environment, DATABASE_URL is not set! (.env or gh secrets)');
 }
+
+if (!process.env.ACCEPTED_ORIGINS) {
+  // [* Stop when DATABASE_URL is not available.]
+  throw new Error('Improper Environment, ACCEPTED_ORIGINS is not set! (.env or gh secrets)');
+}
+
+if (!process.env.HEROKU_API_KEY) {
+  // [* Stop when DATABASE_URL is not available.]
+  throw new Error('Improper Environment, HEROKU_API_KEY is not set! (.env or gh secrets)');
+}
+
 // [* Switch to heroku color url when available]
 const databaseUrl = new DatabaseUrl(process);
 const DB_URL = databaseUrl.db_url; 
-const testable = databaseUrl.testable;
+// const testable = databaseUrl.testable;
 /*
 if (process.env.DATABASE_URL === DB_URL) {
   // [* No testing in Heroku staging]
@@ -137,16 +150,18 @@ const runner = new SqlRunner(DB_URL)
        .add(new FunctionAdoptees002('api', apiVersion, baseVersion))
        ;
        
+       
 // [* Tests]
-if (testable) {
 
-    runner
-      .load(new BaseTests(baseVersion))
-      .load(new ApiTests(apiVersion, baseVersion));
+// if (process.env.NODE_ENV === 'development') {
+//  runner
+//  .load(new BaseTests(baseVersion))
+//  .load(new ApiTests(apiVersion, baseVersion));
+// }
 
-}
-
-runner.run();
+runner.run().catch((err) => {
+  console.log('db.deploy', err);
+});
 
 
 

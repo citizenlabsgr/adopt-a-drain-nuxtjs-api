@@ -42,7 +42,7 @@ module.exports = class FunctionUpdateTest extends Step {
           '${this.kind}_${this.version}',
           'update',
           ARRAY[ 'JSONB','TEXT' ],
-          'Function Update (_chelate JSONB,TEXT) exists'
+          'DB Function Update (_chelate JSONB,TEXT) exists'
       );
     
       --  2
@@ -65,7 +65,7 @@ module.exports = class FunctionUpdateTest extends Step {
     
           'Bad Request'::TEXT,
     
-          'Update Bad no keys form Bad Request 0_0_1'::TEXT
+          'DB Update Bad no keys form Bad Request 0_0_1'::TEXT
     
       );
     
@@ -91,7 +91,7 @@ module.exports = class FunctionUpdateTest extends Step {
     
           'Bad Request'::TEXT,
     
-          'Update Bad tk only form Bad Request 0_0_1'::TEXT
+          'DB Update Bad tk only form Bad Request 0_0_1'::TEXT
     
       );
     
@@ -119,7 +119,7 @@ module.exports = class FunctionUpdateTest extends Step {
     
           'Bad Request'::TEXT,
     
-          'Update Bad sk tk form Bad Request 0_0_1'::TEXT
+          'DB Update Bad sk tk form Bad Request 0_0_1'::TEXT
     
       );
     
@@ -141,7 +141,7 @@ module.exports = class FunctionUpdateTest extends Step {
     
           'Bad Request'::TEXT,
     
-          'Update Bad pk sk tk NO form Bad Request 0_0_1'::TEXT
+          'DB Update Bad pk sk tk NO form Bad Request 0_0_1'::TEXT
     
       );
     
@@ -171,7 +171,7 @@ module.exports = class FunctionUpdateTest extends Step {
     
           'Not Found'::TEXT,
     
-          'Update Bad pk sk tk form PK Not Found 0_0_1'::TEXT
+          'DB Update Bad pk sk tk form PK Not Found 0_0_1'::TEXT
     
       );
     
@@ -201,7 +201,7 @@ module.exports = class FunctionUpdateTest extends Step {
     
           'Not Found'::TEXT,
     
-          'Update Bad badpk sk tk form PK Not Found 0_0_1'::TEXT
+          'DB Update Bad badpk sk tk form PK Not Found 0_0_1'::TEXT
     
       );
  
@@ -235,7 +235,7 @@ module.exports = class FunctionUpdateTest extends Step {
     
           'Not Found'::TEXT,
     
-          'Update Not Found with Change  0_0_1'::TEXT
+          'DB Update Not Found with Change  0_0_1'::TEXT
     
       );
     
@@ -273,7 +273,7 @@ module.exports = class FunctionUpdateTest extends Step {
     
           '{"msg":"OK","status":"200"}'::JSONB,
     
-          'Update No change OK  0_0_1'::TEXT
+          'DB Update No change OK  0_0_1'::TEXT
     
       );
     
@@ -313,7 +313,7 @@ module.exports = class FunctionUpdateTest extends Step {
     
          'OK'::TEXT,
     
-         'Update displayname change OK  0_0_1'::TEXT
+         'DB Update displayname change OK  0_0_1'::TEXT
     
      );
     
@@ -353,7 +353,7 @@ module.exports = class FunctionUpdateTest extends Step {
     
          'OK'::TEXT,
     
-         'Update pk key change OK  0_0_1'::TEXT
+         'DB Update pk key change OK  0_0_1'::TEXT
     
      );
     
@@ -391,7 +391,7 @@ module.exports = class FunctionUpdateTest extends Step {
     
          'Not Found'::TEXT,
     
-         'Update, DOUBLE PUMP on an update 0_0_1'::TEXT
+         'DB Update, DOUBLE PUMP on an update 0_0_1'::TEXT
     
      );
     

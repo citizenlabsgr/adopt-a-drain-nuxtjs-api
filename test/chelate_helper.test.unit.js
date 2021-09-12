@@ -10,7 +10,7 @@ const ChelateHelper = require('../lib/chelates/chelate_helper');
 
 describe('ChelateHelper', () => {
   // Initialize
-  it('ChelateHelper.resolve() form change ', () => {
+  it('API ChelateHelper.resolve() form change ', () => {
     const chelate1 = {
       pk: 'username#abc@xyz.com',
       sk: 'const#USER',
@@ -48,7 +48,7 @@ describe('ChelateHelper', () => {
     expect(chelateResolved.created).to.equal('2021-01-23T14:29:34.998Z');
   });
 
-  it('ChelateHelper.resolve() partial form change ', () => {
+  it('API ChelateHelper.resolve() partial form change ', () => {
     const chelate1 = {
       pk: 'username#abc@xyz.com',
       sk: 'const#USER',
@@ -84,7 +84,7 @@ describe('ChelateHelper', () => {
     expect(chelateResolved.created).to.equal('2021-01-23T14:29:34.998Z');
   });
 
-  it('ChelateHelper.resolve() PK change ', () => {
+  it('API ChelateHelper.resolve() PK change ', () => {
     const chelate1 = {
       pk: 'username#abc@xyz.com',
       sk: 'const#USER',

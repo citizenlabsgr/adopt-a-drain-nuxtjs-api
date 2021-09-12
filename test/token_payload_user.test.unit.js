@@ -21,7 +21,7 @@ describe('User Token Payload', () => {
     user: 'user@user.com',
   };
 
-  it('UserTokenPayload Payload', () => {
+  it('API UserTokenPayload Payload', () => {
     const userTokenPayload = new UserTokenPayload(pl.user, pl.key);
     // console.log('guestTokenPayload',guestTokenPayload.token_payload);
     // expect(userTokenPayload).to.exist();

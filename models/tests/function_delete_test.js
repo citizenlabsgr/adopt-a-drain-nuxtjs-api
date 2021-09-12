@@ -34,7 +34,7 @@ module.exports = class FunctionDeleteTest extends Step {
           '${this.kind}_${this.version}',
           'delete',
           ARRAY[ 'JSONB', 'TEXT' ],
-          'Function Delete (jsonb,text) exists'
+          'DB Function Delete (jsonb,text) exists'
       );
     
       -- 2
@@ -45,7 +45,7 @@ module.exports = class FunctionDeleteTest extends Step {
     
         '{"msg": "Not Found", "owner": "duckduckgoose", "status": "404", "criteria": {"pk": "username#notfound@user.com", "sk": "const#USER"}}'::JSONB,
     
-        'delete pk sk form,  Not Found 0_0_1'::TEXT
+        'DB delete pk sk form,  Not Found 0_0_1'::TEXT
     
       );
       
@@ -63,7 +63,7 @@ module.exports = class FunctionDeleteTest extends Step {
     
         '{"msg":"OK","status":"200"}'::JSONB,
     
-        'delete pk sk form,  OK 0_0_1'::TEXT
+        'DB delete pk sk form,  OK 0_0_1'::TEXT
     
       );
       

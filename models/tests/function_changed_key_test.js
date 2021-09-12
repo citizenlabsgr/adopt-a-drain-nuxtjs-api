@@ -20,7 +20,7 @@ module.exports = class FunctionChangedKeyTest extends Step {
   
         ARRAY[ 'JSONB' ],
   
-        'Function Changed_Key (jsonb) exists'
+        'DB Function Changed_Key (jsonb) exists'
   
     );
   

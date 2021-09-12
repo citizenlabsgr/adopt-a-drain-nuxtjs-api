@@ -21,7 +21,7 @@ describe('Guest Token Payload', () => {
     key: '0',
   };
 
-  it('GuestTokenPayload Payload', () => {
+  it('API GuestTokenPayload Payload', () => {
     const guestTokenPayload = new GuestTokenPayload();
     // console.log('guestTokenPayload',guestTokenPayload.token_payload);
     expect(guestTokenPayload).to.exist();

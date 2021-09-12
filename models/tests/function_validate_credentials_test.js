@@ -21,7 +21,7 @@ module.exports = class FunctionValidateCredentialsTest extends Step {
   
         ARRAY[ 'JSONB' ],
   
-        'Function validate_credentials(jsonb) exists'
+        'DB Function validate_credentials(jsonb) exists'
   
     );
   

@@ -22,7 +22,7 @@ const ChelateUser = require('../lib/chelates/chelate_user');
 
 describe('ChelateUser New', () => {
   // Initialize
-  it('new ChelateUser', () => {
+  it('API new ChelateUser', () => {
     const form = {
       username: 'abc@xyz.com',
       displayname: 'abc',

@@ -6,7 +6,6 @@ const FunctionSigninTest = require('./function_signin_test.js');
 const FunctionSignupTest = require('./function_signup_test.js'); 
 const FunctionAdopteesTest = require('./function_adoptees_test.js'); 
 
-
 module.exports = class ApiTests extends Array {
   constructor(apiVersion, baseVersion) {
     /* $lab:coverage:off$ */

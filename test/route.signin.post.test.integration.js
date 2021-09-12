@@ -37,7 +37,7 @@ describe('Signin Route ', () => {
   });
 
   // signin
-  it('/signin : guest_token can POST Signin, 200', async () => {
+  it('API /signin : guest_token can POST Signin, 200', async () => {
     console.log('sigin test 1');
 
     // Goal: Singin  application user

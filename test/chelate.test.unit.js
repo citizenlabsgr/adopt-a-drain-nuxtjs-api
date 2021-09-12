@@ -113,7 +113,7 @@ describe('Chelate', () => {
   };
   */
   /*
-  it('New Chelate() empty', () => {
+  it('API New Chelate() empty', () => {
     let chelateObj = new Chelate();
     expect(chelateObj).to.exist();
     expect(chelateObj).toBeDefined();
@@ -126,7 +126,7 @@ describe('Chelate', () => {
     expect(chelateObj.updated).not.toBeDefined();
   }) */
 
-  it('New Chelate({ATT ATT ATT} and form)', () => {
+  it('API New Chelate({ATT ATT ATT} and form)', () => {
     const form = {
       username: 'abc@xyz.com',
       displayname: 'abc',
@@ -156,7 +156,7 @@ describe('Chelate', () => {
     expect(chelate.toJson().updated).to.exist();
   });
 
-  it('New Chelate({CONST CONST CONST} and form)', () => {
+  it('API New Chelate({CONST CONST CONST} and form)', () => {
     const form = {
       username: 'abc@xyz.com',
       displayname: 'abc',
@@ -184,7 +184,7 @@ describe('Chelate', () => {
     expect(chelate.toJson().updated).to.exist();
   });
 
-  it('New Chelate({GUID GUID GUID} and form)', () => {
+  it('API New Chelate({GUID GUID GUID} and form)', () => {
     const form = {
       username: 'abc@xyz.com',
       displayname: 'abc',
@@ -212,7 +212,7 @@ describe('Chelate', () => {
     expect(chelate.toJson().updated).to.exist();
   });
 
-  it('New Chelate({* * *} and form)', () => {
+  it('API New Chelate({* * *} and form)', () => {
     const form = {
       username: 'abc@xyz.com',
       displayname: 'abc',
@@ -247,7 +247,7 @@ describe('Chelate', () => {
 
   /*
   removed the .update(form) method
-    it('update(form) Chelate(whatever and form).update(form)', () => {
+    it('API update(form) Chelate(whatever and form).update(form)', () => {
      let form = {
        "username":"abc@xyz.com",
        "displayname":"abc",
@@ -270,7 +270,7 @@ describe('Chelate', () => {
 
     })
   */
-  it('toJson() Chelate(whatever and form).toJson()', () => {
+  it('API API API toJson() Chelate(whatever and form).toJson()', () => {
     const form = {
       username: 'abc@xyz.com',
       displayname: 'abc',
@@ -283,7 +283,7 @@ describe('Chelate', () => {
   });
 
   /*
-  it('New Chelate(key_map_user, chelate)', () => {
+  it('API New Chelate(key_map_user, chelate)', () => {
    let form = {
      "username":"abc@user.com",
      "displayname":"abc",
@@ -311,7 +311,7 @@ describe('Chelate', () => {
     expect(chelateObj.updated).toBeDefined();
   })
 
-  it('New Chelate({ATT CONST *} and form)', () => {
+  it('API New Chelate({ATT CONST *} and form)', () => {
    let form = {
      "username":"abc@xyz.com",
      "displayname":"abc",
@@ -335,7 +335,7 @@ describe('Chelate', () => {
 
   })
 
-  it('Chelate.assign(form) ', () => {
+  it('API Chelate.assign(form) ', () => {
    let form = {
      "username":"abc@xyz.com",
      "displayname":"abc",
@@ -366,7 +366,7 @@ describe('Chelate', () => {
 
   })
 
-  it('Chelate.toString()', () => {
+  it('API Chelate.toString()', () => {
    let form = {
      "username":"abc@xyz.com",
      "displayname":"abc",
@@ -378,7 +378,7 @@ describe('Chelate', () => {
     expect(chelate.toString()).toBeDefined();
   })
 
-  it('New Chelate({ATT CONST *} and form)', () => {
+  it('API New Chelate({ATT CONST *} and form)', () => {
    let form = {
      "username":"abc@xyz.com",
      "displayname":"abc",
@@ -397,7 +397,7 @@ describe('Chelate', () => {
 
   })
 
-  it('Chelate({ATT CONST GUID} and chelate).update(form) ', () => {
+  it('API Chelate({ATT CONST GUID} and chelate).update(form) ', () => {
 
    let form1 = {
      "username":"abc@user.com",

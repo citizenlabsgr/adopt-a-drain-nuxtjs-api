@@ -22,7 +22,7 @@ module.exports = class FunctionCreateValidateTokenTest extends Step {
         '${this.kind}_${this.version}',
         'validate_token',
         ARRAY[ 'TEXT', 'TEXT' ],
-        'Function validate_token(token)'
+        'DB Function validate_token(token)'
     );
   
     -- 2 validate_ token guest
@@ -38,7 +38,7 @@ module.exports = class FunctionCreateValidateTokenTest extends Step {
   
       '{"aud": "citizenlabs-api", "iss": "citizenlabs", "key": "0", "sub": "client-api", "user": "guest", "scope": "api_guest"}'::JSONB,
   
-      'Good token true 0_0_1'::TEXT
+      'DB Good token true 0_0_1'::TEXT
   
     );
   
@@ -55,7 +55,7 @@ module.exports = class FunctionCreateValidateTokenTest extends Step {
   
       '{"aud": "citizenlabs-api", "iss": "citizenlabs", "key": "0", "sub": "client-api", "user": "signup@user.com", "scope": "api_user"}'::JSONB,
   
-      'Good token true 0_0_1'::TEXT
+      'DB Good token true 0_0_1'::TEXT
   
     );
   

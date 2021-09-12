@@ -37,7 +37,7 @@ describe('Signup Route ', () => {
   });
 
   // signup
-  it('/signup : guest_token can POST Signup, 200', async () => {
+  it('API /signup : guest_token can POST Signup, 200', async () => {
     // Goal: Create an application user
     // Strategy: only guest token can signin
     //           set validation in route route.options.auth

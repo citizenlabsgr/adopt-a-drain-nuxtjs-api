@@ -19,7 +19,7 @@ describe('Token Payload', () => {
     key: '0',
   };
 
-  it('Token Payload', () => {
+  it('API Token Payload', () => {
     const tokenPayload = new TokenPayload();
 
     expect(tokenPayload).to.exist();

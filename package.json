@@ -5,11 +5,12 @@
   "main": "server.js",
   "scripts": {
     "db-deploy": "node --trace-warnings ./models/db.deploy.js",
+    "db-unit-test": "node models/db.unit.test.js",
+    "predev": "node --trace-warnings ./models/db.deploy.js",
     "dev": "nodemon",
     "start": "node server.js",
-    "db-test": "node models/db.test.js",
-    "test": "lab -v */*.test.js",
-    "lint1": "eslint '*/*.js'",
+    "test": "lab -v */*.test.unit.js",
+    "test-integration": "lab -v */*.test.integration.js",
     "lint": "eslint '**/*.js?(x)' ."
   },
   "author": "James Wilfong <wilfongjt@gmail.com>",

@@ -1,11 +1,11 @@
+'use strict';
 /* eslint-disable dot-notation */
 /* eslint-disable no-multi-assign */
 
 
 // This test has trouble connecting to database
 // test manually with swagger
-/*
-'use strict';
+
 
 const Lab = require('@hapi/lab');
 
@@ -45,9 +45,20 @@ describe('Adoptees Route ', () => {
     
     // delete record
   });
+  it('API environment variables ', async () => {
+    expect(process.env.NODE_ENV).to.exists();
+    expect(process.env.DATABASE_URL).to.exists();
+    expect(process.env.JWT_SECRET).to.exists();
+    expect(process.env.JWT_CLAIMS).to.exists();
 
+    expect(process.env.ACCEPTED_ORIGINS).to.exists();
+    expect(process.env.HEROKU_API_KEY).to.exists();
+  });
+
+  // API_TOKEN: ${{secrets.API_TOKEN}}
+  // HOST: "0.0.0.0"
   // adoptees 
-  it('/adoptees Not Found: 404', async () => {
+  it('API /adoptees Not Found: 200', async () => {
 
     const payload = new TestTokenPayload().guestTokenPayload();
     const secret = process.env.JWT_SECRET;
@@ -71,12 +82,12 @@ describe('Adoptees Route ', () => {
     });
     // console.log('test adoptee', res.result);
     // expect(res.statusCode).to.equal(200);
-    expect(res.result.status).to.equal('404');
-    expect(res.result.criteria).to.exist();
-    expect(res.result.criteria.sk).to.equal('const#ADOPTEE');
+    expect(res.result.status).to.equal('200');
+    // expect(res.result.criteria).to.exist();
+    // expect(res.result.criteria.sk).to.equal('const#ADOPTEE');
 
     // expect(res.result.token).toBeDefined();
     
   });
 });
-*/
+
