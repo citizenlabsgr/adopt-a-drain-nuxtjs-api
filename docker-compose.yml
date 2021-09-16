@@ -37,8 +37,9 @@ services:
 
     build:
       context: .
-    command: >
-      sh -c "npm run dev"
+
+    #command: >
+    #  sh -c "npm run dev"
     #  sh -c "npm run db-deploy && npm run test && npm run dev"
     # sh -c "npm run db-deploy && npm run dev"
     # facilitate develpment with volumes
