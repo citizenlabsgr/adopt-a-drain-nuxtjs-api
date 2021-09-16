@@ -37,11 +37,10 @@ services:
 
     build:
       context: .
+    #command: npm run dev 
+    command: >
+     sh -c "npm install nodemon && npm run db-deploy && npm run dev"
 
-    #command: >
-    #  sh -c "npm run dev"
-    #  sh -c "npm run db-deploy && npm run test && npm run dev"
-    # sh -c "npm run db-deploy && npm run dev"
     # facilitate develpment with volumes
     volumes:
       - .:/usr/src/api
