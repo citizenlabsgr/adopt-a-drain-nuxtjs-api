@@ -6,7 +6,7 @@
   "scripts": {
     "db-deploy": "node --trace-warnings ./models/db.deploy.js",
     "db-unit-test": "node models/db.unit.test.js",
-    "predev": "npm install && node --trace-warnings ./models/db.deploy.js",
+    "predev": "npm install",
     "dev": "nodemon",
     "start": "node server.js",
     "test": "lab -v */*.test.unit.js",

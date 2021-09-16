@@ -10,8 +10,8 @@ ENV NODE_ENV development
 COPY package*.json /usr/src/api
 
 # update all the packages in node_modules
-# RUN npm install 
-RUN npm install && npm install nodemon
+RUN npm install 
+# RUN npm install && npm install nodemon
 
 # move code from repo to container
 COPY . .
@@ -19,6 +19,6 @@ COPY . .
 EXPOSE 5555
 
 # allow browser connection to docker
-CMD ["npm", "run", "dev"]
+CMD ["npm", "run", "start"]
 
 
