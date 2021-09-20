@@ -1,17 +1,18 @@
+'use strict';
 /* eslint-disable dot-notation */
 /* eslint-disable no-console */
 /* eslint-disable no-multi-assign */
-// 'use strict';
-/*
-This test has trouble connecting to database
-test manually with swagger
 
+
+// This test has trouble connecting to database
+// test manually with swagger
+/*
 const Jwt = require('@hapi/jwt');
 
-// eslint-disable-next-line import/no-extraneous-dependencies
+// es lint-disable-next-line import/no-extraneous-dependencies
 const Lab = require('@hapi/lab');
 
-// eslint-disable-next-line import/no-extraneous-dependencies
+// es lint-disable-next-line import/no-extraneous-dependencies
 const { expect } = require('@hapi/code');
 
 const {

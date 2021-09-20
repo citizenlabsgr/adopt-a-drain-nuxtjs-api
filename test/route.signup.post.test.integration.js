@@ -1,9 +1,9 @@
+'use strict';
 /* eslint-disable dot-notation */
 /* eslint-disable no-multi-assign */
-// 'use strict';
-/*
-This test has trouble connecting to database
-test manually with swagger
+
+// This test has trouble connecting to database
+// test manually with swagger
 
 const Lab = require('@hapi/lab');
 
@@ -75,4 +75,4 @@ describe('Signup Route ', () => {
     // expect(res.result.token).toBeDefined();
   });
 });
-*/
+

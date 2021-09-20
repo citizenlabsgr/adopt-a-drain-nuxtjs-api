@@ -38,15 +38,27 @@ services:
     build:
       context: .
     #command: npm run dev 
+    #command: >
+    # sh -c "npm install nodemon && npm run db-deploy && npm run dev"
     command: >
-     sh -c "npm install nodemon && npm run db-deploy && npm run dev"
-
+      sh -c "
+        while ! nc -z db 5432;
+        do
+            echo 'sleep';
+            sleep 1;
+        done;
+        echo 'DB Port open!';
+        npm install nodemon;
+        npm run db-deploy;
+        npm run dev;
+      "
     # facilitate develpment with volumes
     volumes:
       - .:/usr/src/api
     ports:
       - 5555:5555
     environment:
+      - DOCKER_ENV=development
       - NODE_ENV=${NODE_ENV}
       - HOST=${HOST}
       - PORT=${PORT}
