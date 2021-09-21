@@ -1,5 +1,6 @@
+'use strict';
 /* eslint-disable no-multi-assign */
-// 'use strict';
+
 const Lab = require('@hapi/lab');
 
 const { expect } = require('@hapi/code');

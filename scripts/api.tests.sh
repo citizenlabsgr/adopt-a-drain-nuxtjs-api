@@ -2,4 +2,4 @@
 
 cd ..
 
-docker-compose run db-api npm run test
+docker-compose exec db-api npm run test
