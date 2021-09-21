@@ -9,9 +9,12 @@
     "predev": "npm install",
     "dev": "nodemon",
     "start": "node server.js",
-    "test": "lab -v */*.test.unit.js",
-    "test-integration": "lab -v */*.test.integration.js",
-    "lint": "eslint '**/*.js?(x)' ."
+    "test": "lab -v test/*.test.js",
+    "test1": "lab -v */*.unit.test.js",
+    "test-unit": "lab -v */*.unit.test.js",
+    "test-integration": "lab -v */*.integration.test.js",
+    "lint": "eslint '**/*.js?(x)' .",
+    "lint1": "eslint '**/*.js?(x)' ."
   },
   "author": "James Wilfong <wilfongjt@gmail.com>",
   "license": "ISC",
