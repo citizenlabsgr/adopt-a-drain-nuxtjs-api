@@ -58,6 +58,7 @@ services:
     ports:
       - 5555:5555
     environment:
+      - API_DEBUG=true
       - DOCKER_ENV=development
       - NODE_ENV=${NODE_ENV}
       - HOST=${HOST}
