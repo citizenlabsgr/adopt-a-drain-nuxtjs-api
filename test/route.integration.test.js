@@ -66,8 +66,8 @@ describe('Integration Route Tests', () => {
       headers: {
         authorization: token,
         api_options: {
-          test: testForm,
-          debug: false
+          debug: false,
+          test: testForm, 
         }  
       },
       payload: {
@@ -101,7 +101,10 @@ describe('Integration Route Tests', () => {
       url: '/signup',
       headers: {
         authorization: token,
-        rollback: true,
+        api_options: {
+          rollback: true,
+          debug: false
+        }
       },
       payload: {
         username,
@@ -134,7 +137,10 @@ describe('Integration Route Tests', () => {
       url: '/adoptees',
       headers: {
         authorization: token,
-        rollback: true,
+        api_options: {
+          rollback: true,
+          debug: false
+        }
       },
       payload: {
         "west": 0.0, "east": 2.0, "north": 2.0, "south": 0.0
