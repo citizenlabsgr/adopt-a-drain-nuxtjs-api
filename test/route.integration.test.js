@@ -66,6 +66,7 @@ describe('Integration Route Tests', () => {
       headers: {
         authorization: token,
         test: testForm,
+        api_debug: false,
       },
       payload: {
         username: email,
