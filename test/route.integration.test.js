@@ -88,7 +88,9 @@ describe('Integration Route Tests', () => {
     // Goal: Create an application user
     // Strategy: only guest token can signin
     //           set validation in route route.options.auth
-    const username = 'new@user.com';
+    // const username = 'new@user.com';
+    const username = 'john.newhouser45@newuser.com';
+
     const payload = new TestTokenPayload().guestTokenPayload();
     const secret = process.env.JWT_SECRET;
 
