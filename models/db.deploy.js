@@ -37,8 +37,12 @@ const FunctionValidateForm001 = require('./db/function_validate_form_001.js');
 const FunctionValidateToken001 = require('./db/function_validate_token_001.js');
 const FunctionVerify001 = require('./db/function_verify_001.js');
 const FunctionTime001 = require('./db/function_time_001.js');
-const FunctionSignin001 = require('./db/function_signin_001.js');
+
+// const FunctionSignin = require('./db/function_signin_001.js');
+const FunctionSignin = require('./db/function_signin_002.js');
+
 const FunctionSignup001 = require('./db/function_signup_001.js');
+
 const FunctionAdoptees002 = require('./db/function_adoptees_002.js');
 
 // const TestTable = require('./db/table_test_001.js');
@@ -145,8 +149,10 @@ const runner = new SqlRunner(DB_URL)
        .add(new FunctionVerify001('base', baseVersion))
        .add(new Comment('--  Api Schema Functions --'))
        .add(new FunctionTime001('api', apiVersion))
+
        .add(new FunctionSignup001('api', apiVersion))
-       .add(new FunctionSignin001('api', apiVersion))
+       .add(new FunctionSignin('api', apiVersion))
+
        .add(new FunctionAdoptees002('api', apiVersion, baseVersion))
        ;
        
