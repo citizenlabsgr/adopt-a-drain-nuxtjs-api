@@ -22,8 +22,9 @@ const { expect } = require('@hapi/code');
 const { init } = require('../lib/server');
 
 const TestTokenPayload = require('./util/token_payload_test');
+// const TokenHelper = require('../lib/auth/token_helper');
 
-describe('Integration Route Tests', () => {
+describe('API Route Tests', () => {
   let server = null;
   
   before(async () => {
@@ -47,7 +48,8 @@ describe('Integration Route Tests', () => {
     const email = 'existing2@user.com';
     const payload = new TestTokenPayload().guestTokenPayload();
     const secret = process.env.JWT_SECRET;
-
+    // const token_timeout = process.env.TOKEN_TIMEOUT;
+    // const old_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJjaXRpemVubGFicy1hcGkiLCJpc3MiOiJjaXRpemVubGFicyIsInN1YiI6ImNsaWVudC1hcGkiLCJ1c2VyIjoiZXhpc3RpbmcyQHVzZXIuY29tIiwic2NvcGUiOiJhcGlfdXNlciIsImp0aSI6InVzZXJuYW1lI2V4aXN0aW5nMkB1c2VyLmNvbSIsImtleSI6Imd1aWQjOWNiMTI0NzgtM2EzYS00ODVlLTgzYjEtZTkwMjcyMzJhZDllIiwiZXhwIjoxNjMyNDczMzM2LjI5ODk3Nn0.RrT7xOsoe_xHxgwXPgDv34MrPO1CQuZBGXcRRSf25No';
     let token = Jwt.token.generate(payload, secret);
 
     token = `Bearer ${token}`;
@@ -68,6 +70,7 @@ describe('Integration Route Tests', () => {
         api_options: {
           debug: false,
           test: testForm, 
+          token_timeout: 15
         }  
       },
       payload: {
@@ -75,11 +78,23 @@ describe('Integration Route Tests', () => {
         password: 'a1A!aaaa',
       },
     });
+    
     // console.log('res', res.result);
     expect(res.statusCode).to.equal(200);
     expect(res.result.status).to.equal('200');
-
+    
     expect(res.result.token).to.exist();
+    // let TH = new TokenHelper(res.result.token);
+    // let atime = TH.getCurrentTime();
+
+    // expect(TH.isExpired()).to.equal(false);
+    // let TH_old = new TokenHelper(old_token);
+    // expect(TH_old.isExpired()).to.equal(true);
+    
+    // console.log('getCurrentTime', );
+    // console.log('getExpiration ', TH.getExpiration() - atime, );
+
+    // console.log('isExpired', TH.isExpired());
   });
 
   // signup

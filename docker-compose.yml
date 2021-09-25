@@ -71,6 +71,8 @@ services:
       # In dev, the HEROKU_API_KEY can be set to anything
       # In GitHub secrets, set HEROKU_API_KEY to actual value from heroku
       - HEROKU_API_KEY=${HEROKU_API_KEY}
+      # token timeout is measured in second 1800 seconds is 30 minuntes
+      - TOKEN_TIMEOUT=5
     depends_on:
       - db  
  
