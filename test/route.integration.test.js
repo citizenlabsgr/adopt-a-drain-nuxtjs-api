@@ -66,9 +66,9 @@ describe('API Route Tests', () => {
       url: '/signin',
       headers: {
         authorization: token,
-        debug: true,
-        test: testForm, 
-        timeout: 1
+        apidebug: true,
+        apitest: testForm, 
+        apitimeout: 1
       },
       payload: {
         username: email,
