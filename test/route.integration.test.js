@@ -37,7 +37,6 @@ describe('API Route Tests', () => {
     // delete record
   });
 
-  
   // signin
   it('API /signin : guest_token can POST Signin, 200', async () => {
 
@@ -67,11 +66,9 @@ describe('API Route Tests', () => {
       url: '/signin',
       headers: {
         authorization: token,
-        api_options: {
-          debug: false,
-          test: testForm, 
-          token_timeout: 15
-        }  
+        debug: true,
+        test: testForm, 
+        timeout: 1
       },
       payload: {
         username: email,
