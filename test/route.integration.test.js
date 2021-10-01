@@ -81,17 +81,7 @@ describe('API Route Tests', () => {
     expect(res.result.status).to.equal('200');
     
     expect(res.result.token).to.exist();
-    // let TH = new TokenHelper(res.result.token);
-    // let atime = TH.getCurrentTime();
 
-    // expect(TH.isExpired()).to.equal(false);
-    // let TH_old = new TokenHelper(old_token);
-    // expect(TH_old.isExpired()).to.equal(true);
-    
-    // console.log('getCurrentTime', );
-    // console.log('getExpiration ', TH.getExpiration() - atime, );
-
-    // console.log('isExpired', TH.isExpired());
   });
 
   // signup
@@ -100,9 +90,8 @@ describe('API Route Tests', () => {
     // Goal: Create an application user
     // Strategy: only guest token can signin
     //           set validation in route route.options.auth
-    // const username = 'new@user.com';
+    
     const username = 'john.newhouser45@newuser.com';
-
     const payload = new TestTokenPayload().guestTokenPayload();
     const secret = process.env.JWT_SECRET;
 
@@ -161,15 +150,11 @@ describe('API Route Tests', () => {
       },
     });
     // console.log('test adoptee', res.result);
-    // expect(res.statusCode).to.equal(200);
+
     expect(res.result.status).to.equal('200');
     expect(res.result.selection).to.exist();
     expect(res.result.selection).to.equal([]);
-    // expect(res.result.criteria).to.exist();
-    // expect(res.result.criteria.sk).to.equal('const#ADOPTEE');
 
-    // expect(res.result.token).toBeDefined();
-    
   });
 });
 

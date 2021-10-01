@@ -8,7 +8,7 @@ module.exports = class CreateFunctionInsert001 extends Step {
     // this.kind = kind;
     this.name = 'insert';
     this.name = `${this.kind}_${this.version}.${this.name}`;
-    this.sql = `CREATE OR REPLACE FUNCTION ${this.name}(_chelate JSONB,key TEXT) RETURNS JSONB
+    this.sql = `CREATE OR REPLACE FUNCTION ${this.name}(_chelate JSONB, key TEXT) RETURNS JSONB
 
     AS $$
     
@@ -22,7 +22,7 @@ module.exports = class CreateFunctionInsert001 extends Step {
     
       --declare _scope TEXT; -- soft role
     
-      --declare key TEXT; -- who is inserting this record
+      declare owner_key TEXT; -- who is inserting this record
     
     BEGIN
     
@@ -44,37 +44,31 @@ module.exports = class CreateFunctionInsert001 extends Step {
     
           -- [Add owner to chelate]
     
-          -- key := COALESCE(current_setting('request.jwt.claim. key','t'), current_user);
+          -- owner_key := COALESCE(current_setting('request.jwt.claim. owner_key','t'), current_user);
     
-          -- set_config('request.jwt.claim. key',guid); -- with a guid# prefix
+          -- set_config('request.jwt.claim. owner_key',guid); -- with a guid# prefix
     
-          -- key := COALESCE(current_setting('request.jwt.claim. key','t'), '0');
+          -- owner_key := COALESCE(current_setting('request.jwt.claim. owner_key','t'), '0');
     
-          --raise notice 'insert request.jwt.claim. key %',current_setting('request.jwt.claim. key','t');
+          --raise notice 'insert request.jwt.claim. owner_key %',current_setting('request.jwt.claim. owner_key','t');
     
           -- [figure out who the owner is]
     
-          --key := COALESCE(current_setting('request.jwt.claim. key','t'), '0');
+          --owner_key := COALESCE(current_setting('request.jwt.claim. owner_key','t'), '0');
     
-          key := COALESCE(key, '0');
-    
-    
-    
-          --Raise Notice 'owner %', key;
-    
-    
+          owner_key := COALESCE(key, '0');
     
           _form := (_chelate ->> 'form')::JSONB;
     
-          --_form := _form || format('{"owner":"%s"}',key)::JSONB;
+          --_form := _form || format('{"owner":"%s"}',owner_key)::JSONB;
     
             -- insert
     
           -- !form
     
-          if key = '0' then
+          if owner_key = '0' then
     
-            -- [Insert requires an owner key value]
+            -- [Insert requires an owner owner_key value]
     
             return '{"status":"400", "msg":"Bad Request", "extra":"chelate is missing owner."}'::JSONB;
     
@@ -100,7 +94,7 @@ module.exports = class CreateFunctionInsert001 extends Step {
     
             insert into ${this.kind}_${this.version}.one (pk,sk,tk,form,owner)
     
-              values (lower(_chelate ->> 'pk'), (_chelate ->> 'sk'), (_chelate ->> 'tk'), _form, key)
+              values (lower(_chelate ->> 'pk'), (_chelate ->> 'sk'), (_chelate ->> 'tk'), _form, owner_key)
     
               returning * into _result;
     
@@ -116,13 +110,11 @@ module.exports = class CreateFunctionInsert001 extends Step {
     
             insert into ${this.kind}_${this.version}.one (pk,sk,form,owner)
     
-              values (lower(_chelate ->> 'pk'), (_chelate ->> 'sk') ,_form, key)
+              values (lower(_chelate ->> 'pk'), (_chelate ->> 'sk') ,_form, owner_key)
     
               returning * into _result;
     
             --raise notice 'B insert form %',_form;
-    
-    
     
           -- sktk
     
@@ -133,15 +125,11 @@ module.exports = class CreateFunctionInsert001 extends Step {
             _extra := 'C';
     
             insert into ${this.kind}_${this.version}.one (sk,tk,form,owner)
-    
-              values ((_chelate ->> 'sk'), (_chelate ->> 'tk') ,_form, key)
-    
+              values ((_chelate ->> 'sk'), (_chelate ->> 'tk') ,_form, owner_key)
               returning * into _result;
     
             --raise notice 'C insert form %',_form;
-    
-    
-    
+  
           -- sk
     
           elsif _chelate ? 'sk' then
@@ -151,16 +139,11 @@ module.exports = class CreateFunctionInsert001 extends Step {
             _extra := 'D';
     
             insert into ${this.kind}_${this.version}.one (sk,form,owner)
-    
               values (
-    
                       (_chelate ->> 'sk'),
-    
-                      _form, key) returning * into _result;
+                      _form, owner_key) returning * into _result;
     
             --raise notice 'D insert form %',_form;
-    
-    
     
           else
     
@@ -171,8 +154,6 @@ module.exports = class CreateFunctionInsert001 extends Step {
           end if;
     
               --raise notice 'insert 3';
-    
-    
     
         EXCEPTION
     
@@ -190,7 +171,7 @@ module.exports = class CreateFunctionInsert001 extends Step {
     
                 RAISE NOTICE 'Insert Beyond here there be dragons! %', sqlstate;
     
-                return format('{"status":"%s", "msg":"Unhandled","extra":"%s","owner":"%s","chelate":%s}', sqlstate, _extra,key,_chelate)::JSONB;
+                return format('{"status":"%s", "msg":"Unhandled","extra":"%s","owner":"%s","chelate":%s}', sqlstate, _extra,owner_key,_chelate)::JSONB;
     
         END;
     

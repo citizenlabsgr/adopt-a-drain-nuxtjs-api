@@ -1,10 +1,9 @@
 'use strict';
 /* eslint-disable no-undef */
 
-console.log('db.deploy');
-// const process = require('process');
-// const Consts = require('../lib/constants/consts');
-const SqlRunner = require('../lib/runner/runner_sql.js');
+console.log('db.sql');
+
+const SqlScripter = require('../lib/runner/scripter_sql.js');
 
 const Comment = require('../lib/runner/comment.js');
 const Extension = require('./db/extension.js');
@@ -15,7 +14,7 @@ const Schema = require('./db/schema.js');
 const Table001 = require('./db/table_001.js');
 
 const FunctionAlgorithmSign001 = require('./db/function_algorithm_sign_001.js');
-const FunctionChangedKey = require('./db/function_changed_key_002.js');
+const FunctionChangedKey001 = require('./db/function_changed_key_001.js');
 const FunctionChelate001 = require('./db/function_chelate_001.js');
 const FunctionDelete001 = require('./db/function_delete_001.js');
 const FunctionGetJwtClaims001 = require('./db/function_get_jwt_claims_001.js');
@@ -43,7 +42,7 @@ const FunctionSignin = require('./db/function_signin_002.js');
 
 const FunctionSignup001 = require('./db/function_signup_001.js');
 
-const FunctionAdoptees = require('./db/function_adoptees_002.js');
+const FunctionAdoptees002 = require('./db/function_adoptees_002.js');
 const FunctionAdopterPut = require('./db/function_adopter_put_001.js');
 
 // const TestTable = require('./db/table_test_001.js');
@@ -86,50 +85,23 @@ if (!process.env.HEROKU_API_KEY) {
 // [* Switch to heroku color url when available]
 const databaseUrl = new DatabaseUrl(process);
 const DB_URL = databaseUrl.db_url; 
-// const testable = databaseUrl.testable;
-/*
-if (process.env.DATABASE_URL === DB_URL) {
-  // [* No testing in Heroku staging]
-  // [* No testing in Heroku production]
-  // [* No testing in Heroku review]
-  // [* Test in local development]
-  if (process.env.NODE_ENV === 'developmemt') {
-    testable = true;
-    console.log('Development Database Connection');
-  } else {
-    console.log('Production Database Connection');
-  }
-} else {
-  console.log("Branch", process.env.HEROKU_BRANCH);
-  if (process.env.HEROKU_BRANCH) {
-    console.log('Review Database Connection');
-  } else {
-    // staging db
-    console.log('Staging Database Connection');
-  }
-}
-*/
-// console.log('process.env.NODE_ENV ',process.env.NODE_ENV );
-// console.log('DATABASE_URL', process.env.DATABASE_URL);
-// console.log('DB_URL', DB_URL);
-// console.log('testable', testable);
 
 // [* Build database]
 // [* support multiple versions]
-const runner = new SqlRunner(DB_URL)
-       .add(new Comment('Load Extensions '))
+const scripter = new SqlScripter(DB_URL)
+       .add(new Comment('-- Load Extensions --'))
        .add(new Extension('pgcrypto','public'))
        .add(new Extension('"uuid-ossp"','public'))
-       .add(new Comment('Schema '))
+       .add(new Comment('--  Schema --'))
        .add(new Schema('base', baseVersion))
        .add(new Schema('api', apiVersion))
-       .add(new Comment('Base Schema Table '))
+       .add(new Comment('--  Base Schema Table --'))
        .add(new Table001('base',baseVersion))
-       .add(new Comment('Base Schema Functions '))
+       .add(new Comment('--  Base Schema Functions --'))
        .add(new FunctionUrlDecode001('base', baseVersion))
        .add(new FunctionUrlEncode001('base', baseVersion))
        .add(new FunctionAlgorithmSign001('base', baseVersion))
-       .add(new FunctionChangedKey('base', baseVersion))
+       .add(new FunctionChangedKey001('base', baseVersion))
        .add(new FunctionChelate001('base', baseVersion))
        .add(new FunctionDelete001('base', baseVersion))
        .add(new FunctionGetJwtClaims001('base', baseVersion))
@@ -148,28 +120,21 @@ const runner = new SqlRunner(DB_URL)
        .add(new FunctionValidateForm001('base', baseVersion))
        .add(new FunctionValidateToken001('base', baseVersion))
        .add(new FunctionVerify001('base', baseVersion))
-       .add(new Comment('Api Schema Functions '))
+       .add(new Comment('--  Api Schema Functions --'))
        .add(new FunctionTime001('api', apiVersion))
 
        .add(new FunctionSignup001('api', apiVersion))
        .add(new FunctionSignin('api', apiVersion))
 
-       .add(new FunctionAdoptees('api', apiVersion, baseVersion))
+       .add(new FunctionAdoptees002('api', apiVersion, baseVersion))
        .add(new FunctionAdopterPut('api', apiVersion, baseVersion))
 
        ;
        
        
-// [* Tests]
-
-// if (process.env.NODE_ENV === 'development') {
-//  runner
-//  .load(new BaseTests(baseVersion))
-//  .load(new ApiTests(apiVersion, baseVersion));
-// }
-
-runner.run().catch((err) => {
-  console.log('db.deploy', err);
+// [* Scripts]
+scripter.run().catch((err) => {
+  console.log('db.sql', err);
 });
 
 
