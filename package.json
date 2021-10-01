@@ -14,7 +14,8 @@
     "test-unit": "lab -v */*.unit.test.js",
     "test-integration": "lab -v */*.integration.test.js",
     "lint": "eslint '**/*.js?(x)' .",
-    "lint1": "eslint '**/*.js?(x)' ."
+    "lint1": "eslint '**/*.js?(x)' .",
+    "scriptify": "node ./models/db.sql.js"
   },
   "author": "James Wilfong <wilfongjt@gmail.com>",
   "license": "ISC",

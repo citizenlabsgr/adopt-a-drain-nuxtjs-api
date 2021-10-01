@@ -17,13 +17,27 @@ module.exports = class FunctionSigninTest extends Step {
     this.guest_token = `${this.baseKind}_${this.baseVersion}.sign(${this.jwt_claims_guest}::JSON, ${this.jwt_secret}::TEXT)::TEXT`;
   
     this.sql = `BEGIN;
-    
+  /*  
       select ${this.kind}_${this.version}.signup(
     
         ${this.guest_token},
     
         '{"username":"signin_1@user.com","displayname":"J","password":"a1A!aaaa"}'::JSON
     
+      );
+  */
+      insert into base_0_0_1.one
+      (pk, sk, tk, form, owner)
+      values (
+          'username#signin_1@user.com',
+          'const#USER',
+          'guid#820a5bd9-e669-41d4-b917-81212bc184a3',
+          '{"username":"signin_1@user.com",
+                  "displayname":"J",
+                  "scope":"api_user",
+                  "password": "$2a$06$TXVF4CDfUcHXvTeOIGrEn.BSGbbCzLxMu2t8tyZimKtsBRxxyeQBK"
+           }'::JSONB,
+          'duckduckgoose'
       );
     
       SELECT plan(7);
@@ -36,7 +50,7 @@ module.exports = class FunctionSigninTest extends Step {
     
           'signin',
     
-          ARRAY[ 'TEXT', 'JSON' ],
+          ARRAY[ 'TEXT', 'JSON', 'INTEGER' ],
     
           'DB Function signin (text, json) should exist'
     

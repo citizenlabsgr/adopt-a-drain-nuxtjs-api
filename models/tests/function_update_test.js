@@ -9,29 +9,17 @@ module.exports = class FunctionUpdateTest extends Step {
     this.name = `${this.kind}_${this.version}.${this.name}`;
     this.sql = `BEGIN;
     insert into ${this.kind}_${this.version}.one
-    
       (pk, sk, tk, form, owner)
-    
       values (
-    
           'username#update@user.com',
-    
           'const#USER',
-    
           'guid#820a5bd9-e669-41d4-b917-81212bc184a3',
-    
           '{"username":"update@user.com",
-    
                   "displayname":"J",
-    
                   "scope":"api_user",
-    
                   "password": "$2a$06$TXVF4CDfUcHXvTeOIGrEn.BSGbbCzLxMu2t8tyZimKtsBRxxyeQBK"
-    
            }'::JSONB,
-    
           'updateOwner'
-    
       );
     
       SELECT plan(12);
