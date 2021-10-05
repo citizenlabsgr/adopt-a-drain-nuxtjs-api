@@ -24,7 +24,8 @@ const FunctionInsert001 = require('./db/function_insert_001.js');
 // const FunctionQuery001 = require('./db/function_query_001.js');
 // const FunctionQuery001 = require('./db/function_query_001.js');
 // const FunctionQuery002 = require('./db/function_query_002.js');
-const FunctionQuery003 = require('./db/function_query_003.js');
+// const FunctionQuery003 = require('./db/function_query_003.js');
+const FunctionQuery = require('./db/function_query_004.js');
 
 const FunctionSign001 = require('./db/function_sign_001.js');
 const FunctionUpdate001 = require('./db/function_update_001.js');
@@ -45,6 +46,7 @@ const FunctionSignup001 = require('./db/function_signup_001.js');
 
 const FunctionAdoptees = require('./db/function_adoptees_002.js');
 const FunctionAdopterPut = require('./db/function_adopter_put_001.js');
+const FunctionAdopterGet = require('./db/function_adopter_get_001.js');
 
 // const TestTable = require('./db/table_test_001.js');
 // const BaseTests = require('./tests/test_base.js');
@@ -138,7 +140,7 @@ const runner = new SqlRunner(DB_URL)
        // .add(new FunctionQuery001('base', baseVersion))
        // .add(new FunctionQuery001('base', baseVersion))
        // .add(new FunctionQuery002('base', baseVersion))
-       .add(new FunctionQuery003('base', baseVersion))
+       .add(new FunctionQuery('base', baseVersion))
        .add(new FunctionSign001('base', baseVersion))
        .add(new FunctionUpdate001('base', baseVersion))
      
@@ -156,6 +158,7 @@ const runner = new SqlRunner(DB_URL)
 
        .add(new FunctionAdoptees('api', apiVersion, baseVersion))
        .add(new FunctionAdopterPut('api', apiVersion, baseVersion))
+       .add(new FunctionAdopterGet('api', apiVersion, baseVersion))
 
        ;
        
