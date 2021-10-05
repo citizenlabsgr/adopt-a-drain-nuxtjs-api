@@ -6,6 +6,7 @@ const FunctionSigninTest = require('./function_signin_test.js');
 const FunctionSignupTest = require('./function_signup_test.js'); 
 const FunctionAdopteesTest = require('./function_adoptees_test.js'); 
 const FunctionAdopterPutTest = require('./function_adopter_put_test.js'); 
+const FunctionAdopterGetTest = require('./function_adopter_get_test.js');
 
 module.exports = class ApiTests extends Array {
   constructor(apiVersion, baseVersion) {
@@ -17,6 +18,7 @@ module.exports = class ApiTests extends Array {
     this.push(new FunctionSigninTest('api', apiVersion, baseVersion));
     this.push(new FunctionAdopteesTest('api', apiVersion, baseVersion));
     this.push(new FunctionAdopterPutTest('api', apiVersion, baseVersion));
+    this.push(new FunctionAdopterGetTest('api', apiVersion, baseVersion));
 
     /* $lab:coverage:on$ */
   }    

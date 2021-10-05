@@ -45,12 +45,28 @@ module.exports = class FunctionAdopterPutTest extends Step {
   
         'adopter',
   
-        ARRAY[ 'TEXT', 'TEXT', 'JSON'],
+        ARRAY[ 'TEXT', 'TEXT'],
   
-        'DB Function adopter PUT (text, text, json) exists'
+        'DB Function GET adopter (text, text) exists'
   
     );
+    
+    -- 2 adopter(user_token, id) 
+    
+    SELECT is (
   
+      (${this.kind}_${this.version}.adopter(
+        ${this.user_token},
+        'update@user.com'::TEXT
+      )::JSONB - 'selection'),
+  
+      '{"msg":"OK","status":"200"}'::JSONB,
+  
+      'DB GET adopter(user_token, id) 200 0_0_1'::TEXT
+  
+    );
+    
+  /*
     -- 2 change non-key
     
     SELECT is (
@@ -99,7 +115,7 @@ module.exports = class FunctionAdopterPutTest extends Step {
       'DB adopter PUT update password 200 0_0_1'::TEXT
   
     );
-
+    */
     SELECT * FROM finish();
 
   ROLLBACK;

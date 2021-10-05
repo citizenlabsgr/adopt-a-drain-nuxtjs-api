@@ -48,7 +48,7 @@ module.exports = class FunctionQuery002 extends Step {
         
               if not(_chelate ? 'mbr') then
                   -- [Query where _chelate is {pk, sk:*}]      
-              SELECT array_to_json(array_agg(to_jsonb(u) #- '{form,password}' )) into _result    
+                  SELECT array_to_json(array_agg(to_jsonb(u) #- '{form,password}' )) into _result    
                     FROM ${this.version}.one u    
                     where pk = lower(_chelate ->> 'pk');
               else
@@ -89,7 +89,7 @@ module.exports = class FunctionQuery002 extends Step {
                 SELECT array_to_json(array_agg(to_jsonb(u) #- '{form,password}' )) into _result
                   FROM ${this.version}.one u
                   where sk = _chelate ->> 'sk';
-            else 
+              else 
                 -- [Query where _chelate is {sk, tk*, mbr}]    
                 SELECT array_to_json(array_agg(to_jsonb(u) #- '{form,password}' )) into _result
                   FROM ${this.version}.one u
@@ -100,7 +100,7 @@ module.exports = class FunctionQuery002 extends Step {
                       and form->>'lat' >= (_chelate->>'mbr')::JSONB->>'south'
                   ;
                   
-            end if;      
+              end if;      
                 
         
             elsif _chelate ? 'sk' and _chelate ? 'tk' then
