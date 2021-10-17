@@ -1,3 +1,4 @@
+/*
 'use strict';
 // const pg = require('pg');
 
@@ -16,7 +17,8 @@ module.exports = class FunctionQuery002 extends Step {
           declare _result JSONB;
           DECLARE _chelate JSONB;
         BEGIN
-        
+        raise notice 'query 003 1';
+
           -- [Function: Query by chelate like {pk,sk},{sk,tk}, or {xk,yk}]
           -- [Description: General search]
           -- select by pk and sk
@@ -193,14 +195,15 @@ module.exports = class FunctionQuery002 extends Step {
         
         $$ LANGUAGE plpgsql;
     
-    /* Doesnt work in Hobby
-    --grant EXECUTE on FUNCTION ${this.name}(JSONB) to api_guest;
+    -- Doesnt work in Hobby
+    -- --grant EXECUTE on FUNCTION ${this.name}(JSONB) to api_guest;
     
-    grant EXECUTE on FUNCTION ${this.name}(JSONB) to api_user;
+    -- grant EXECUTE on FUNCTION ${this.name}(JSONB) to api_user;
     
-    grant EXECUTE on FUNCTION ${this.name}(JSONB) to api_admin;
-    */
+    -- grant EXECUTE on FUNCTION ${this.name}(JSONB) to api _admin;
+    
     `;
     // console.log('CreateFunction', this.sql);
   }    
 };
+*/

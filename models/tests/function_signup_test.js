@@ -30,9 +30,9 @@ module.exports = class FunctionSignupTest extends Step {
   
         'signup',
   
-        ARRAY[ 'TEXT', 'JSON', 'TEXT' ],
+        ARRAY[ 'TEXT', 'JSON' ],
   
-        'DB Function Signup Insert (text, jsonb, text) exists'
+        'DB Function Signup Insert (text, jsonb) exists'
   
     );
   
@@ -53,7 +53,7 @@ module.exports = class FunctionSignupTest extends Step {
       'DB Signup Insert (NULL,NULL) 403 0_0_1'::TEXT
   
     );
-  
+ 
   -- 3
   
   SELECT is (
@@ -188,26 +188,6 @@ module.exports = class FunctionSignupTest extends Step {
       '{"msg":"OK","status":"200"}'::JSONB,
   
       'DB Signup Insert  200 0_0_1'::TEXT
-  
-    );
-  
-    -- 11
-  
-    SELECT is (
-  
-      (${this.kind}_${this.version}.signup(
-  
-        ${this.guest_token},
-  
-        '{"username":"signup3@user.com","displayname":"J","password":"a1A!aaaa"}'::JSON,
-  
-        'duckduckgoose'
-  
-      )::JSONB - 'insertion'),
-  
-      '{"msg":"OK","status":"200"}'::JSONB,
-  
-      'DB Signup Insert 200 0_0_1'::TEXT
   
     );
   

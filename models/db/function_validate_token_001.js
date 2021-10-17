@@ -24,7 +24,6 @@ module.exports = class CreateFunctionValidateToken001 extends Step {
         -- use db parameter app.settings.jwt_secret
         -- event the token
         -- return true/false
-        --raise notice 'is_valid _token %',_token;
     
         if _token is NULL then
           -- [False when token or scope is NULL]
@@ -49,12 +48,9 @@ module.exports = class CreateFunctionValidateToken001 extends Step {
             return NULL;
           end if;
     
-          -- [Check token for expected scope]
-          
-          if not((valid_user ->> 'scope')::TEXT = expected_scope) then
+          if strpos(expected_scope, valid_user ->> 'scope'::TEXT) = 0 then
             return NULL;
           end if;
-    
         EXCEPTION
             when sqlstate '22023' then 
               RAISE NOTICE 'invalid_parameter_value sqlstate 22023 %', sqlstate;
@@ -67,9 +63,7 @@ module.exports = class CreateFunctionValidateToken001 extends Step {
               RETURN NULL;
     
         END;
-    
-        -- [False when scope isnt verified]
-    
+        
         -- [Return token claims]
     
         RETURN valid_user;

@@ -14,6 +14,10 @@ module.exports = class FunctionCreateValidateTokenTest extends Step {
     this.jwt_claims_user = `${this.kind}_${this.version}.get_jwt_claims('signup@user.com','api_user','0')`;
     this.user_token = `${this.kind}_${this.version}.sign(${this.jwt_claims_user}::JSON, ${this.jwt_secret}::TEXT)::TEXT`; 
     
+    this.jwt_claims_admin = `${this.kind}_${this.version}.get_jwt_claims('signup@user.com','api_admin','0')`;
+    this.admin_token = `${this.kind}_${this.version}.sign(${this.jwt_claims_admin}::JSON, ${this.jwt_secret}::TEXT)::TEXT`; 
+    
+    
     this.sql = `BEGIN;
 
     SELECT plan(3);
@@ -58,7 +62,22 @@ module.exports = class FunctionCreateValidateTokenTest extends Step {
       'DB Good token true 0_0_1'::TEXT
   
     );
+    -- 4 validate_ token admin
+    
+    SELECT is (
   
+      ${this.kind}_${this.version}.validate_token(
+        
+        ${this.admin_token}::TEXT,
+        'api_admin'::TEXT
+  
+      )::JSONB,
+  
+      '{"aud": "citizenlabs-api", "iss": "citizenlabs", "key": "0", "sub": "client-api", "user": "signup@user.com", "scope": "api_admin"}'::JSONB,
+  
+      'DB Good token true 0_0_1'::TEXT
+  
+    );
     SELECT * FROM finish();
   
   ROLLBACK;

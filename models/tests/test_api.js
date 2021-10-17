@@ -8,6 +8,9 @@ const FunctionAdopteesTest = require('./function_adoptees_test.js');
 const FunctionAdopterPutTest = require('./function_adopter_put_test.js'); 
 const FunctionAdopterGetTest = require('./function_adopter_get_test.js');
 
+const FunctionAdopterPostTest = require('./function_adopter_post_test.js');
+// const FunctionAdopterDeleteTest = require('./function_adopter_delete_test.js');
+
 module.exports = class ApiTests extends Array {
   constructor(apiVersion, baseVersion) {
     /* $lab:coverage:off$ */
@@ -19,6 +22,8 @@ module.exports = class ApiTests extends Array {
     this.push(new FunctionAdopteesTest('api', apiVersion, baseVersion));
     this.push(new FunctionAdopterPutTest('api', apiVersion, baseVersion));
     this.push(new FunctionAdopterGetTest('api', apiVersion, baseVersion));
+    this.push(new FunctionAdopterPostTest('api', apiVersion, baseVersion));  
+    // this.push(new FunctionAdopterDeleteTest('api', apiVersion, baseVersion));  
 
     /* $lab:coverage:on$ */
   }    

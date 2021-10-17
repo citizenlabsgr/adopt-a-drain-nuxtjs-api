@@ -44,7 +44,7 @@ const FunctionSignup001 = require('./db/function_signup_001.js');
 
 const FunctionAdoptees002 = require('./db/function_adoptees_002.js');
 const FunctionAdopterPut = require('./db/function_adopter_put_001.js');
-const FunctionAdopterGet = require('./db/function_adopter_get_001.js');
+const FunctionAdopterGet = require('./db/function_adopter_get_002.js');
 
 // const TestTable = require('./db/table_test_001.js');
 // const BaseTests = require('./tests/test_base.js');

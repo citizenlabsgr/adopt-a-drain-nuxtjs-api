@@ -8,12 +8,13 @@ module.exports = class CreateFunctionDelete001 extends Step {
     // this.kind = kind;
     this.name = 'delete';
     this.name = `${this.kind}_${this.version}.${this.name}`;
+    this.params = 'criteria JSONB, owner_key TEXT';
+
     this.sql = `
-    CREATE OR REPLACE FUNCTION ${this.name}(criteria JSONB, owner_key TEXT) RETURNS JSONB
+    CREATE OR REPLACE FUNCTION ${this.name}(${this.params}) RETURNS JSONB
     
     AS $$
-    
-      --declare _crit JSONB;
+  
       declare _result record;
       declare _status TEXT;
       declare _msg TEXT;
@@ -22,6 +23,7 @@ module.exports = class CreateFunctionDelete001 extends Step {
       BEGIN
         -- [Function: Delete by Primary Criteria {pk,sk}]
         -- [Description: Delete User by primary key {pk,sk}]
+
         -- [Validate Criteria]
         
           criteria := ${this.kind}_${this.version}.validate_criteria(criteria);
@@ -42,7 +44,8 @@ module.exports = class CreateFunctionDelete001 extends Step {
                   -- [Delete where pk and sk]
      
                   Delete from ${this.kind}_${this.version}.one
-                    where lower(pk)=lower(criteria ->> 'pk') and owner=owner_key
+                    where lower(pk)=lower(criteria ->> 'pk') 
+                          and owner=owner_key
                     returning * into _result;
     
               elsif criteria ? 'pk' and criteria ? 'sk' then
@@ -62,6 +65,7 @@ module.exports = class CreateFunctionDelete001 extends Step {
               else
                   return format('{"status":"400", "msg":"Bad Request", "criteria":%s}',criteria)::JSONB ;
               end if;
+              
               -- [Remove password from results when found]
               _rc :=  to_jsonb(_result)  #- '{form,password}';
               if _rc ->> 'pk' is NULL then
@@ -77,19 +81,19 @@ module.exports = class CreateFunctionDelete001 extends Step {
     
           -- [Return {status,msg,criteria,deletion}]
           return format('{"status":"200", "msg":"OK", "criteria":%s, "deletion":%s}',criteria,_rc::TEXT)::JSONB ;
+
       END;
     
       $$ LANGUAGE plpgsql;
-    
-    
-    
+  
     -- GRANT: Grant Execute
-    
     
     /* Doesnt work in Hobby
     grant EXECUTE on FUNCTION ${this.name}(JSONB,TEXT) to api_user;
     */
     `;
-    // console.log('CreateFunction', this.sql);
-  }    
+    }
+    getName() {
+      return `${this.name}(${this.params})`;
+    }  
 };
