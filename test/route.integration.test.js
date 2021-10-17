@@ -262,7 +262,6 @@ describe('API Route Tests', () => {
     // console.log('token', token);
 
     token = `Bearer ${token}`;
-    // const id = request.params.user;
     
     const testForm = {
       username: username,
@@ -295,7 +294,7 @@ describe('API Route Tests', () => {
     // console.log('/adopter GET test out');
 
   });
-/*
+
   // ---------------------------------
   // adopter DELETE
   // ---------------------------------
@@ -303,15 +302,13 @@ describe('API Route Tests', () => {
   it('API /adopter : user_token can DElETE, 200', async () => {
 
     // Goal: adopter  application user
-    // Strategy: only user token can delete
+    // Strategy: Insert dummy user, and then remove it.
     // Role: api_user
    
-    
     const username = 'adopter@user.com';
     const key = 'duckduckgoose';
     const scope = 'api_user';
     const lapse_in_millisec = 5000; // 5 seconds
-    
     
     const payload = new UserTokenPayload(username, 
                                          key, 
@@ -322,11 +319,13 @@ describe('API Route Tests', () => {
     const secret = process.env.JWT_SECRET;    
 
     let token = Jwt.token.generate(payload, secret);
-    
+    let guestToken = Jwt.token.generate(
+      new TestTokenPayload().guestTokenPayload(), 
+      secret
+    );
 
     token = `Bearer ${token}`;
-    // const id = request.params.user;
-    
+
     const testForm = {
       username: username,
       displayname: username,
@@ -344,10 +343,7 @@ describe('API Route Tests', () => {
         api_options: {
           debug: false,
           test: testForm,
-          guest_token:  Jwt.token.generate(
-            new TestTokenPayload().guestTokenPayload(), 
-            secret
-          )
+          guest_token:  guestToken
         }
       }
     });
@@ -357,11 +353,11 @@ describe('API Route Tests', () => {
     expect(res.statusCode).to.equal(200);
     expect(res.result.status).to.equal('200');
     
-    expect(res.result.token).to.exist();
+    // expect(res.result.token).to.exist();
     console.log('/adopter DElETE test out');
 
   });
-
+/*
   // ---------------------------------
   // adopter PUT
   // ---------------------------------
