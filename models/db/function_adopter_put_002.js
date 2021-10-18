@@ -15,6 +15,7 @@ module.exports = class FunctionAdopterPut extends Step {
     this.baseKind='base';
     this.baseVersion=baseVersion;
     this.params = 'token TEXT, id TEXT, form JSON';
+    
     this.sql = `CREATE OR REPLACE FUNCTION ${this.name}(${this.params})  RETURNS JSONB AS $$
     Declare _form JSONB; 
     Declare result JSONB; 

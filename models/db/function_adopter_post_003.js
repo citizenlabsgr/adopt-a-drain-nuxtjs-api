@@ -13,6 +13,7 @@ module.exports = class FunctionAdopterPost extends Step {
     this.params = 'token TEXT, form JSON, owner TEXT';
     this.method = 'POST';
     this.roles = 'api_admin';
+    this.scope = 'api_admin';
     this.sql = `
     CREATE OR REPLACE FUNCTION ${this.name}(${this.params})  RETURNS JSONB AS $$
     

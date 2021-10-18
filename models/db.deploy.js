@@ -47,7 +47,7 @@ const FunctionAdoptees = require('./db/function_adoptees_002.js');
 
 const FunctionAdopterPost = require('./db/function_adopter_post_003.js');
 const FunctionAdopterGet = require('./db/function_adopter_get_002.js');
-const FunctionAdopterPut = require('./db/function_adopter_put_002.js');
+const FunctionAdopterPut = require('./db/function_adopter_put_003.js');
 const FunctionAdopterDelete = require('./db/function_adopter_delete_001.js');
 
 // const TestTable = require('./db/table_test_001.js');

@@ -206,15 +206,15 @@ describe('API Route Tests', () => {
         api_options: {
           debug: false,
           rollback: true
-        }
+        },
+        owner: key
       },
       payload: {
-        form: {
+        
           username: username,
           displayname: username,
           password: 'a1A!aaaa'
-        },
-        user_key: key
+        
       }
     });
     // console.log('/adopter POST test 3');
@@ -239,9 +239,11 @@ describe('API Route Tests', () => {
     // Role: api_user, api_admin
    
     const username = 'adopter@user.com';
+    const id = username;
     const key = 'duckduckgoose';
     const scope = 'api_user';
     const lapse_in_millisec = 5000; // 5 seconds
+    const secret = process.env.JWT_SECRET;
      
     const payload = new UserTokenPayload(username, 
                                          key, 
@@ -249,19 +251,15 @@ describe('API Route Tests', () => {
                                          lapse_in_millisec)
                                          .payload();
                                          
-    const secret = process.env.JWT_SECRET;
     
-    let token = Jwt.token.generate(payload, secret);
+    let userToken = Jwt.token.generate(payload, secret);
     // --------------------------
-    // const guest_payload = new TestTokenPayload().guestTokenPayload();
-    let guestToken = Jwt.token.generate(
-      new TestTokenPayload().guestTokenPayload(), 
-      secret
-    );
+    // [Admin token...generate]
+    let adminToken = Jwt.token.generate(
+      new TestTokenPayload().adminTokenPayload(username, key), 
+      secret);
 
-    // console.log('token', token);
-
-    token = `Bearer ${token}`;
+    userToken = `Bearer ${userToken}`;
     
     const testForm = {
       username: username,
@@ -274,13 +272,14 @@ describe('API Route Tests', () => {
 
     const res = await server.inject({
       method: 'get',
-      url: `/adopter/${username}`,
+      url: `/adopter/${id}`,
       headers: {
-        authorization: token,
+        authorization: userToken,
+        owner: key,
         api_options: {
           debug: false,
           test: testForm,
-          guest_token: guestToken
+          token: adminToken
         }
       }
     });
@@ -289,9 +288,7 @@ describe('API Route Tests', () => {
     
     expect(res.statusCode).to.equal(200);
     expect(res.result.status).to.equal('200');
-    
-    // expect(res.result.token).to.exist();
-    // console.log('/adopter GET test out');
+    expect(res.result.selection).to.exist();
 
   });
 
@@ -306,6 +303,7 @@ describe('API Route Tests', () => {
     // Role: api_user
    
     const username = 'adopter@user.com';
+    const id = username;
     const key = 'duckduckgoose';
     const scope = 'api_user';
     const lapse_in_millisec = 5000; // 5 seconds
@@ -319,11 +317,11 @@ describe('API Route Tests', () => {
     const secret = process.env.JWT_SECRET;    
 
     let token = Jwt.token.generate(payload, secret);
-    let guestToken = Jwt.token.generate(
-      new TestTokenPayload().guestTokenPayload(), 
-      secret
-    );
-
+    
+    // [Admin token...generate]
+    let adminToken = Jwt.token.generate(
+      new TestTokenPayload().adminTokenPayload(username, key), 
+      secret);
     token = `Bearer ${token}`;
 
     const testForm = {
@@ -337,13 +335,14 @@ describe('API Route Tests', () => {
 
     const res = await server.inject({
       method: 'delete',
-      url: `/adopter/${username}`,
+      url: `/adopter/${id}`,
       headers: {
         authorization: token,
+        owner: key,
         api_options: {
           debug: false,
           test: testForm,
-          guest_token:  guestToken
+          token:  adminToken
         }
       }
     });
@@ -357,7 +356,7 @@ describe('API Route Tests', () => {
     console.log('/adopter DElETE test out');
 
   });
-/*
+
   // ---------------------------------
   // adopter PUT
   // ---------------------------------
@@ -365,7 +364,86 @@ describe('API Route Tests', () => {
   it('API /adopter : user_token can PUT, 200', async () => {
 
     // Goal: adopter  application user
-    // Strategy: only user token can delete
+    // Strategy: 
+    // - signup a user, get user id, 
+    // - make user token, provide user-token to update
+    // - use rollback to get rid of signup          
+    // Role: api_user
+
+    
+    // [Token values ]
+    
+    const username = 'adopter@user.com';
+    const id = username;
+    const key = 'duckduckgoose';
+    const scope = 'api_user';
+    const lapse_in_millisec = 5000; // 5 seconds
+    const secret = process.env.JWT_SECRET;
+
+    // [Two tokens required to run test guestToken and userToken]
+    // [User token calculated from test values]
+    const userPayload = new UserTokenPayload(
+                                         username, 
+                                         key, 
+                                         scope, 
+                                         lapse_in_millisec)
+                                         .payload();
+    let userToken  = Jwt.token.generate(userPayload, 
+                                        secret);    
+
+    // [Admin token...generate]
+    let adminToken = Jwt.token.generate(
+      new TestTokenPayload().adminTokenPayload(username, key), 
+      secret);
+
+    userToken = `Bearer ${userToken}`;
+    // [Existing user required to run test]
+    const testForm = {
+      username: username,
+      displayname: username,
+      password: 'a1A!aaaa',
+    };
+
+    // [Any value can be changed]
+    const changeForm = {
+      username: 'update@user.com',
+      displayname: 'U',
+      password: 'b1B!bbbb',
+    };
+
+    // [Start the test]
+    
+    const res = await server.inject({
+      method: 'put',
+      url: `/adopter/${id}`,
+      headers: {
+        authorization: userToken,
+        owner: key,
+        api_options: {
+          debug: false,
+          test: testForm,
+          token:  adminToken
+        }
+      },
+      payload: changeForm
+    });
+
+    // console.log('res PUT ', res.result);
+    // console.log('res PUT ', res.result.updation.form.scope);
+    
+    expect(res.statusCode).to.equal(200);
+    expect(res.result.status).to.equal('200');
+    expect(res.result.updation.form.scope).to.equal('api_user');
+  });
+  
+/*
+it('API /adopter : user_token can PUT, 200', async () => {
+
+    // Goal: adopter  application user
+    // Strategy: 
+    // - signup a user, get user id, 
+    // - make user token, provide user-token to update
+    // - use rollback to get rid of signup          
     // Role: api_user
 
     console.log('/adopter PUT test 1');
