@@ -353,7 +353,7 @@ describe('API Route Tests', () => {
     expect(res.result.status).to.equal('200');
     
     // expect(res.result.token).to.exist();
-    console.log('/adopter DElETE test out');
+    // console.log('/adopter DElETE test out');
 
   });
 
