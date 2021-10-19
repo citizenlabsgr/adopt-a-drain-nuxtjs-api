@@ -11,6 +11,10 @@ module.exports = class DropFunction extends Step {
     DROP FUNCTION if exists api_0_0_1.signup(TEXT,JSON,TEXT); 
     DROP FUNCTION if exists api_0_0_1.signin(TEXT,JSON); 
     DROP FUNCTION if exists api_0_0_1.adopter(TEXT,JSON); 
+
+    DROP FUNCTION if exists base_0_0_1.chelate(JSONB); 
+    DROP FUNCTION if exists base_0_0_1.chelate(JSONB,JSONB); 
+    DROP FUNCTION if exists base_0_0_1.insert(JSONB,TEXT); 
     `;
   }    
   
