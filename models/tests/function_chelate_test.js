@@ -26,31 +26,62 @@ module.exports = class FunctionChelateTest extends Step {
     );
   
     -- 2
+      
+    SELECT is (
+    
+      ${this.kind}_${this.version}.chelate( 
+        '{"pk":"fa","sk":"fb","tk":"fc","owner":"*"}'::JSONB,
+        '{
+            "fa":"v1",
+            "fb":"v2",
+            "fc":"v3",
+            "fd":"v4"
+          }'::JSONB
+       )::JSONB - '{created,updated}'::TEXT[],
   
+      '{"pk": "fa#v1", "sk": "fb#v2", "tk": "fc#v3", "form": {"fa": "v1", "fb": "v2", "fc": "v3", "fd": "v4"}, "owner": "v3", "active": true}'::JSONB,
+  
+      'DB delete pk sk form,  Not Found 0_0_1'::TEXT
+  
+    );
+    -- 3
+    SELECT is (
+    
+      ${this.kind}_${this.version}.chelate( 
+        '{"pk":"fa","sk":"fb","tk":"fc","owner":"a3s3d4f"}'::JSONB,
+        '{
+            "fa":"v1",
+            "fb":"v2",
+            "fc":"v3",
+            "fd":"v4"
+          }'::JSONB
+       )::JSONB - '{created,updated}'::TEXT[],
+  
+      '{"pk": "fa#v1", "sk": "fb#v2", "tk": "fc#v3", "form": {"fa": "v1", "fb": "v2", "fc": "v3", "fd": "v4"}, "owner": "a3s3d4f", "active": true}'::JSONB,
+  
+      'DB delete pk sk form,  Not Found 0_0_1'::TEXT
+  
+    );
+    /*
     SELECT ok (
   
       ${this.kind}_${this.version}.chelate(
   
-        '{"pk":"a","sk":"b","tk":"c"}'::JSONB,
+        '{"pk":"a","sk":"b","tk":"c","owner":"*"}'::JSONB,
   
         '{
-  
             "a":"v1",
-  
             "b":"v2",
-  
             "c":"v3",
-  
             "d":"v4"
-  
           }'::JSONB
   
       )::JSONB ->> 'pk' = 'a#v1',
   
-      'DB chelate (keys JSONB, form JSONB) 0_0_1'::TEXT
+      'DB chelate (chelate JSONB, form JSONB) 0_0_1'::TEXT
   
     );
-  
+  */
     SELECT * FROM finish();
   
   
@@ -62,7 +93,7 @@ module.exports = class FunctionChelateTest extends Step {
   
   
   
-  
+  /*
   
   BEGIN;
   
@@ -419,7 +450,9 @@ module.exports = class FunctionChelateTest extends Step {
     SELECT * FROM finish();
   
   ROLLBACK;
+  */
     `;
+  
     // $lab:coverage:on$
   }    
 };

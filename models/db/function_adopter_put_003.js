@@ -2,27 +2,37 @@
 // const pg = require('pg');
 
 const Step = require('../../lib/runner/step');
-module.exports = class RestGet extends Step {
+module.exports = class FunctionAdopterPut extends Step {
   constructor(baseName, baseVersion) {
     super(baseName, baseVersion);
     // this.kind = kind;
     this.name = 'adopter';
     this.name = `${this.kind}_${this.version}.${this.name}`;
-    this.role = 'api_user';
+    this.role = 'api_user,api_admin';
+    this.scope = 'api_user';
     this.pk = 'username';
     this.sk = 'const#USER';
-    
-    // this.baseKind='base';
+    this.method = 'PUT';
+    this.baseKind='base';
     this.baseVersion=baseVersion;
-
-    this.sql = `CREATE OR REPLACE FUNCTION ${this.name}(token TEXT, id TEXT)  RETURNS JSONB AS $$
+    // this.params = 'token TEXT, id TEXT, form JSON';
+    this.params = 'token TEXT, id TEXT, form JSON, owner TEXT';
+    
+    this.sql = `CREATE OR REPLACE FUNCTION ${this.name}(${this.params})  RETURNS JSONB AS $$
+    Declare _form JSONB; 
     Declare result JSONB; 
+    Declare chelate JSONB := '{}'::JSONB;
+    Declare key_map JSONB := '{"pk":"${this.pk}","sk":"${this.sk}"}'::JSONB;
     Declare tmp TEXT;
     BEGIN
           
-      -- [Function: get object given user_token TEXT, id TEXT]
-      -- [Description: get an existing object]
-            
+      -- [Function: adopter given user_token TEXT, owner_key TEXT, form JSON]
+      -- [Description: Update an existing user/ adopter]
+      -- not supported under Hobby
+      
+      _form := form::JSONB ;          
+      -- chelate := chelate || key_map || format('{"pk": "username#%s"}',id)::JSONB;
+      
       -- [Validate id parameter]
       if id is NULL then
             -- [Fail 400 when id is NULL]
@@ -30,21 +40,15 @@ module.exports = class RestGet extends Step {
       end if;
 
       -- [Validate Token]
-      result := base_${this.baseVersion}.validate_token(token, '${this.role}') ;
+      result := ${this.baseKind}_${this.baseVersion}.validate_token(token, '${this.role}') ;
 
       if result is NULL then
             -- [Fail 403 When token is invalid]
-            -- not available in hobby RESET ROLE;
-
             return format('{"status":"403","msg":"Forbidden","extra":"Invalid token","user":"%s"}',CURRENT_USER)::JSONB;
       end if;
       
       -- [Verify token has expected scope]
-      if not(result ->> 'scope' = '${this.role}') then
-              -- [Fail 401 when unexpected scope is detected]
-              return '{"status":"401","msg":"Unauthorized"}'::JSONB;
-      end if;
-      
+
       -- [Validate form parameter]
       if form is NULL then
               -- [Fail 400 when form is NULL]
@@ -65,7 +69,7 @@ module.exports = class RestGet extends Step {
 
       -- [Assign Scope]
 
-      _form := _form || format('{"scope":"%s"}','${this.role}')::JSONB;
+      _form := _form || format('{"scope":"%s"}','${this.scope}')::JSONB;
 
       -- [Assemble Data]
       chelate := chelate || format('{"form": %s}', _form)::JSONB;
@@ -73,7 +77,7 @@ module.exports = class RestGet extends Step {
 
       -- [Execute update]
 
-      result := base_${this.baseVersion}.update(chelate, result ->> 'key'); -- result->> key is owner key
+      result := ${this.baseKind}_${this.baseVersion}.update(chelate, owner); 
 
       -- [Return {status,msg,updation}]
 
@@ -82,11 +86,15 @@ module.exports = class RestGet extends Step {
     END;
 
     $$ LANGUAGE plpgsql;
-    
+
     /* Doesnt work in Hobby
     grant EXECUTE on FUNCTION ${this.name}(TEXT,JSON,TEXT) to ${this.role};
     */
+
     `;
     // console.log('CreateFunction', this.sql);
   }    
+  getName() {
+    return `${this.name}(${this.params}) ${this.method}`;
+  }
 };

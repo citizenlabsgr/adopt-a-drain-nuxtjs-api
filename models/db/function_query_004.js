@@ -25,7 +25,6 @@ module.exports = class FunctionQuery extends Step {
       DECLARE owner BOOLEAN;
       DECLARE mbr BOOLEAN;
     BEGIN
-    
       -- [Function: Query by chelate like {pk,sk},{sk,tk}, or {xk,yk}]
       -- [Description: General search]
       -- select by pk and sk
@@ -45,7 +44,7 @@ module.exports = class FunctionQuery extends Step {
         return format('{"status":"400","msg":"Bad Request", "extra":"A", "chelate": %s}',chelate)::JSONB;
     
       end if;
-    
+
       -- chelate := chelate::JSONB;
       pk := chelate ? 'pk';
       sk := chelate ? 'sk';
@@ -65,7 +64,7 @@ module.exports = class FunctionQuery extends Step {
         
       if pk and sk and owner and mbr and chelate ->> 'sk' = '*' then
           -- 	format('{"pk":"","sk":"*","owner":"","mbr":%s}',mbr)::JSONB;
-        raise notice 'A';
+        -- raise notice 'A';
         --_result := '[{"res":"A"}]';
         SELECT array_to_json(array_agg(to_jsonb(u) #- '{form,password}' )) into _result    
                         FROM base_${baseVersion}.one u    
@@ -79,7 +78,7 @@ module.exports = class FunctionQuery extends Step {
     
       elsif pk and sk and owner and mbr then
         -- 	format('{"pk":"","sk":"","owner":"","mbr":%s}',mbr)::JSONB;
-          raise notice 'B';
+          -- raise notice 'B';
           _result := '[{"res":"B"}]';
           SELECT array_to_json(array_agg(to_jsonb(u) #- '{form,password}' )) into _result    
                         FROM base_${baseVersion}.one u    
@@ -92,7 +91,7 @@ module.exports = class FunctionQuery extends Step {
                         ;
       elsif pk and sk and mbr and chelate ->> 'sk' = '*' then
         -- 	format('{"pk":"","sk":"*","mbr":%s}',mbr)::JSONB;
-        raise notice 'C';
+        -- raise notice 'C';
         --_result := '[{"res":"C"}]';
         
          SELECT array_to_json(array_agg(to_jsonb(u) #- '{form,password}' )) into _result    
@@ -107,12 +106,12 @@ module.exports = class FunctionQuery extends Step {
         
       elsif pk and sk and mbr then
         -- 	format('{"pk":"","sk":"","mbr":%s}',mbr)::JSONB;
-        raise notice 'D';
+        -- raise notice 'D';
         _result := '[{"res":"D"}]';
         
       elsif pk and sk and owner and chelate ->> 'sk' = '*' then
         -- 	'{"pk":"","sk":"*","owner":""}'::JSONB
-        raise notice 'E';
+        -- raise notice 'E';
         -- _result := '[{"res":"E"}]';
         SELECT array_to_json(array_agg(to_jsonb(u) #- '{form,password}' )) into _result    
                         FROM base_${baseVersion}.one u 
@@ -121,7 +120,7 @@ module.exports = class FunctionQuery extends Step {
     
       elsif pk and sk and owner then
           -- 	'{"pk":"","sk":"","owner":""}'::JSONB
-        raise notice 'F';
+        -- raise notice 'F';
         _result := '[{"res":"F"}]';
         SELECT array_to_json(array_agg(to_jsonb(u) #- '{form,password}' )) into _result    
                         FROM base_${baseVersion}.one u 
@@ -131,7 +130,7 @@ module.exports = class FunctionQuery extends Step {
         
       elsif pk and sk and chelate ->> 'sk' = '*' then
         -- 	'{"pk":"","sk":"*"}'::JSONB
-        raise notice 'G';
+        -- raise notice 'G';
                       
         SELECT array_to_json(array_agg(to_jsonb(u) #- '{form,password}' )) into _result    
                         FROM base_${baseVersion}.one u    
@@ -139,7 +138,7 @@ module.exports = class FunctionQuery extends Step {
     
       elsif pk and sk then
         -- 	'{"pk":"","sk":""}'::JSONB
-        raise notice 'H';
+        -- raise notice 'H';
         --_result := '[{"res":"H"}]';
         SELECT array_to_json(array_agg(to_jsonb(u) #- '{form,password}' )) into _result    
                         FROM base_${baseVersion}.one u    
@@ -148,7 +147,7 @@ module.exports = class FunctionQuery extends Step {
         
       elsif sk and tk and owner and mbr and chelate ->> 'tk' = '*' then
         -- 	format('{"sk":"","tk":"*","owner":"", "mbr": %s}',mbr)::JSONB
-        raise notice 'I';
+        -- raise notice 'I';
         -- _result := '[{"res":"I"}]';
         SELECT array_to_json(array_agg(to_jsonb(u) #- '{form,password}' )) into _result    
                       FROM base_${baseVersion}.one u 
@@ -163,7 +162,7 @@ module.exports = class FunctionQuery extends Step {
         
       elsif sk and tk and owner and mbr then
         -- 	format('{"sk":"","tk":"","owner":"", "mbr": %s}',mbr)::JSONB	
-        raise notice 'J';
+        -- raise notice 'J';
         --_result := '[{"res":"J"}]';
         SELECT array_to_json(array_agg(to_jsonb(u) #- '{form,password}' )) into _result    
                       FROM base_${baseVersion}.one u 
@@ -179,7 +178,7 @@ module.exports = class FunctionQuery extends Step {
       elsif sk and tk and mbr and chelate ->> 'tk' = '*' then
         -- 	format('{"sk":"","tk":"*", "mbr": %s}',mbr)::JSONB	
     
-        raise notice 'K';
+        -- raise notice 'K';
         
             SELECT array_to_json(array_agg(to_jsonb(u) #- '{form,password}' )) into _result    
                       FROM base_${baseVersion}.one u 
@@ -193,7 +192,7 @@ module.exports = class FunctionQuery extends Step {
         
       elsif sk and tk and mbr then
         -- 	format('{"sk":"","tk":"", "mbr": %s}',mbr)::JSONB	
-        raise notice 'L';
+        -- raise notice 'L';
         --_result := '[{"res":"L"}]';
         SELECT array_to_json(array_agg(to_jsonb(u) #- '{form,password}' )) into _result    
                       FROM base_${baseVersion}.one u 
@@ -207,7 +206,7 @@ module.exports = class FunctionQuery extends Step {
         
       elsif sk and tk and owner and chelate ->> 'tk' = '*' then
         -- 	'{"sk":"","tk":"*", "owner":""}'::JSONB	
-        raise notice 'M';
+        -- raise notice 'M';
         --_result := '[{"res":"M"}]';
         SELECT array_to_json(array_agg(to_jsonb(u) #- '{form,password}' )) into _result    
                       FROM base_${baseVersion}.one u 
@@ -218,7 +217,7 @@ module.exports = class FunctionQuery extends Step {
         
       elsif sk and tk and owner then
         -- 	'{"sk":"","tk":"", "owner":""}'::JSONB	
-        raise notice 'N';
+        -- raise notice 'N';
         -- _result := '[{"res":"N"}]';
         SELECT array_to_json(array_agg(to_jsonb(u) #- '{form,password}' )) into _result    
                       FROM base_${baseVersion}.one u 
@@ -228,7 +227,7 @@ module.exports = class FunctionQuery extends Step {
                       ;
       elsif sk and tk and chelate ->> 'tk' = '*' then
           -- 	'{"sk":"","tk":"*"}'::JSONB
-        raise notice 'O';
+        -- raise notice 'O';
         --_result := '[{"res":"O"}]';
         SELECT array_to_json(array_agg(to_jsonb(u) #- '{form,password}' )) into _result    
                       FROM base_${baseVersion}.one u 
@@ -237,7 +236,7 @@ module.exports = class FunctionQuery extends Step {
                       ;
         
       elsif sk and tk then
-        raise notice 'P';
+        -- raise notice 'P';
         --_result := '[{"res":"P"}]';
         SELECT array_to_json(array_agg(to_jsonb(u) #- '{form,password}' )) into _result    
                       FROM base_${baseVersion}.one u 
@@ -248,7 +247,7 @@ module.exports = class FunctionQuery extends Step {
       elsif xk and yk and owner and mbr and chelate ->> 'yk' = '*' then
           -- format('{"xk":"","yk":"*", "owner":"", "mbr": %s}',mbr)::JSONB
           -- format('{"xk":"3","yk":"*", "owner":"goose", "mbr": %s}',mbr)::JSONB)
-        raise notice 'Q';
+        -- raise notice 'Q';
         --_result := '[{"res":"Q"}]';
         SELECT array_to_json(array_agg(to_jsonb(u) #- '{form,password}' )) into _result    
                       FROM base_${baseVersion}.one u 
@@ -262,7 +261,7 @@ module.exports = class FunctionQuery extends Step {
         
       elsif xk and yk and owner and mbr then
         -- format('{"xk":"1","yk":"const#ADOPTEE", "owner":"duckduckgoose", "mbr": %s}',mbr)::JSONB
-        raise notice 'R';
+        -- raise notice 'R';
         --_result := '[{"res":"R"}]';
         SELECT array_to_json(array_agg(to_jsonb(u) #- '{form,password}' )) into _result    
                       FROM base_${baseVersion}.one u 
@@ -277,7 +276,7 @@ module.exports = class FunctionQuery extends Step {
         
       elsif xk and yk and mbr and chelate ->> 'yk' = '*' then
         -- format('{"xk":"1","yk":"*", "mbr": %s}',mbr)::JSONB
-        raise notice 'S';
+        -- raise notice 'S';
         -- _result := '[{"res":"S"}]';
         SELECT array_to_json(array_agg(to_jsonb(u) #- '{form,password}' )) into _result    
                       FROM base_${baseVersion}.one u 
@@ -292,7 +291,7 @@ module.exports = class FunctionQuery extends Step {
         
       elsif xk and yk and mbr then
         -- format('{"xk":"1","yk":"const#ADOPTEE", "mbr": %s}',mbr)::JSONB
-        raise notice 'T';
+        -- raise notice 'T';
         --_result := '[{"res":"T"}]';
         SELECT array_to_json(array_agg(to_jsonb(u) #- '{form,password}' )) into _result    
                       FROM base_${baseVersion}.one u 
@@ -306,7 +305,7 @@ module.exports = class FunctionQuery extends Step {
         
       elsif xk and yk and owner and chelate ->> 'yk' = '*' then
         -- '{"xk":"1","yk":"*", "owner": "duckduckgoose"}'::JSONB
-        raise notice 'U';
+        -- raise notice 'U';
         --_result := '[{"res":"U"}]';
         SELECT array_to_json(array_agg(to_jsonb(u) #- '{form,password}' )) into _result    
                       FROM base_${baseVersion}.one u 
@@ -317,7 +316,7 @@ module.exports = class FunctionQuery extends Step {
         
       elsif xk and yk and owner then
         -- '{"xk":"1","yk":"const#ADOPTEE", "owner": "duckduckgoose"}'::JSONB
-        raise notice 'V';
+        -- raise notice 'V';
         --_result := '[{"res":"V"}]';
         SELECT array_to_json(array_agg(to_jsonb(u) #- '{form,password}' )) into _result    
                       FROM base_${baseVersion}.one u 
@@ -328,7 +327,7 @@ module.exports = class FunctionQuery extends Step {
         
       elsif xk and yk and chelate ->> 'yk' = '*' then
         -- '{"xk":"1","yk":"*"}'::JSONB
-        raise notice 'W';
+        -- raise notice 'W';
         --_result := '[{"res":"W"}]';
         SELECT array_to_json(array_agg(to_jsonb(u) #- '{form,password}' )) into _result    
                       FROM base_${baseVersion}.one u 
@@ -338,7 +337,7 @@ module.exports = class FunctionQuery extends Step {
         
       elsif xk and yk then
         -- '{"xk":"1","yk":"const#ADOPTEE"}'::JSONB
-            raise notice 'X';
+            -- raise notice 'X';
             --_result := '[{"res":"X"}]';
             SELECT array_to_json(array_agg(to_jsonb(u) #- '{form,password}' )) into _result    
                       FROM base_${baseVersion}.one u 
@@ -366,7 +365,7 @@ module.exports = class FunctionQuery extends Step {
         -- [Fail 200 when query results are empty ]
         -- return format('{"status":"404","msg":"Not Found","chelate": %s}', chelate::TEXT)::JSONB;
         -- return _result;
-        return '{"status":"200", "msg":"OK", "selection": []}'::JSONB;
+        return '{"status":"404", "msg":"Not Found", "selection": []}'::JSONB;
     
       end if;
     

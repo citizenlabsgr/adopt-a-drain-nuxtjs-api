@@ -2,29 +2,30 @@
 // const pg = require('pg');
 
 const Step = require('../../lib/runner/step');
-module.exports = class FunctionAdopterPut extends Step {
+module.exports = class FunctionAdopterDelete extends Step {
   constructor(baseName, baseVersion) {
     super(baseName, baseVersion);
     // this.kind = kind;
     this.name = 'adopter';
     this.name = `${this.kind}_${this.version}.${this.name}`;
-    this.role = 'api_user';
+    this.role = 'api_user api_admin';
+    this.scope = 'api_user';
     this.pk = 'username';
     this.sk = 'const#USER'; // formerly const#ADOPTER
     
     this.baseKind='base';
     this.baseVersion=baseVersion;
-    this.params = 'token TEXT, id TEXT';
-    this.method = 'GET';
+    this.params = 'token TEXT, id VARCHAR, owner TEXT';
+    this.method = 'DELETE';
     this.sql = `CREATE OR REPLACE FUNCTION ${this.name}(${this.params})  RETURNS JSONB AS $$
+ 
     Declare result JSONB; 
     Declare tmp TEXT;
-    Declare chelate JSONB ='{"pk":"replaceme", "sk":"const#USER"}'::JSONB;
+    Declare criteria JSONB ='{"pk":"<id>", "sk":"const#USER"}'::JSONB;
     BEGIN
-          
-      -- [Function: get ${this.name} given user_token TEXT, id TEXT]
-      -- [Description: get an existing api_0_0_1.adopter]
-            
+      -- [Function: get api_${this.version}.adopter given user_token TEXT, id VARCHAR, owner TEXT]
+      -- [Description: get an existing api_${this.version}.adopter]
+      -- [Note: Only the owner can delete]       
       -- [Validate id parameter]
       if id is NULL then
             -- [Fail 400 when id is NULL]
@@ -32,41 +33,37 @@ module.exports = class FunctionAdopterPut extends Step {
       end if;
 
       -- [Validate Token]
-      result := base_${this.baseVersion}.validate_token(token, 'api_user') ;
-
+      result := base_${this.baseVersion}.validate_token(token, '${this.role}') ;
       if result is NULL then
             -- [Fail 403 When token is invalid]
             return format('{"status":"403","msg":"Forbidden","extra":"Invalid token","user":"%s"}',CURRENT_USER)::JSONB;
       end if;
       
-      -- this is redundant, done in validate_token
       -- [Verify token has expected scope]
-      -- if not(result ->> 'scope' = 'api_user') then
+      --if not(result ->> 'scope' = 'api_user') then
       --        -- [Fail 401 when unexpected scope is detected]
       --        return '{"status":"401","msg":"Unauthorized"}'::JSONB;
-      -- end if;
+      --end if;
       
-
       -- [Assemble Data] 
-      chelate := chelate || format('{"pk":"username#%s", "owner":"%s" }', id, result ->> 'key')::JSONB;
+      criteria := criteria || format('{"pk":"username#%s"}', id)::JSONB;
       
-      -- [Execute update]
-      result := base_${this.baseVersion}.query(chelate); -- result->> key is owner key
+      -- [Execute delete]
+      result := base_${this.baseVersion}.delete(criteria, owner);
+
+      -- result := base_${this.baseVersion}.delete(criteria, result ->> 'key');
+      -- result := base_${this.baseVersion}.delete(criteria, id); 
 
       -- [Return {status,msg,selection}]
-
       return result;
 
     END;
 
     $$ LANGUAGE plpgsql;
-    
     /* Doesnt work in Hobby
-    grant EXECUTE on FUNCTION ${this.name}(TEXT,TEXT) to ${this.role};
+    grant EXECUTE on FUNCTION ${this.name}(TEXT,VARCHAR) to ${this.role};
     */
-
     `;
-    // console.log('CreateFunction', this.sql);
   }    
   getName() {
     return `${this.name}(${this.params}) ${this.method}`;

@@ -6,6 +6,8 @@ module.exports = class CreateFunctionTime001 extends Step {
   constructor(baseName, baseVersion) {
     super(baseName, baseVersion);
     // this.kind = kind;
+    this.method = 'GET';
+    this.params = '';
     this.name = 'time';
     this.name = `${this.kind}_${this.version}.${this.name}`;
     this.sql = `CREATE OR REPLACE FUNCTION ${this.name}() RETURNS JSONB
@@ -35,5 +37,8 @@ module.exports = class CreateFunctionTime001 extends Step {
     */
     `;
     // console.log('CreateFunction', this.sql);
+  }
+  getName() {
+    return `${this.name}(${this.params}) ${this.method}`;
   }    
 };

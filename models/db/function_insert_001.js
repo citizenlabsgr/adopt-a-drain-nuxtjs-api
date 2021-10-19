@@ -34,7 +34,7 @@ module.exports = class CreateFunctionInsert001 extends Step {
     
         -- [Fail 400 when a parameter is NULL]
     
-        return '{"status":"400","msg":"Bad Request"}'::JSONB;
+        return '{"status":"400","msg":"Bad Request", "extra":"chelate is NULL"}'::JSONB;
     
       end if;
     

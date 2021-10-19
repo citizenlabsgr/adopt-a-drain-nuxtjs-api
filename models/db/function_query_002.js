@@ -197,7 +197,7 @@ module.exports = class FunctionQuery002 extends Step {
     
     --grant EXECUTE on FUNCTION ${this.name}(JSONB) to api_user;
     
-    --grant EXECUTE on FUNCTION ${this.name}(JSONB) to api_admin;
+    --grant EXECUTE on FUNCTION ${this.name}(JSONB) to api_ admin;
     
     `;
     // console.log('CreateFunction', this.sql);

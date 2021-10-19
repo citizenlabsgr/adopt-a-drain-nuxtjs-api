@@ -51,16 +51,24 @@ module.exports = class TestTokenPayload {
     if (!key){
       throw 'user_TokenPayload is requires a key';
     }
-    if (!key.includes('#') ) {
-      throw 'user_TokenPayload requires a key with a #, eg guid#somevalue';
-    }
+    
+    // if (!key.includes('#') ) {
+    //  throw 'user_TokenPayload requires a key with a #, eg guid#somevalue';
+    // }
+    
     if (!scope){
       throw 'user_TokenPayload is requires a scope';
     }
+    console.log('userTokenPayload out', new TokenPayload()
+    .user(username)
+    .key(key)
+    .scope(scope)
+    .payload());
+    
     return new TokenPayload()
                  .user(username)
                  .key(key)
-                 .scope_(scope)
+                 .scope(scope)
                  .payload();
   }
   adminTokenPayload(username, key) {
@@ -73,7 +81,7 @@ module.exports = class TestTokenPayload {
     return new TokenPayload()
                  .user(username)
                  .key(key)
-                 .scope_('api_admin')
+                 .scope('api_admin')
                  .payload();
   }
   /*

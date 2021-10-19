@@ -17,9 +17,8 @@ module.exports = class FunctionAdopterPut extends Step {
     this.params = 'token TEXT, id TEXT';
     this.method = 'GET';
     this.sql = `CREATE OR REPLACE FUNCTION ${this.name}(${this.params})  RETURNS JSONB AS $$
-    Declare result JSONB; 
-    Declare tmp TEXT;
-    Declare chelate JSONB ='{"pk":"replaceme", "sk":"const#USER"}'::JSONB;
+      Declare result JSONB; 
+      Declare chelate JSONB ='{"pk":"replaceme", "sk":"const#USER"}'::JSONB;
     BEGIN
           
       -- [Function: get ${this.name} given user_token TEXT, id TEXT]
@@ -32,33 +31,55 @@ module.exports = class FunctionAdopterPut extends Step {
       end if;
 
       -- [Validate Token]
-      result := base_${this.baseVersion}.validate_token(token, 'api_user') ;
+      result := base_${this.baseVersion}.validate_token(token, '${this.role}') ;
 
       if result is NULL then
             -- [Fail 403 When token is invalid]
             return format('{"status":"403","msg":"Forbidden","extra":"Invalid token","user":"%s"}',CURRENT_USER)::JSONB;
       end if;
       
-      -- this is redundant, done in validate_token
-      -- [Verify token has expected scope]
-      -- if not(result ->> 'scope' = 'api_user') then
-      --        -- [Fail 401 when unexpected scope is detected]
-      --        return '{"status":"401","msg":"Unauthorized"}'::JSONB;
-      -- end if;
-      
-
       -- [Assemble Data] 
-      chelate := chelate || format('{"pk":"username#%s", "owner":"%s" }', id, result ->> 'key')::JSONB;
+      -- chelate := chelate || format('{"pk":"username#%s", "owner":"%s" }', id, result ->> 'key')::JSONB;
       
       -- [Execute update]
-      result := base_${this.baseVersion}.query(chelate); -- result->> key is owner key
-
+      result := ${this.name}(token, id, result ->> 'key') ;
       -- [Return {status,msg,selection}]
 
       return result;
 
     END;
+    $$ LANGUAGE plpgsql;
 
+    CREATE OR REPLACE FUNCTION ${this.name}(${this.params}, owner_key TEXT)  RETURNS JSONB AS $$
+      Declare result JSONB; 
+      Declare chelate JSONB ='{"pk":"replaceme", "sk":"const#USER"}'::JSONB;
+    BEGIN
+      -- [Function: get ${this.name} given user_token TEXT, id TEXT, owner_key]
+
+      -- [Validate id parameter]
+      if id is NULL then
+            -- [Fail 400 when id is NULL]
+            return '{"status":"400","msg":"Bad Request"}'::JSONB;
+      end if;
+
+      -- [Validate Token]
+      result := base_${this.baseVersion}.validate_token(token, '${this.role},api_admin') ;
+
+      if result is NULL then
+            -- [Fail 403 When token is invalid]
+            return format('{"status":"403","msg":"Forbidden","extra":"Invalid token","user":"%s"}',CURRENT_USER)::JSONB;
+      end if;
+
+      -- [Assemble Data] 
+      chelate := chelate || format('{"pk":"username#%s", "owner":"%s" }', id, owner_key)::JSONB;
+      
+      -- [Execute update]
+      result := base_${this.baseVersion}.query(chelate); -- result->> key is owner key
+
+      -- [Return {status,msg,selection}]
+      return result;
+
+    END;
     $$ LANGUAGE plpgsql;
     
     /* Doesnt work in Hobby

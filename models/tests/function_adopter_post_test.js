@@ -1,7 +1,7 @@
 'use strict';
 
 const Step = require('../../lib/runner/step');
-module.exports = class FunctionAdopterPutTest extends Step {
+module.exports = class FunctionAdopterPostTest extends Step {
   constructor(kind, apiVersion, baseVersion) {
     // $lab:coverage:off$
     super(kind, apiVersion);
@@ -14,12 +14,14 @@ module.exports = class FunctionAdopterPutTest extends Step {
   
     this.jwt_claims_guest = `${this.baseKind}_${this.baseVersion}.get_jwt_claims('guest','api_guest','0')`;
     this.jwt_claims_user = `${this.baseKind}_${this.baseVersion}.get_jwt_claims('adopter@user.com','api_user','duckduckgoose')`;
+    this.jwt_claims_admin = `${this.baseKind}_${this.baseVersion}.get_jwt_claims('adopter@user.com','api_admin','administrator')`;
   
     this.guest_token = `${this.baseKind}_${this.baseVersion}.sign(${this.jwt_claims_guest}::JSON, ${this.jwt_secret}::TEXT)::TEXT`;
     this.user_token = `${this.baseKind}_${this.baseVersion}.sign(${this.jwt_claims_user}::JSON, ${this.jwt_secret}::TEXT)::TEXT`;
+    this.admin_token = `${this.baseKind}_${this.baseVersion}.sign(${this.jwt_claims_admin}::JSON, ${this.jwt_secret}::TEXT)::TEXT`;
 
- 
     this.sql = `BEGIN;
+    /*
     insert into base_0_0_1.one
     (pk, sk, tk, form, owner)
     values (
@@ -33,9 +35,10 @@ module.exports = class FunctionAdopterPutTest extends Step {
          }'::JSONB,
         'duckduckgoose'
     );
-
+    */
     SELECT plan(4);
  
+  
     -- 1 Update
   
     SELECT has_function(
@@ -43,91 +46,45 @@ module.exports = class FunctionAdopterPutTest extends Step {
         '${this.kind}_${this.version}',
   
         'adopter',
-  
-        ARRAY[ 'TEXT', 'TEXT'],
-  
-        'DB Function GET adopter (text, text) exists'
-  
-    );
 
-    -- 2 Update
+        ARRAY[ 'TEXT', 'JSON', 'TEXT'],
   
-    SELECT has_function(
-  
-        '${this.kind}_${this.version}',
-  
-        'adopter',
-  
-        ARRAY[ 'TEXT', 'TEXT', 'TEXT'],
-  
-        'DB Function GET adopter (text, text, text) exists'
+        'DB Function adopter POST (text, json, text) exists'
   
     );
-    -- 3 adopter(user_token, id) 
+  
+    -- 2 
     
     SELECT is (
   
       (${this.kind}_${this.version}.adopter(
-        ${this.user_token},
-        'update@user.com'::TEXT
-      )::JSONB - 'selection'),
+        ${this.admin_token},
+        '{"username":"insert@user.com","displayname":"J","password":"a1A!aaaa"}'::JSON,
+        'duckduckgoose'::TEXT
+      )::JSONB - 'insertion'),
   
       '{"msg":"OK","status":"200"}'::JSONB,
   
-      'DB GET adopter(user_token, id) 200 0_0_1'::TEXT
+      'DB adopter POST insert@user.com 200 0_0_1'::TEXT
   
     );
-    
-  /*
-    -- 2 change non-key
+    -- 3 
     
     SELECT is (
   
       (${this.kind}_${this.version}.adopter(
-        ${this.user_token},
-        'update@user.com'::TEXT,
-        '{"username":"update@user.com","displayname":"J","password":"a1A!aaaa"}'::JSON
-      )::JSONB - 'updation'),
+        ${this.admin_token},
+        '{"username":"insert@user.com","displayname":"J","password":"a1A!aaaa"}'::JSON,
+        'duckduckgoose'::TEXT
+      )::JSONB - 'insertion'),
   
-      '{"msg":"OK","status":"200"}'::JSONB,
+      '{"msg":"Duplicate","status":"409"}'::JSONB,
   
-      'DB adopter PUT update displayname 200 0_0_1'::TEXT
-  
-    );
-    
-    
-    -- 4 change pk
-    
-    SELECT is (
-  
-      (${this.kind}_${this.version}.adopter(
-        ${this.user_token},
-        'update@user.com'::TEXT,
-        '{"username":"update2@user.com","displayname":"J","password":"a1A!aaaa"}'::JSON
-      )::JSONB - 'updation'),
-  
-      '{"msg":"OK","status":"200"}'::JSONB,
-  
-      'DB adopter PUT update username 200 0_0_1'::TEXT
+      'DB adopter duplicate POST insert@user.com 200 0_0_1'::TEXT
   
     );
     
-    -- 5 change password
-    
-    SELECT is (
-  
-      (${this.kind}_${this.version}.adopter(
-        ${this.user_token},
-        'update2@user.com'::TEXT,
-        '{"username":"update2@user.com","displayname":"J","password":"b1B!bbbb"}'::JSON
-      )::JSONB  - 'updation'),
-  
-      '{"msg":"OK","status":"200"}'::JSONB,
-  
-      'DB adopter PUT update password 200 0_0_1'::TEXT
-  
-    );
-    */
+
     SELECT * FROM finish();
 
   ROLLBACK;

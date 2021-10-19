@@ -5,12 +5,15 @@ const Step = require('../../lib/runner/step');
 module.exports = class FunctionAdoptees001 extends Step {
   constructor(apiName, apiVersion, baseVersion) {
     super(apiName, apiVersion);
+
+    this.method = 'GET';
+    this.params = 'guest_token TEXT, mbr JSON';
     this.baseKind = 'base';
     this.baseVersion = baseVersion;
 
     this.name = 'adoptees';
     this.name = `${this.kind}_${this.version}.${this.name}`;
-    this.sql = `CREATE OR REPLACE FUNCTION ${this.name}(guest_token TEXT, mbr JSON) RETURNS JSONB
+    this.sql = `CREATE OR REPLACE FUNCTION ${this.name}(${this.params}) RETURNS JSONB
     AS $$
       Declare _mbr JSONB; -- {"west":0.0,"east","north":0.0,"south":0.0}
       Declare _adoptees JSONB;
@@ -76,4 +79,7 @@ module.exports = class FunctionAdoptees001 extends Step {
     `;
     // console.log('CreateFunction', this.sql);
   }    
+  getName() {
+    return `${this.name}(${this.params}) ${this.method}`;
+  }
 };

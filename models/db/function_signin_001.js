@@ -5,11 +5,13 @@ const Step = require('../../lib/runner/step');
 module.exports = class CreateFunctionSignin001 extends Step {
   constructor(baseName, baseVersion) {
     super(baseName, baseVersion);
+    this.method = 'POST';
+    this.params = 'guest_token TEXT,credentials JSON';
     this.baseKind = 'base';
     this.baseVersion = baseVersion;
     this.name = 'signin';
     this.name = `${this.kind}_${this.version}.${this.name}`;
-    this.sql = `CREATE OR REPLACE FUNCTION ${this.name}(guest_token TEXT,credentials JSON) RETURNS JSONB
+    this.sql = `CREATE OR REPLACE FUNCTION ${this.name}(${this.params}) RETURNS JSONB
 
     AS $$
   
@@ -107,4 +109,7 @@ module.exports = class CreateFunctionSignin001 extends Step {
     `;
     // console.log('CreateFunction', this.sql);
   }    
+  getName() {
+    return `${this.name}(${this.params}) ${this.method}`;
+  }
 };

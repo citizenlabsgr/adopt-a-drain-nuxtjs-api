@@ -104,7 +104,7 @@ module.exports = class FunctionSigninTest extends Step {
     
             "password":"a1A!aaaa"
     
-           }'::JSON)::JSONB - 'extra',
+           }'::JSON)::JSONB - '{extra, user}'::TEXT[],
     
         '{"msg": "Forbidden", "status": "403"}'::JSONB,
     
@@ -121,7 +121,7 @@ module.exports = class FunctionSigninTest extends Step {
     
           '{"username":"unknown@user.com","password":"a1A!aaaa"}'::JSON
     
-        )::JSONB - '{"extra","credentials"}'::TEXT[],
+        )::JSONB - 'credentials',
         '{"msg":"Not Found","status":"404"}'::JSONB,
     
         'DB signin GOOD token Bad Username Credentials 0_0_1'::TEXT
