@@ -20,9 +20,9 @@ module.exports = class CreateTable001 extends Step {
         owner TEXT
       );
       CREATE UNIQUE INDEX IF NOT EXISTS one_first_idx ON ${this.name}(pk,sk);
-      CREATE UNIQUE INDEX IF NOT EXISTS one_second_idx ON ${this.name}(sk,tk);
+      CREATE INDEX IF NOT EXISTS one_second_idx ON ${this.name}(sk,tk);
       /* speed up adoptees query by bounding rect */
-      CREATE UNIQUE INDEX IF NOT EXISTS one_second_flip_idx ON ${this.name}(tk, sk);
+      CREATE INDEX IF NOT EXISTS one_second_flip_idx ON ${this.name}(tk, sk);
     `;
     // console.log('** CreateTable', this.name);
   }    

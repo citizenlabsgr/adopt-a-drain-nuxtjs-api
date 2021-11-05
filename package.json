@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "db-deploy": "node --trace-warnings ./models/db.deploy.js",
+    "db-tests": "node ./api-gen/db.tests.js",
     "db-unit-test": "node models/db.unit.test.js",
     "predev": "npm install",
     "dev": "nodemon",
@@ -12,10 +13,12 @@
     "test": "lab -v test/*.test.js",
     "test1": "lab -v */*.unit.test.js",
     "test-unit": "lab -v */*.unit.test.js",
+    "test-unit2": "lab -v */*.unit.test.js",
     "test-integration": "lab -v */*.integration.test.js",
     "lint": "eslint '**/*.js?(x)' .",
     "lint1": "eslint '**/*.js?(x)' .",
-    "scriptify": "node ./models/db.sql.js"
+    "scriptify": "node ./models/db.sql.js",
+    "api-gen": "node ./api-gen/generate-tests.js"
   },
   "author": "James Wilfong <wilfongjt@gmail.com>",
   "license": "ISC",
@@ -36,6 +39,6 @@
     "@hapi/lab": "^24.3.2",
     "dotenv": "^10.0.0",
     "eslint": "^7.32.0",
-    "nodemon": "^2.0.13"
+    "nodemon": "^2.0.14"
   }
 }

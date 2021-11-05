@@ -1,0 +1,136 @@
+{
+    "data": {
+        "signup-post": [{
+            "pk":"username#adopter@user.com",
+            "sk":"const#USER",
+            "tk":"guid#820a5bd9-e669-41d4-b917-81212bc184a3",
+            "form":{"username":"adopter@user.com",
+                    "displayname":"J",
+                    "scope":"api_user",
+                    "password": "a1A!aaaa"
+             },
+            "owner":"duckduckgoose"
+        }],
+        "signin-post": [{
+            "pk":"username#adopter@user.com",
+            "sk":"const#USER",
+            "tk":"guid#820a5bd9-e669-41d4-b917-81212bc184a3",
+            "form":{"username":"adopter@user.com",
+                    "displayname":"J",
+                    "scope":"api_user",
+                    "password": "$2a$06$TXVF4CDfUcHXvTeOIGrEn.BSGbbCzLxMu2t8tyZimKtsBRxxyeQBK"
+             },
+            "owner":"duckduckgoose"
+        }],
+        "signin-post-patch": [{
+            "pk":"username#adopter@user.com",
+            "sk":"const#USER",
+            "tk":"guid#820a5bd9-e669-41d4-b917-81212bc184a3",
+            "form":{"username":"adopter@user.com",
+                    "password": "a1A!aaaa"
+             },
+            "owner":"duckduckgoose"
+        }],
+        "adopter-get": [{
+            "pk":"username#adopter@user.com",
+            "sk":"const#USER",
+            "tk":"guid#820a5bd9-e669-41d4-b917-81212bc184a3",
+            "form":{"username":"adopter@user.com",
+                    "displayname":"J",
+                    "scope":"api_user",
+                    "password": "$2a$06$TXVF4CDfUcHXvTeOIGrEn.BSGbbCzLxMu2t8tyZimKtsBRxxyeQBK"
+             },
+            "owner":"duckduckgoose"
+        }],
+        "adopter-delete": [{
+            "pk":"username#adopter@user.com",
+            "sk":"const#USER",
+            "tk":"guid#820a5bd9-e669-41d4-b917-81212bc184a3",
+            "form":{"username":"adopter@user.com",
+                    "displayname":"J",
+                    "scope":"api_user",
+                    "password": "$2a$06$TXVF4CDfUcHXvTeOIGrEn.BSGbbCzLxMu2t8tyZimKtsBRxxyeQBK"
+             },
+            "owner":"duckduckgoose"
+        }],
+        "adopter-post": [{
+            "pk":"username#adopter@user.com",
+            "sk":"const#USER",
+            "tk":"guid#820a5bd9-e669-41d4-b917-81212bc184a3",
+            "form":{"username":"adopter@user.com",
+                    "displayname":"J",
+                    "scope":"api_user",
+                    "password": "$2a$06$TXVF4CDfUcHXvTeOIGrEn.BSGbbCzLxMu2t8tyZimKtsBRxxyeQBK"
+             },
+            "owner":"duckduckgoose"
+        }],
+        "adopter-put": [{
+            "pk":"username#adopter@user.com",
+            "sk":"const#USER",
+            "tk":"guid#820a5bd9-e669-41d4-b917-81212bc184a3",
+            "form":{"username":"adopter1@user.com",
+                    "displayname":"J1",
+                    "scope":"api_user",
+                    "password": "$2a$06$TXVF4CDfUcHXvTeOIGrEn.BSGbbCzLxMu2t8tyZimKtsBRxxyeQBK"
+             },
+            "owner":"duckduckgoose"
+        }],
+        "adoptee-get": [{
+            "pk":"drain_id#gr_40107671",
+            "sk":"const#ADOPTEE",
+            "tk":"guid#820a5bd9-e669-41d4-b917-81212bc184a3",
+            "form":{
+                "lat": 42.9688029487, 
+                "lon": -85.6761931983, 
+                "name": "abc", 
+                "type": "adoptee", 
+                "drain_id": "GR_40107671", 
+                "adopter_key": "duckduckgoose"
+            },
+            "owner":"duckduckgoose"
+        }],
+        "adoptee-delete": [{
+            "pk":"drain_id#gr_40107671",
+            "sk":"const#ADOPTEE",
+            "tk":"guid#820a5bd9-e669-41d4-b917-81212bc184a3",
+            "form":{
+                "lat": 42.9688029487, 
+                "lon": -85.6761931983, 
+                "name": "abc", 
+                "type": "adoptee", 
+                "drain_id": "GR_40107671", 
+                "adopter_key": "duckduckgoose"
+            },
+            "owner":"duckduckgoose"
+        }],
+        "adoptee-post": [{
+            "pk":"drain_id#gr_40107671",
+            "sk":"const#ADOPTEE",
+            "tk":"guid#820a5bd9-e669-41d4-b917-81212bc184a3",
+            "form":{
+                "lat": 42.9688029487, 
+                "lon": -85.6761931983, 
+                "name": "abc", 
+                "type": "adoptee", 
+                "drain_id": "GR_40107671", 
+                "adopter_key": "duckduckgoose"
+            },
+            "owner":"duckduckgoose"
+        }],
+        "adoptee-put": [{
+            "pk":"drain_id#gr_40107671",
+            "sk":"const#ADOPTEE",
+            "tk":"guid#820a5bd9-e669-41d4-b917-81212bc184a3",
+            "form":{
+                "lat": 42.9688029487, 
+                "lon": -85.6761931983, 
+                "name": "abc", 
+                "type": "adoptee", 
+                "drain_id": "GR_40107671", 
+                "adopter_key": "duckduckgoose"
+            },
+            "owner":"duckduckgoose"
+        }]
+    }
+    
+}

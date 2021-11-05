@@ -16,39 +16,68 @@ const Table001 = require('./db/table_001.js');
 
 const DropFunctions = require('./db/drop_functions.js');
 
+const TypeOwnerId = require('./db/type_owner_id_001.js');
+const TypeIdentity = require('./db/type_identity_001.js');
+const TypeToken = require('./db/type_token_001.js');
 
-const FunctionAlgorithmSign001 = require('./db/function_algorithm_sign_001.js');
-const FunctionChangedKey = require('./db/function_changed_key_002.js');
-const FunctionChelate = require('./db/function_chelate_002.js');
-const FunctionDelete001 = require('./db/function_delete_001.js');
-const FunctionGetJwtClaims001 = require('./db/function_get_jwt_claims_001.js');
-const FunctionGetJwtSecret001 = require('./db/function_get_jwt_secret_001.js');
-const FunctionInsert001 = require('./db/function_insert_001.js');
+let base_version = '004';
+const FunctionAlgorithmSign = require(`./db/base/${base_version}/function_algorithm_sign.js`);
+const FunctionChangedKey = require(`./db/base/${base_version}/function_changed_key.js`);
+const FunctionChelate = require(`./db/base/${base_version}/function_chelate.js`);
+const FunctionDelete = require(`./db/base/${base_version}/function_delete.js`);
+const FunctionGetJwtClaims = require(`./db/base/${base_version}/function_get_jwt_claims.js`);
+const FunctionGetJwtSecret = require(`./db/base/${base_version}/function_get_jwt_secret.js`);
+const FunctionInsert = require(`./db/base/${base_version}/function_insert.js`);
+const FunctionQuery = require(`./db/base/${base_version}/function_query.js`);
+const FunctionSign = require(`./db/base/${base_version}/function_sign.js`);
+const FunctionUpdate = require(`./db/base/${base_version}/function_update.js`);
+const FunctionUrlDecode = require(`./db/base/${base_version}/function_url_decode.js`);
+const FunctionUrlEncode = require(`./db/base/${base_version}/function_url_encode.js`);
+const FunctionValidateChelate = require(`./db/base/${base_version}/function_validate_chelate.js`);
+const FunctionValidateCredentials = require(`./db/base/${base_version}/function_validate_credentials.js`);
+const FunctionValidateCriteria = require(`./db/base/${base_version}/function_validate_criteria.js`);
+const FunctionValidateForm = require(`./db/base/${base_version}/function_validate_form.js`);
+const FunctionValidateToken = require(`./db/base/${base_version}/function_validate_token.js`);
+const FunctionVerify = require(`./db/base/${base_version}/function_verify.js`);
+const FunctionTime = require(`./db/base/${base_version}/function_time.js`);
 
-const FunctionQuery = require('./db/function_query_004.js');
+// Auth
+let auth_version = '003';
+const FunctionSignin = require(`./db/auth/${auth_version}/function_signin.js`);
+const FunctionSignup = require(`./db/auth/${auth_version}/function_signup.js`);
 
-const FunctionSign001 = require('./db/function_sign_001.js');
-const FunctionUpdate001 = require('./db/function_update_001.js');
-const FunctionUrlDecode001 = require('./db/function_url_decode_001.js');
-const FunctionUrlEncode001 = require('./db/function_url_encode_001.js');
-const FunctionValidateChelate001 = require('./db/function_validate_chelate_001.js');
-const FunctionValidateCredentials001 = require('./db/function_validate_credentials_001.js');
-const FunctionValidateCriteria001 = require('./db/function_validate_criteria_001.js');
-const FunctionValidateForm001 = require('./db/function_validate_form_001.js');
-const FunctionValidateToken001 = require('./db/function_validate_token_001.js');
-const FunctionVerify001 = require('./db/function_verify_001.js');
-const FunctionTime001 = require('./db/function_time_001.js');
+// Adoptees
+let adoptees_version = '003';
+const FunctionAdoptees = require(`./db/adoptees/${adoptees_version}/function_adoptees.js`);
 
-const FunctionSignin = require('./db/function_signin_003.js');
+// Adopter
+let adopter_version = '005';
+const FunctionAdopterDeleteTv = require(`./db/adopter/${adopter_version}/function_adopter_delete_tv.js`);
+const FunctionAdopterDeleteTvo = require(`./db/adopter/${adopter_version}/function_adopter_delete_tvo.js`);
+const FunctionAdopterGetTIO = require(`./db/adopter/${adopter_version}/function_adopter_get_tio.js`);
+const FunctionAdopterGetTI = require(`./db/adopter/${adopter_version}/function_adopter_get_ti.js`);
+const FunctionAdopterPost = require(`./db/adopter/${adopter_version}/function_adopter_post_tjo.js`);
+const FunctionAdopterPutTIJO = require(`./db/adopter/${adopter_version}/function_adopter_put_tijo.js`);
+const FunctionAdopterPutTIJ = require(`./db/adopter/${adopter_version}/function_adopter_put_tij.js`);
 
-const FunctionSignup = require('./db/function_signup_003.js');
+/*
+const FunctionAdopterDeleteTvo = require('./db/adopter/function_adopter_delete_tvo_002.js');
+const FunctionAdopterGetTIO = require('./db/adopter/function_adopter_get_TIO_003.js');
+const FunctionAdopterGetTI = require('./db/adopter/function_adopter_get_TI_003.js');
+const FunctionAdopterPost = require('./db/adopter/function_adopter_post_005.js');
+const FunctionAdopterPut = require('./db/adopter/function_adopter_put_005.js');
+*/
+// Adoptee
+let adoptee_version = '003';
+const FunctionAdopteeDeleteTVO = require(`./db/adoptee/${adoptee_version}/function_adoptee_delete_tvo.js`);
+const FunctionAdopteeDeleteTV = require(`./db/adoptee/${adoptee_version}/function_adoptee_delete_tv.js`);
 
-const FunctionAdoptees = require('./db/function_adoptees_002.js');
+const FunctionAdopteeGetTI = require(`./db/adoptee/${adoptee_version}/function_adoptee_get_ti.js`);
+const FunctionAdopteeGetTO = require(`./db/adoptee/${adoptee_version}/function_adoptee_get_to.js`);
+const FunctionAdopteePost = require(`./db/adoptee/${adoptee_version}/function_adoptee_post_tjo.js`);
+const FunctionAdopteePutTIJO = require(`./db/adoptee/${adoptee_version}/function_adoptee_put_tijo.js`);
+const FunctionAdopteePutTIJ = require(`./db/adoptee/${adoptee_version}/function_adoptee_put_tij.js`);
 
-const FunctionAdopterPost = require('./db/function_adopter_post_003.js');
-const FunctionAdopterGet = require('./db/function_adopter_get_002.js');
-const FunctionAdopterPut = require('./db/function_adopter_put_003.js');
-const FunctionAdopterDelete = require('./db/function_adopter_delete_001.js');
 
 // const TestTable = require('./db/table_test_001.js');
 // const BaseTests = require('./tests/test_base.js');
@@ -122,48 +151,69 @@ if (process.env.DATABASE_URL === DB_URL) {
 // [* support multiple versions]
 const runner = new SqlRunner(DB_URL)
        .add(new Comment('Load Extensions '))
+
        .add(new Extension('pgcrypto','public'))
        .add(new Extension('"uuid-ossp"','public'))
        .add(new Comment('Schema '))
        .add(new Schema('base', baseVersion))
        .add(new Schema('api', apiVersion))
+
+       .add(new Comment('Custom Types '))
+       .add(new TypeOwnerId('api', apiVersion))
+       .add(new TypeIdentity('api', apiVersion))
+       .add(new TypeToken('api', apiVersion))
+
        .add(new Comment('Base Schema Table '))
        .add(new Table001('base',baseVersion))
        .add(new Comment('Base Schema Functions '))
        
        .add(new DropFunctions('',''))
-       .add(new FunctionUrlDecode001('base', baseVersion))
-       .add(new FunctionUrlEncode001('base', baseVersion))
-       .add(new FunctionAlgorithmSign001('base', baseVersion))
+       .add(new FunctionUrlDecode('base', baseVersion))
+       .add(new FunctionUrlEncode('base', baseVersion))
+       .add(new FunctionAlgorithmSign('base', baseVersion))
        .add(new FunctionChangedKey('base', baseVersion))
        .add(new FunctionChelate('base', baseVersion))
-       .add(new FunctionDelete001('base', baseVersion))
-       .add(new FunctionGetJwtClaims001('base', baseVersion))
-       .add(new FunctionGetJwtSecret001('base', baseVersion, process))
-       .add(new FunctionInsert001('base', baseVersion))
+       .add(new FunctionDelete('base', baseVersion))
+       .add(new FunctionGetJwtClaims('base', baseVersion))
+       .add(new FunctionGetJwtSecret('base', baseVersion, process))
+       .add(new FunctionInsert('base', baseVersion))
 
        .add(new FunctionQuery('base', baseVersion))
-       .add(new FunctionSign001('base', baseVersion))
-       .add(new FunctionUpdate001('base', baseVersion))
+       .add(new FunctionSign('base', baseVersion))
+       .add(new FunctionUpdate('base', baseVersion))
      
-       .add(new FunctionValidateChelate001('base', baseVersion))
-       .add(new FunctionValidateCredentials001('base', baseVersion))
-       .add(new FunctionValidateCriteria001('base', baseVersion))
-       .add(new FunctionValidateForm001('base', baseVersion))
-       .add(new FunctionValidateToken001('base', baseVersion))
-       .add(new FunctionVerify001('base', baseVersion))
+       .add(new FunctionValidateChelate('base', baseVersion))
+       .add(new FunctionValidateCredentials('base', baseVersion))
+       .add(new FunctionValidateCriteria('base', baseVersion))
+       .add(new FunctionValidateForm('base', baseVersion))
+       .add(new FunctionValidateToken('base', baseVersion))
+       .add(new FunctionVerify('base', baseVersion))
        
        .add(new Comment('Api Schema Functions '))
-       .add(new FunctionTime001('api', apiVersion))
+       .add(new FunctionTime('api', apiVersion))
 
        .add(new FunctionSignup('api', apiVersion))
        .add(new FunctionSignin('api', apiVersion))
 
        .add(new FunctionAdoptees('api', apiVersion, baseVersion))
+
        .add(new FunctionAdopterPost('api', apiVersion, baseVersion))
-       .add(new FunctionAdopterPut('api', apiVersion, baseVersion))
-       .add(new FunctionAdopterDelete('api', apiVersion, baseVersion))
-       .add(new FunctionAdopterGet('api', apiVersion, baseVersion))
+       .add(new FunctionAdopterPutTIJ('api', apiVersion, baseVersion))
+       .add(new FunctionAdopterPutTIJO('api', apiVersion, baseVersion))
+       .add(new FunctionAdopterDeleteTv('api', apiVersion, baseVersion))
+       .add(new FunctionAdopterDeleteTvo('api', apiVersion, baseVersion))
+
+       .add(new FunctionAdopterGetTIO('api', apiVersion, baseVersion))
+       .add(new FunctionAdopterGetTI('api', apiVersion, baseVersion))
+       
+       .add(new FunctionAdopteePost('api', apiVersion, baseVersion))
+       .add(new FunctionAdopteePutTIJ('api', apiVersion, baseVersion))
+       .add(new FunctionAdopteePutTIJO('api', apiVersion, baseVersion))
+       .add(new FunctionAdopteeDeleteTV('api', apiVersion, baseVersion))
+       .add(new FunctionAdopteeDeleteTVO('api', apiVersion, baseVersion))
+       .add(new FunctionAdopteeGetTO('api', apiVersion, baseVersion))
+       .add(new FunctionAdopteeGetTI('api', apiVersion, baseVersion))
+ 
        ;
        
        

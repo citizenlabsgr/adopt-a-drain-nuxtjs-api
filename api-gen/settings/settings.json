@@ -1,0 +1,276 @@
+{
+    "description":"list of api methods",
+    "rules": [
+      "* Roles are pushed into api_settings in generate-tests. "
+    ],
+    "parameters": [
+        "token TOKEN",
+        "chelate JSON",
+        "criteria JSON",
+        "id IDENTITY",
+        "owner OWNER_ID",
+        "mbr MBR" 
+    ],
+    "version": "0_0_1",
+    "api_settings": {
+        "signup-post": {
+            "active": true,
+            "description":"post one adopter for guest",
+            "name": {"name":"signup","kind":"api","version":"0_0_1"}, 
+            "method": "post", 
+            "return":"JSONB", 
+            "params":[
+                {"name":"token","type":"TOKEN"},        
+                {"name":"form","type":"JSON"}
+            ]
+        },
+        "signin-post": {
+            "active": true,
+            "description":"get user token for guest",
+                "name": {"name":"signin","kind":"api","version":"0_0_1"}, 
+                "method": "post", 
+                "return":"JSONB", 
+                "params":[
+                    {"name":"token","type":"TOKEN"},
+                    {"name":"critera","type":"JSON"}
+                ],
+                "roles":[]
+        },
+        "adopter-delete-tv":{
+            "active": true,
+            "description":"delete one by id",
+            "name": {"name":"adopter","kind":"api","version":"0_0_1"},
+            "method": "delete",
+            "return":"JSONB",
+            "params":[
+                    {"name":"token","type":"TOKEN"},
+                    {"name":"id","type":"VARCHAR"}
+            ],
+            "roles":[]
+        },
+        "adopter-delete-tvo":{
+            "active": true,
+            "description":"delete one by id for owner",
+            "name": {"name":"adopter","kind":"api","version":"0_0_1"}, 
+            "method": "delete", 
+            "return":"JSONB",
+            "params":[
+                {"name":"token","type":"TOKEN"},
+                {"name":"id","type":"VARCHAR"},
+                {"name":"owner","type":"OWNER_ID"}
+            ],
+            "roles":[]
+        },
+        "adopter-get-ti":{
+            "active": true,
+            "description":"get one by id",
+            "name": {"name":"adopter","kind":"api","version":"0_0_1"},
+            "method": "get",
+            "return":"JSONB",
+            "params":[
+                {"name":"token","type":"TOKEN"},
+                {"name":"id","type":"IDENTITY"}
+            ],
+            "roles":[]
+        },
+        "adopter-get-tio":{
+            "active": true,
+            "description":"get one by id and for owner",
+            "name": {"name":"adopter","kind":"api","version":"0_0_1"}, 
+            "method": "get", 
+            "return":"JSONB",
+            "params":[
+                {"name":"token","type":"TOKEN"},
+                {"name":"id","type":"IDENTITY"},
+                {"name":"owner","type":"OWNER_ID"}
+            ],
+            "roles":[]
+        },
+        
+        "adopter-post-tj":{
+            "active": true,
+            "description":"post one for owner",
+            "name": {"name":"adopter","kind":"api","version":"0_0_1"}, 
+            "method": "post", 
+            "return":"JSONB",
+            "params":[
+                {"name":"token","type":"TOKEN"},
+                {"name":"form","type":"JSON"}
+            ],
+            "roles":[]
+        },
+        "adopter-post-tjo":{
+            "active": true,
+            "description":"post one for owner",
+            "name": {"name":"adopter","kind":"api","version":"0_0_1"},
+            "method": "post",
+            "return":"JSONB",
+            "params":[
+                {"name":"token","type":"TOKEN"},
+                {"name":"form","type":"JSON"},
+                {"name":"owner","type":"OWNER_ID"}
+            ],
+            "roles":[]
+        },
+        "adopter-put-tij":{
+            "active": true,
+            "description":"put by id",
+            "name": {"name":"adopter","kind":"api","version":"0_0_1"}, 
+            "method": "put", 
+            "return":"JSONB",
+            "params":[
+                {"name":"token","type":"TOKEN"},
+                {"name":"id","type":"IDENTITY"},
+                {"name":"form","type":"JSON"}
+            ],
+            "roles":[]
+        },
+        "adopter-put-tijo":{
+            "active": true,
+            "description":"put by id for owner",
+            "name": {"name":"adopter","kind":"api","version":"0_0_1"},
+            "method": "put",
+            "return":"JSONB",
+            "params":[
+                {"name":"token","type":"TOKEN"},
+                {"name":"id","type":"IDENTITY"},
+                {"name":"form","type":"JSON"},
+                {"name":"owner","type":"OWNER_ID"}
+            ],
+            "roles":[]
+        },
+        "adoptee-delete-tv": {
+            "active": true,
+            "description":"delete one by id",
+            "name": {"name":"adoptee","kind":"api","version":"0_0_1"}, 
+            "method": "delete", 
+            "return":"JSONB",
+            "params":[
+                {"name":"token","type":"TOKEN"},
+                {"name":"id","type":"VARCHAR"}
+            ],
+            "roles":[]
+        },
+        "adoptee-delete-tvo": {
+            "active": true,
+            "description":"delete one by id for owner",
+            "name": {"name":"adoptee","kind":"api","version":"0_0_1"},
+            "method": "delete",
+            "return":"JSONB",
+            "params":[
+                {"name":"token","type":"TOKEN"},
+                {"name":"id","type":"VARCHAR"},
+                {"name":"owner","type":"OWNER_ID"}
+            ],
+            "roles":[]
+        },
+        "adoptee-get-ti":{
+            "active": true,
+            "description":"",
+            "name": {"name":"adoptee","kind":"api","version":"0_0_1"}, 
+            "method": "get", 
+            "return":"JSONB",
+            "params":[
+                {"name":"token","type":"TOKEN"},
+                {"name":"id","type":"IDENTITY"}
+            ],
+            "roles":[]
+        },
+        "adoptee-get-to":{
+            "active": true,
+            "description":"get many for owner",
+            "name": {"name":"adoptee","kind":"api","version":"0_0_1"},
+            "method": "get",
+            "return":"JSONB",
+            "params":[
+                {"name":"token","type":"TOKEN"},
+                {"name":"owner","type":"OWNER_ID"}
+            ],
+            "roles":[]
+        },
+        "adoptee-post-tj":{
+            "active": true,
+            "description":"post one",
+            "name": {"name":"adoptee","kind":"api","version":"0_0_1"}, 
+            "method": "post", 
+            "return":"JSONB",
+            "params":[
+                {"name":"token","type":"TOKEN"},
+                {"name":"form","type":"JSON"},
+                {"name":"owner","type":"OWNER_ID"}
+            ],
+            "roles":[]
+        },
+        "adoptee-put-tij":{
+            "active": true,
+            "description":"put by id",
+            "name": {"name":"adoptee","kind":"api","version":"0_0_1"}, 
+            "method": "put", 
+            "return":"JSONB",
+            "params":[
+                {"name":"token","type":"TOKEN"},
+                {"name":"id","type":"IDENTITY"},
+                {"name":"form","type":"JSON"},
+                {"name":"owner","type":"OWNER_ID"}
+            ],
+            "roles":[]
+        }
+    },
+    "tokens": [
+        {
+            "name":"guest_token",
+            "role": "api_guest",
+            "claim": {"aud":"citizenlabs-api", "iss":"citizenlabs", "sub":"client-api", "user":"guest", "scope":"api_guest", "key":"0"},
+            "api": [
+                "signup-post",
+                "signin-post"
+            ]
+        },
+        {
+            "name":"user_token",
+            "role": "api_user",
+            "claim": {"aud":"citizenlabs-api", "iss":"citizenlabs", "sub":"client-api", "user":"adopter@user.com", "scope":"api_user", "key":"duckduckgoose"},
+            "api": [
+                "adopter-delete-tv",
+                "adopter-get-ti",
+                "adopter-put-tij",
+
+                "adoptee-delete-tv",
+                "adoptee-get-ti",
+                "adoptee-get-to",
+                "adoptee-post-tj",
+                "adoptee-put-tij"
+            ]
+        },
+        {
+            "name":"admin_token",
+            "role": "api_admin",
+            "claim": {"aud":"citizenlabs-api", "iss":"citizenlabs", "sub":"client-api", "user":"adopter@user.com", "scope":"api_admin", "key":"duckduckgoose"},
+            "api": [
+                "adopter-delete-tvo",
+                "adopter-get-tio",
+                "adopter-post-tjo",
+                "adopter-put-tijo",
+                "adoptee-delete-tvo"
+            ]
+        }
+    ],
+    "get":[
+        {"name":"get all", "params": "admin_token"},
+        {"name":"get singleton for", "params": "admin_token"},
+        {"name":"get all for owner", "params": "admin_token"},
+        {"name":"get singleton by owner", "params": "user_token"}
+    ],
+    "delete": [
+        {"name":"delete singleton by owner"},
+        {"name":"delete for owner"}
+    ],
+    "post":[
+        {"name":"POST singleton by owner"},
+        {"name":"POST singleton for owner"}
+    ],
+    "put":[
+        {"name":"PUT singleton by owner"},
+        {"name":"PUT singleton for owner"}
+    ]
+}
