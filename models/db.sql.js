@@ -13,6 +13,8 @@ const Schema = require('./db/schema.js');
 
 const Table001 = require('./db/table_001.js');
 
+const TypeOwnerId = require('./db/type_owner_id_001.js');
+
 const FunctionAlgorithmSign001 = require('./db/function_algorithm_sign_001.js');
 const FunctionChangedKey001 = require('./db/function_changed_key_001.js');
 const FunctionChelate001 = require('./db/function_chelate_001.js');
@@ -43,8 +45,16 @@ const FunctionSignin = require('./db/function_signin_002.js');
 const FunctionSignup001 = require('./db/function_signup_001.js');
 
 const FunctionAdoptees002 = require('./db/function_adoptees_002.js');
-const FunctionAdopterPut = require('./db/function_adopter_put_003.js');
-const FunctionAdopterGet = require('./db/function_adopter_get_002.js');
+
+const FunctionAdopterDelete = require('./db/adopter/function_adopter_delete_002.js');
+const FunctionAdopterGet = require('./db/adopter/function_adopter_get_003.js');
+const FunctionAdopterPost = require('./db/adopter/function_adopter_post_005.js');
+const FunctionAdopterPut = require('./db/adopter/function_adopter_put_005.js');
+
+const FunctionAdopteeDelete = require('./db/adoptee/function_adoptee_delete_002.js');
+const FunctionAdopteePost = require('./db/adoptee/function_adoptee_post_002.js');
+const FunctionAdopteePut = require('./db/adoptee/function_adoptee_put_002.js');
+const FunctionAdopteeGet = require('./db/adoptee/function_adoptee_get_TO_002.js');
 
 // const TestTable = require('./db/table_test_001.js');
 // const BaseTests = require('./tests/test_base.js');
@@ -93,6 +103,8 @@ const scripter = new SqlScripter(DB_URL)
        .add(new Comment('-- Load Extensions --'))
        .add(new Extension('pgcrypto','public'))
        .add(new Extension('"uuid-ossp"','public'))
+       .add(new Comment('Custom Types '))
+       .add(new TypeOwnerId('api', apiVersion))
        .add(new Comment('--  Schema --'))
        .add(new Schema('base', baseVersion))
        .add(new Schema('api', apiVersion))
@@ -108,9 +120,7 @@ const scripter = new SqlScripter(DB_URL)
        .add(new FunctionGetJwtClaims001('base', baseVersion))
        .add(new FunctionGetJwtSecret001('base', baseVersion, process))
        .add(new FunctionInsert001('base', baseVersion))
-       // .add(new FunctionQuery001('base', baseVersion))
-       // .add(new FunctionQuery001('base', baseVersion))
-       // .add(new FunctionQuery002('base', baseVersion))
+
        .add(new FunctionQuery('base', baseVersion))
        
        .add(new FunctionSign001('base', baseVersion))
@@ -129,9 +139,15 @@ const scripter = new SqlScripter(DB_URL)
        .add(new FunctionSignin('api', apiVersion))
 
        .add(new FunctionAdoptees002('api', apiVersion, baseVersion))
+       .add(new FunctionAdopterPost('api', apiVersion, baseVersion))
        .add(new FunctionAdopterPut('api', apiVersion, baseVersion))
        .add(new FunctionAdopterGet('api', apiVersion, baseVersion))
+       .add(new FunctionAdopterDelete('api', apiVersion, baseVersion))
 
+       .add(new FunctionAdopteePost('api', apiVersion, baseVersion))       
+       .add(new FunctionAdopteeDelete('api', apiVersion, baseVersion))
+       .add(new FunctionAdopteePut('api', apiVersion, baseVersion))
+       .add(new FunctionAdopteeGet('api', apiVersion, baseVersion))
        ;
        
        
