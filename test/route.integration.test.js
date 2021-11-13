@@ -175,11 +175,11 @@ describe('API Route Tests', () => {
       url: '/adoptee',
       headers: {
         authorization: token,
+        mbr: {"west": 0.0, "east": 2.0, "north": 2.0, "south": 0.0},
         api_options: {
           rollback: true,
           test: adoptee_data,
-          debug: false,
-          mbr: {"west": 0.0, "east": 2.0, "north": 2.0, "south": 0.0}
+          debug: false
         }
       }
     });
