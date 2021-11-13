@@ -11,8 +11,8 @@ module.exports = class PuttTemplate extends Template {
     }
     validate() {
       super.validate();
-      if (!this.hasType('JSON')) {
-        throw new Error(`JSON parameter required in ${this.api_settings.name.name} `);
+      if (!this.hasType('JSONB')) {
+        throw new Error(`JSONB parameter required in ${this.api_settings.name.name} `);
       }
       
       if (!this.hasType('IDENTITY')) {

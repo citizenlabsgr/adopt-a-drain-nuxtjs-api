@@ -19,6 +19,7 @@ const DropFunctions = require('./db/drop_functions.js');
 const TypeOwnerId = require('./db/type_owner_id_001.js');
 const TypeIdentity = require('./db/type_identity_001.js');
 const TypeToken = require('./db/type_token_001.js');
+const TypeMbr = require('./db/type_mbr_001.js');
 
 let base_version = '004';
 const FunctionAlgorithmSign = require(`./db/base/${base_version}/function_algorithm_sign.js`);
@@ -29,6 +30,8 @@ const FunctionGetJwtClaims = require(`./db/base/${base_version}/function_get_jwt
 const FunctionGetJwtSecret = require(`./db/base/${base_version}/function_get_jwt_secret.js`);
 const FunctionInsert = require(`./db/base/${base_version}/function_insert.js`);
 const FunctionQuery = require(`./db/base/${base_version}/function_query.js`);
+const FunctionQueryMbr = require(`./db/base/${base_version}/function_query_mbr.js`);
+
 const FunctionSign = require(`./db/base/${base_version}/function_sign.js`);
 const FunctionUpdate = require(`./db/base/${base_version}/function_update.js`);
 const FunctionUrlDecode = require(`./db/base/${base_version}/function_url_decode.js`);
@@ -41,14 +44,17 @@ const FunctionValidateToken = require(`./db/base/${base_version}/function_valida
 const FunctionVerify = require(`./db/base/${base_version}/function_verify.js`);
 const FunctionTime = require(`./db/base/${base_version}/function_time.js`);
 
-// Auth
-let auth_version = '003';
-const FunctionSignin = require(`./db/auth/${auth_version}/function_signin.js`);
-const FunctionSignup = require(`./db/auth/${auth_version}/function_signup.js`);
+// signin
+let signin_version = '003';
+const FunctionSignin = require(`./db/signin/${signin_version}/function_signin_post.js`);
+
+// signup
+let signup_version = '003';
+const FunctionSignup = require(`./db/signup/${signup_version}/function_signup_post.js`);
 
 // Adoptees
-let adoptees_version = '003';
-const FunctionAdoptees = require(`./db/adoptees/${adoptees_version}/function_adoptees.js`);
+// let adoptees_version = '003';
+// const FunctionAdoptees = require(`./db/adoptees/${adoptees_version}/function_adoptees.js`);
 
 // Adopter
 let adopter_version = '005';
@@ -68,15 +74,18 @@ const FunctionAdopterPost = require('./db/adopter/function_adopter_post_005.js')
 const FunctionAdopterPut = require('./db/adopter/function_adopter_put_005.js');
 */
 // Adoptee
-let adoptee_version = '003';
+let adoptee_version = '005';
 const FunctionAdopteeDeleteTVO = require(`./db/adoptee/${adoptee_version}/function_adoptee_delete_tvo.js`);
-const FunctionAdopteeDeleteTV = require(`./db/adoptee/${adoptee_version}/function_adoptee_delete_tv.js`);
 
-const FunctionAdopteeGetTI = require(`./db/adoptee/${adoptee_version}/function_adoptee_get_ti.js`);
+const FunctionAdopteeGetTI = require(`./db/adoptee/${adoptee_version}/function_adoptee_get_tio.js`);
+// const FunctionAdopteeGetTJ = require(`./db/adoptee/${adoptee_version}/function_adoptee_get_tj.js`);
 const FunctionAdopteeGetTO = require(`./db/adoptee/${adoptee_version}/function_adoptee_get_to.js`);
-const FunctionAdopteePost = require(`./db/adoptee/${adoptee_version}/function_adoptee_post_tjo.js`);
+const FunctionAdopteeGetTMbr = require(`./db/adoptee/${adoptee_version}/function_adoptee_get_tmbr.js`);
+
+const FunctionAdopteePostTJO = require(`./db/adoptee/${adoptee_version}/function_adoptee_post_tjo.js`);
+
 const FunctionAdopteePutTIJO = require(`./db/adoptee/${adoptee_version}/function_adoptee_put_tijo.js`);
-const FunctionAdopteePutTIJ = require(`./db/adoptee/${adoptee_version}/function_adoptee_put_tij.js`);
+// const FunctionAdopteePutTIJ = require(`./db/adoptee/${adoptee_version}/function_adoptee_put_tij.js`);
 
 
 // const TestTable = require('./db/table_test_001.js');
@@ -162,6 +171,7 @@ const runner = new SqlRunner(DB_URL)
        .add(new TypeOwnerId('api', apiVersion))
        .add(new TypeIdentity('api', apiVersion))
        .add(new TypeToken('api', apiVersion))
+       .add(new TypeMbr('api', apiVersion))
 
        .add(new Comment('Base Schema Table '))
        .add(new Table001('base',baseVersion))
@@ -179,6 +189,8 @@ const runner = new SqlRunner(DB_URL)
        .add(new FunctionInsert('base', baseVersion))
 
        .add(new FunctionQuery('base', baseVersion))
+       .add(new FunctionQueryMbr('base', baseVersion))
+
        .add(new FunctionSign('base', baseVersion))
        .add(new FunctionUpdate('base', baseVersion))
      
@@ -195,8 +207,6 @@ const runner = new SqlRunner(DB_URL)
        .add(new FunctionSignup('api', apiVersion))
        .add(new FunctionSignin('api', apiVersion))
 
-       .add(new FunctionAdoptees('api', apiVersion, baseVersion))
-
        .add(new FunctionAdopterPost('api', apiVersion, baseVersion))
        .add(new FunctionAdopterPutTIJ('api', apiVersion, baseVersion))
        .add(new FunctionAdopterPutTIJO('api', apiVersion, baseVersion))
@@ -206,14 +216,17 @@ const runner = new SqlRunner(DB_URL)
        .add(new FunctionAdopterGetTIO('api', apiVersion, baseVersion))
        .add(new FunctionAdopterGetTI('api', apiVersion, baseVersion))
        
-       .add(new FunctionAdopteePost('api', apiVersion, baseVersion))
-       .add(new FunctionAdopteePutTIJ('api', apiVersion, baseVersion))
+       .add(new FunctionAdopteePostTJO('api', apiVersion, baseVersion))
        .add(new FunctionAdopteePutTIJO('api', apiVersion, baseVersion))
-       .add(new FunctionAdopteeDeleteTV('api', apiVersion, baseVersion))
        .add(new FunctionAdopteeDeleteTVO('api', apiVersion, baseVersion))
+       
        .add(new FunctionAdopteeGetTO('api', apiVersion, baseVersion))
        .add(new FunctionAdopteeGetTI('api', apiVersion, baseVersion))
- 
+       // .add(new FunctionAdopteeGetTJ('api', apiVersion, baseVersion))
+       .add(new FunctionAdopteeGetTMbr('api', apiVersion, baseVersion))
+
+       
+       
        ;
        
        

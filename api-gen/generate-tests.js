@@ -7,6 +7,8 @@ const HasFunctionTemplate = require('./lib/has_function_template.js');
 const InsertTemplate = require('./lib/insert_template.js');
 const PostTemplate = require('./lib/post_template.js');
 const SigninPostTemplate = require('./lib/signin_post_template.js');
+const SignupPostTemplate = require('./lib/signup_post_template.js');
+
 const PutTemplate = require('./lib/put_template.js');
 
 const GetTemplate = require('./lib/get_template.js');
@@ -26,14 +28,26 @@ settings['data'] = testdata['data'];
 testdata = undefined;
 let i = 1;
 // console.log('settings', settings);
+console.log('[Validate Settings]');
+
 
 console.log('[Process tests for the Token/user types]');
 let fileList = [];
 let fileNameList = [];
 let classList = [];
+let tokenNameList =[];
 let apiTestFolder = 'api-tests';
 
+// let functionFolder = `${__dirname}/${apiTestFolder}`;
+let functionFolder = `${__dirname.replace('/api-gen','')}/models/db`;
+
+if (!validateSettings(settings, functionFolder)) {
+    console.log('Invalid Settings');
+}
+// GENERATE DATABASE TESTS
     for (let t in settings.tokens) {    
+        // Process Tokens with Claims
+        
 
         // console.log('JSON 4');
         let token_name = settings.tokens[t].name;
@@ -41,9 +55,15 @@ let apiTestFolder = 'api-tests';
         let role = settings.tokens[t].role; // get role from token settings
         // console.log('role', role);
         for (let a in settings.tokens[t].api) {
+            // iterate 
+            // Build filename
+            // Build classname
             let api_key =settings.tokens[t].api[a];
+            // let folder =  `${__dirname}/${apiTestFolder}`;
+            // let filename =  getTestFileName(folder, api_key, token_name);
+            
 
-            let file_name = `${api_key}.${token_name}.test.js`;
+            let file_name = `${api_key}.${token_name}.db.test.js`;
             let filename = `${__dirname}/${apiTestFolder}/${file_name}`;
             
             let classname = `${util.toTitleCase(api_key)}`;
@@ -63,16 +83,27 @@ let apiTestFolder = 'api-tests';
             let patch_data = settings.data[`${api_key}-patch`];
 
             // inject role array into api_settings when not found
-            if (!settings.api_settings[api_key].roles) { 
-                settings.api_settings[api_key].roles = [];
-            } 
+            // console.log('settings.api_settings',settings.api_settings);
+            // console.log('api_key',api_key);
+            // console.log('settings.api_settings[api_key]',settings.api_settings[api_key]);
+            try {
+                if (!hasRoles(settings.api_settings[api_key])){
+                    settings.api_settings[api_key].roles = [];
+                }
+                // if (!settings.api_settings[api_key].roles) { 
+                //    settings.api_settings[api_key].roles = [];
+                // } 
+            } catch(err) {
+                throw new Error(`Api roles not found in ${api_key}`);
+            }
             settings.api_settings[api_key].roles.push(role);
 
             let api_settings = settings.api_settings[api_key];
-            // console.log('api_settings add role', api_settings);
+            console.log('api_settings add role', api_settings);
 
             if (!api_settings) {
                 console.error('Api_Settigs[',api_key,'] Not Found');
+                throw new Error(`Missing api_setting for ${api_key}`);
             }
 
             let token_statement = `base_0_0_1.sign('${JSON.stringify(claim)}'::JSON, base_0_0_1.get_jwt_secret()::TEXT)`;
@@ -129,15 +160,16 @@ let apiTestFolder = 'api-tests';
                     // script.setTokens(new TokenTemplate(version,data));
                     
                     // [Post multiple records]
-                    if (api_settings.name.name !== 'signin') {
+                    if (api_settings.name.name === 'signup') {
                         for (let i in data) {
-                            script.add(new PostTemplate(
+                            script.add(new SignupPostTemplate(
                             token_name,
                             claim,
                             api_settings, 
                             data[i]));
-                        }  
-                    } else { // signin patch
+                        } 
+                    
+                    } else if (api_settings.name.name === 'signin') { // signin patch
                         script.setData(new InsertTemplate(version,data));
                         // console.log('SignIn Patch');
                         for (let i in patch_data) {
@@ -147,6 +179,14 @@ let apiTestFolder = 'api-tests';
                             api_settings, 
                             patch_data[i]));
                         }  
+                    } else {
+                        for (let i in data) {
+                            script.add(new PostTemplate(
+                            token_name,
+                            claim,
+                            api_settings, 
+                            data[i]));
+                        } 
                     }
                     break;
                 case 'PUT':
@@ -167,25 +207,19 @@ let apiTestFolder = 'api-tests';
                 default:
                     throw new Error(`Undefined Method ${method}`);      
             }    
+            console.log('   ');
             // [Generate individual test files]
             let scrpt = script.templatize();   
-            
-            /*
-            let file_name = `${api_key}.${token_name}.test.js`;
-            let filename = `${__dirname}/${apiTestFolder}/${file_name}`;
-            
-            let classname = `${util.toTitleCase(api_key)}`;
-            let tokenname = `${util.toTitleCase(token_name.replace('_','-'))}`;
-            // console.log('api_settings.active', api_settings.active);
-
-            */
             // [Generate active tests]
+
             let fileHelper = new FileHelper(`${__dirname}/${apiTestFolder}`, file_name);
+            
             if (api_settings.active) {
 
                 fileList.push(filename);
                 fileNameList.push(file_name);
                 classList.push(classname);
+                tokenNameList.push(`${util.toTitleCase(token_name.replace('_','-'))}`);
             let ms = `
     'use strict';
     // this file was generated
@@ -207,23 +241,23 @@ let apiTestFolder = 'api-tests';
             // console.log('script', scrpt);
             i++;
         }
-
-        console.log('--');
+        // console.log('  ');
+        // console.log('--');
         // break;
     }
 console.log('[Generate active tests]');
 console.log('fileList', fileList);
 console.log('classList', classList);
-const apiTestCollectionName = '0.api-test-collection.js';
+console.log('tokenNameList', tokenNameList);
+const apiTestCollectionName = '0.api-db-test-collection.js';
 let collectionFileHelper = new FileHelper(`${__dirname}/${apiTestFolder}`, apiTestCollectionName);
 let declarations = '';
 let instances = '';
 for (i in fileNameList) {
-    
-   declarations += `const ${classList[i]} = require('./${fileNameList[i]}');` +'\n';
+   declarations += `const Function${classList[i]}${tokenNameList[i]}Test = require('./${fileNameList[i]}');` +'\n';
 }
 for (i in classList) {
-   instances += `      this.push(new ${classList[i]}('api', apiVersion, baseVersion));`+'\n';
+   instances += `      this.push(new Function${classList[i]}${tokenNameList[i]}Test('api', apiVersion, baseVersion));`+'\n';
 }
 collectionFileHelper.write(`
 // this file was generated
@@ -249,77 +283,6 @@ module.exports = class ApiTests extends Array {
   };
 `);
 
-// let data = settings.chelates[settings.apis[settings.tokens[t].api[a]].expected[e]];
-// let api_key = ''; 
-// let data = setting.data[]; 
-// let insertTemplate = new InsertTemplate(version,data);
-/*
-let script = new Script(insertTemplate);
-
-script.add(new HasFunctionTemplate(
-                                   settings.tokens[t].name,
-                                   settings.tokens[t].claim,
-                                   settings.apis[settings.tokens[t].api[a]]));
-*/
-/*                                   
-for (let t in settings.tokens) {
-    console.log('t',t, settings.tokens[t].name);
-    for (let a in settings.tokens[t].api ) {
-       // console.log('  a', a, settings.tokens[t].api[a]);
-       let apis_key = settings.tokens[t].api[a];
-       console.log('apis_key',apis_key);
-       console.log('xxx',settings.apis[settings.tokens[t].api[a]]);
-       // console.log('  a', a, settings.tokens[t].api[a],settings.apis[settings.tokens[t].api[a]]);
-
-       // for (let e in settings.tokens[t].api[a]) {
-       //    console.log('    e', e , settings.tokens[t].api[a][e]);
-       // }
-    }
-}    
-*/
-// console.log('',);
-
-// let scpt = script.templatize();
-
-// console.log('script', scpt);
-
-/*
-for (let t in settings.tokens){
-    // console.log('token is ', settings.tokens[t]);
-    let token_name = settings.tokens[t].name;
-    
-    for (let a in settings.tokens[t].api) {
-        let tmpl;
-        switch(settings.tokens[t].api[a].method) {
-            case 'get':
-            case 'GET':
-                console.log('GET');
-                break;
-            case 'delete':
-            case 'DELETE':
-                console.log('DELETE');
-                
-            break;       
-            case 'post':
-            case 'POST':
-                // console.log('POST');
-                script.add(new HasFunctionTemplate('api','001', token_name, settings.tokens[t].api[a]));
-                // console.log('tmpl', tmpl.templatize());
-            break;
-            case 'put':
-            case 'PUT':
-                console.log('PUT');
-
-            break;                  
-
-        }
-
-    
-    }
-}
-*/
-// console.log('script', script.run());
-
 // sql functions
 
 console.log('JSON out');
@@ -329,4 +292,141 @@ function trim_after(value, delimeter) {
     let parts = value.split(delimeter);
     parts = parts.splice(0,parts.length-1);
     return parts.join(delimeter);
+}
+
+function hasRoles(api_setting) {
+    // check api_settings for role
+    // console.log('hasRoles', api_setting);
+    if (!api_setting) {
+        return false;
+    }
+    if (api_setting.roles) {
+        return true;
+    }
+    return false;
+}
+/*
+function getTestFileName(folder, api_key, token_name) {
+    let file_name = `${folder}/${api_key}.${token_name}.db.test.js`;
+    return file_name;
+}
+*/
+
+function getFunctionFileName(folder, api_key) {
+    let file_name = `function_${api_key.replace('-','_').replace('-','_').replace('-','_')}.js`;
+    file_name = `${folder}/${file_name}`;
+    return file_name;
+}
+/*
+function formatFunctionParametersSmall(api_setting) {
+    let rc = '';
+    for (let i in api_setting.params) {
+        rc += api_setting.params[i].type[0];
+    }
+    return rc.toLowerCase();
+}
+*/
+
+function formatFunctionParametersTypes(api_setting) {
+    let rc = '';
+    for (let i in api_setting.params) {
+        if (rc.length > 0) {rc +=',';}
+        rc += api_setting.params[i].type;
+    }
+    return rc.toLowerCase();
+}
+
+function validateSettings(settings,functionFolder) {
+    let rc = true;
+    let data_key = false;
+    // let function_name = '';
+    // [Check api_settings]
+    console.log('# Api Settings');
+    let i = 1;
+    for (let t in settings.tokens) {  
+        for (let a in settings.tokens[t].api) {
+            let api_key =settings.tokens[t].api[a];
+            let status = 'Ok';
+
+            if (settings.api_settings[api_key]) {
+                data_key = api_key;
+
+            } else {
+                status = `Missing api ${api_key}`;
+                rc = false;
+            }
+            if(!hasRoles(settings.api_settings[api_key])){
+                status = 'Add roles to api_settings';
+            }
+            
+            // console.log(`api_key ${api_key} Primary: ${primary} hasDefault: ${has_default}`); 
+            console.log(`    ${i} ${status} API ${api_key}(${data_key}) `); 
+            i += 1;
+        }    
+        
+    } 
+
+    // [Check data]
+    console.log('# Data');
+    i = 1;
+    for (let t in settings.tokens) {  
+        for (let a in settings.tokens[t].api) {
+            let api_key =settings.tokens[t].api[a];
+            if (settings.data[api_key]) {
+                data_key = api_key;
+            } else if (settings.data[trim_after(api_key,'-')]) {
+                data_key = trim_after(api_key,'-');
+            } else {
+                rc = false;
+            }
+            
+            // console.log(`api_key ${api_key} Primary: ${primary} hasDefault: ${has_default}`); 
+            console.log(`    ${i} api_key ${api_key} data_key: ${data_key}`); 
+            i++;
+        }    
+    }    
+    // [Check functions]
+    // function getFunctionFileName(folder, api_key, token_name) {
+    // let folder = `${__dirname}/${functionFolder}`;
+    console.log('# Expected Functions (found files)');
+    i = 1;
+    for (let t in settings.tokens) {  
+        // let token_name = settings.tokens[t].name;
+
+        for (let a in settings.tokens[t].api) {
+            let status = '';
+            let api_key =settings.tokens[t].api[a];
+            let api_setting = settings.api_settings[api_key];
+
+            let function_name = api_setting.name.name;
+            let folder = `${functionFolder}/${function_name}/${settings.api_settings[api_key].version}`;
+            let filename = getFunctionFileName(folder, api_key) ;
+            let paramTypes = formatFunctionParametersTypes(api_setting);
+                
+            // let api_name = settings.api_settings[api_key].name.name;
+            // function_name = ;
+            // console.log('name', api_name);
+
+            status = `UNDEFINED Function File(${filename})  `;
+            if (fs.existsSync(filename)) {
+                status = 'Ok';
+            }
+            console.log(`    ${i} ${status} ${function_name}(${paramTypes}), `);
+            i++;
+            /*
+            if (settings.data[api_key]) {
+                data_key = api_key;
+            } else if (settings.data[trim_after(api_key,'-')]) {
+                data_key = trim_after(api_key,'-');
+            } else {
+                rc = false;
+            }
+            */
+            
+            // console.log(`api_key ${api_key} Primary: ${primary} hasDefault: ${has_default}`); 
+            // console.log(`    * api_key ${api_key} data_key: ${data_key}`); 
+
+        }    
+    } 
+    return rc;
 }

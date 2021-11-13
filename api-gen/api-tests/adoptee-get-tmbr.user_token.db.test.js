@@ -2,7 +2,7 @@
     'use strict';
     // this file was generated
     const Step = require('../../lib/runner/step.js');
-    module.exports = class FunctionAdopteeGetToUserTokenTest extends Step {
+    module.exports = class FunctionAdopteeGetTmbrUserTokenTest extends Step {
         constructor(kind, version, baseVersion) {    
             super(kind, version);
             this.baseVersion = baseVersion;
@@ -22,7 +22,7 @@
             'drain_id#gr_40107671',
             'const#ADOPTEE',
             'guid#820a5bd9-e669-41d4-b917-81212bc184a3',
-            '{"lat":42.9688029487,"lon":-85.6761931983,"name":"abc","type":"adoptee","drain_id":"GR_40107671","adopter_key":"duckduckgoose"}'::JSONB,
+            '{"lat":1,"lon":1,"name":"abc","type":"adoptee","drain_id":"GR_40107671","adopter_key":"duckduckgoose"}'::JSONB,
             'duckduckgoose'
         );
         
@@ -37,9 +37,9 @@
       
             'adoptee',
       
-            ARRAY[TOKEN,OWNER_ID],
+            ARRAY[TOKEN,MBR],
       
-            'DB Function GET adoptee (TOKEN,OWNER_ID) exists'
+            'DB Function GET adoptee (TOKEN,MBR) exists'
       
         );
         */
@@ -50,7 +50,8 @@
               base_0_0_1.sign('{"aud":"citizenlabs-api","iss":"citizenlabs","sub":"client-api","user":"adopter@user.com","scope":"api_user","key":"duckduckgoose"}'::JSON, base_0_0_1.get_jwt_secret()::TEXT)::TOKEN
               
               
-              ,'("duckduckgoose")'::OWNER_ID
+              ,'(2,0,0,2)'::MBR
+              
             )::JSONB - 'selection'),
         
             '{"msg":"OK","status":"200"}'::JSONB,

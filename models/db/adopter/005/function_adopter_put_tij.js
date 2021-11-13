@@ -15,23 +15,19 @@ module.exports = class FunctionAdopterPut extends Step {
     this.method = 'PUT';
     this.baseKind='base';
     this.baseVersion=baseVersion;
-    this.params = 'token TOKEN, id IDENTITY, form JSON';
+    this.params = 'token TOKEN, id IDENTITY, form JSONB';
     
     this.sql = `CREATE OR REPLACE FUNCTION ${this.name}(${this.params})  RETURNS JSONB AS $$
-    Declare _form JSONB; 
     Declare result JSONB; 
     Declare chelate JSONB := '{}'::JSONB;
     Declare key_map JSONB := '{"pk":"${this.pk}","sk":"${this.sk}"}'::JSONB;
     Declare tmp TEXT;
     BEGIN
           
-      -- [Function: adopter given user_token TOKEN, form JSON]
+      -- [Function: adopter given user_token TOKEN, form JSONB]
       -- [Description: Update an existing user/ adopter]
       -- not supported under Hobby
-      
-      _form := form::JSONB ;          
-      -- chelate := chelate || key_map || format('{"pk": "username#%s"}',id)::JSONB;
-      
+            
       -- [Validate id parameter]
       if id is NULL then
             -- [Fail 400 when id is NULL]
@@ -58,20 +54,18 @@ module.exports = class FunctionAdopterPut extends Step {
 
       -- [Validate Form with user's credentials]
 
-      _form := form::JSONB;
-
       -- [Hash password when found]
       
-      if _form ? 'password' then
-              _form := _form || format('{"password": "%s"}',crypt(form ->> 'password', gen_salt('bf')) )::JSONB;
+      if form ? 'password' then
+              form := form || format('{"password": "%s"}',crypt(form ->> 'password', gen_salt('bf')) )::JSONB;
       end if;
 
       -- [Assign Scope]
 
-      _form := _form || format('{"scope":"%s"}','${this.scope}')::JSONB;
+      form := form || format('{"scope":"%s"}','${this.scope}')::JSONB;
 
       -- [Assemble Data]
-      chelate := chelate || format('{"form": %s}', _form)::JSONB;
+      chelate := chelate || format('{"form": %s}', form)::JSONB;
       chelate := chelate || key_map || format('{"pk": "username#%s"}',id.id)::JSONB;    
 
       -- [Execute update]
@@ -87,7 +81,7 @@ module.exports = class FunctionAdopterPut extends Step {
     $$ LANGUAGE plpgsql;
 
     /* Doesnt work in Hobby
-    grant EXECUTE on FUNCTION ${this.name}(TOKEN,JSON,OWNER_ID) to ${this.role};
+    grant EXECUTE on FUNCTION ${this.name}(TOKEN,JSONB,OWNER_ID) to ${this.role};
     */
 
     `;

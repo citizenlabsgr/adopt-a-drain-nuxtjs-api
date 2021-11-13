@@ -9,7 +9,7 @@ const SqlRunner = require('../lib/runner/runner_sql.js');
 // const BaseTests = require('./tests/test_base.js');
 // const ApiTests = require('./lib/db.test_api.js');
 const BaseTests = require('./base-tests/0.test-collection.js');
-const ApiTests = require('./api-tests/0.api-test-collection.js');
+const ApiTests = require('./api-tests/0.api-db-test-collection.js');
 
 // run all scripts
 // Creates have an order

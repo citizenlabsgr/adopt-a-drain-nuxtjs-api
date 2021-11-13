@@ -7,43 +7,36 @@ module.exports = class GetTemplate extends Template {
         super(token_name, claim, api_settings,chelate);
         
     }
+   /*
     validate() {
       super.validate();
-      /*
-      [TOKEN], [IDENTITY["<v>"||"*"]], [OWNER_ID]
-if ID  = * select where owner = OD  
-if ID != * select where id = ID and owner = OD
-
-      VARCHAR || 
-
-      IDENTITY === OWNER_ID 
-*/
-
-      if (!this.hasType('IDENTITY') && !this.hasType('OWNER_ID') && !this.hasType('JSON')) {
-        throw new Error(`IDENTITY, OWNER_ID or JSON parameter required in ${this.api_settings.name.name} `);
+            // TMBR
+      // TIO
+      // TFO
+      // TOO
+      
+      if (this.hasType('TOKEN') && this.hasType('IDENTITY')  && this.hasType('OWNER_ID')) {
+        //
+      } else if (this.hasType('TOKEN') && this.hasType('JSON') && this.hasType('OWNER_ID')) {
+        //
+      }  else if (this.hasType('TOKEN') && this.hasType('OWNER_ID') && this.hasType('OWNER_ID')) {
+        //
+      } else if (this.hasType('TOKEN') && this.hasType('IDENTITY')) {
+        //
+      } else if (this.hasType('TOKEN') && this.hasType('JSON')) {
+        //
+      }  else if (this.hasType('TOKEN') && this.hasType('OWNER_ID')) {
+        //
+      } else if (this.hasType('TOKEN') && this.hasType('MBR')) {
+        // 
+      }  else {
+        throw new Error(`Invalid parameter combination for ${this.api_settings.name.name} expect TMBR, TIO, TJO, TOO, TI, TJ, TO `);
       }
-      if (this.hasType('IDENTITY') && this.hasType('OWNER_ID') && this.hasType('JSON') ) {
-        throw new Error(`Either IDENTITY, OWNER_ID or JSON parameter required in ${this.api_settings.name.name} `);
-      }
-      // if (this.hasType('IDENTITY') && this.hasType('OWNER_ID') ) {
-      //  throw new Error(`Either IDENTITY or OWNER_ID parameter required in ${this.api_settings.name.name} `);
-      // }
-      // if (this.hasType('IDENTITY') && this.hasType('JSON') ) {
-      //  throw new Error(`Either IDENTITY or JSON parameter required in ${this.api_settings.name.name} `);
-      // }
-      if (this.hasType('OWNER_ID') && this.hasType('JSON') ) {
-        throw new Error(`Either OWNER_ID or JSON parameter required in ${this.api_settings.name.name} `);
-      }
-      if (this.hasType('VARCHAR')) {
-        throw new Error(`VARCHAR parameter not permitted in ${this.api_settings.name.name} `);
-      }
-      if (this.hasType('MBR')) {
-        throw new Error(`MBR parameter not permitted in ${this.api_settings.name.name} `);
-      }
-      // if (this.hasType('OWNER_ID')) {
-      //  throw new Error(`OWNER_ID parameter not permitted in ${this.api_settings.name.name} `);
-      // }
+      
     }
+    */
+
+    
     get200() {
       // note: id and form are 
       return `
@@ -53,6 +46,7 @@ if ID != * select where id = ID and owner = OD
               ${this.token}
               ${this.id}
               ${this.form}
+              ${this.mbr}
               ${this.ownerId}
             )::JSONB - 'selection'),
         
@@ -62,6 +56,7 @@ if ID != * select where id = ID and owner = OD
           );
         `; 
     }
+
     templatize() {
         let rc = this.get200();
         return rc;

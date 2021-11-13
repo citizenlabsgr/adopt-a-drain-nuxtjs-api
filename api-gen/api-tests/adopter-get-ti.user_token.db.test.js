@@ -2,16 +2,16 @@
     'use strict';
     // this file was generated
     const Step = require('../../lib/runner/step.js');
-    module.exports = class FunctionAdopteePutTijUserTokenTest extends Step {
+    module.exports = class FunctionAdopterGetTiUserTokenTest extends Step {
         constructor(kind, version, baseVersion) {    
             super(kind, version);
             this.baseVersion = baseVersion;
             this.sql = `
     BEGIN;
       -- token : token
-      -- function: adoptee
+      -- function: adopter
       -- chelate: 
-      -- method: PUT
+      -- method: GET
       -- expected: 
       -- setup: 
 
@@ -19,10 +19,10 @@
         insert into base_0_0_1.one
         (pk, sk, tk, form, owner)
         values (
-            'drain_id#gr_40107671',
-            'const#ADOPTEE',
+            'username#adopter@user.com',
+            'const#USER',
             'guid#820a5bd9-e669-41d4-b917-81212bc184a3',
-            '{"lat":42.9688029487,"lon":-85.6761931983,"name":"abc","type":"adoptee","drain_id":"GR_40107671","adopter_key":"duckduckgoose"}'::JSONB,
+            '{"username":"adopter@user.com","displayname":"J","scope":"api_user","password":"$2a$06$TXVF4CDfUcHXvTeOIGrEn.BSGbbCzLxMu2t8tyZimKtsBRxxyeQBK"}'::JSONB,
             'duckduckgoose'
         );
         
@@ -35,27 +35,28 @@
   
             'api_0_0_1',
       
-            'adoptee',
+            'adopter',
       
-            ARRAY[TOKEN,IDENTITY,JSON,OWNER_ID],
+            ARRAY[TOKEN,IDENTITY],
       
-            'DB Function PUT adoptee (TOKEN,IDENTITY,JSON,OWNER_ID) exists'
+            'DB Function GET adopter (TOKEN,IDENTITY) exists'
       
         );
         */
         
-        SELECT is (
-            (api_0_0_1.adoptee(
+          SELECT is (
+  
+            (api_0_0_1.adopter(
               base_0_0_1.sign('{"aud":"citizenlabs-api","iss":"citizenlabs","sub":"client-api","user":"adopter@user.com","scope":"api_user","key":"duckduckgoose"}'::JSON, base_0_0_1.get_jwt_secret()::TEXT)::TOKEN
-              ,'("gr_40107671")'::IDENTITY
-              ,'{"lat":42.9688029487,"lon":-85.6761931983,"name":"abc","type":"adoptee","drain_id":"GR_40107671","adopter_key":"duckduckgoose"}'::JSON
-              ,'("duckduckgoose")'::OWNER_ID
-            )::JSONB - 'updation'),
+              ,'("adopter@user.com")'::IDENTITY
+              
+              
+              
+            )::JSONB - 'selection'),
         
             '{"msg":"OK","status":"200"}'::JSONB,
         
-            'DB adoptee PUT 200 0_0_1'::TEXT
-        
+            'DB adopter GET 200 0_0_1'::TEXT
           );
         
       

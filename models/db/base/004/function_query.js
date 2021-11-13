@@ -187,7 +187,8 @@ module.exports = class FunctionQuery extends Step {
                       ;
                       
       elsif sk and tk and mbr and chelate ->> 'tk' = '*' then
-        -- 	format('{"sk":"","tk":"*", "mbr": %s}',mbr)::JSONB	
+        -- get all sk in a mbr
+        -- 	format('{"sk":"const#<uppercase>","tk":"*", "mbr": %s}',mbr)::JSONB	
     
         -- raise notice 'K';
         

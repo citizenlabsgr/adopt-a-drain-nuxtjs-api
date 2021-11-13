@@ -5,8 +5,9 @@ module.exports = class TypeIdentity extends Step {
   constructor(baseName, baseVersion) {
     super(baseName, baseVersion);
     
-    // [OWNER_ID Type]
-    
+    // [IDENTITY Type]
+    this.name = 'identity';
+    this.format = '("<id-string>")';
     this.sql = `
     DO
     $BODY$  
@@ -17,8 +18,8 @@ module.exports = class TypeIdentity extends Step {
                     WHERE       (t.typrelid = 0 OR (SELECT c.relkind = 'c' FROM pg_catalog.pg_class c WHERE c.oid = t.typrelid)) 
                     AND     NOT EXISTS(SELECT 1 FROM pg_catalog.pg_type el WHERE el.oid = t.typelem AND el.typarray = t.oid)
                     AND     n.nspname NOT IN ('pg_catalog', 'information_schema')
-                    AND t.typname='identity') then 
-        CREATE TYPE identity AS (
+                    AND t.typname='${this.name}') then 
+        CREATE TYPE ${this.name} AS (
           id TEXT
         );  
       end if;
@@ -29,7 +30,7 @@ module.exports = class TypeIdentity extends Step {
   }    
   
   getName() {
-    return 'create token type.';
+    return `.${this.name} .${this.format} `;
   }
   
 };

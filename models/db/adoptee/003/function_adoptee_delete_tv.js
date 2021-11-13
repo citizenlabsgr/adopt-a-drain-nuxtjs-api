@@ -57,6 +57,6 @@ module.exports = class FunctionAdopteeDelete extends Step {
     `;
   }    
   getName() {
-    return `${this.name}(${this.params}) ${this.method}`;
+    return `.${this.name}(${this.params}) .${this.method} .${this.role} .`;
   }
 };

@@ -80,12 +80,44 @@
             "sk":"const#ADOPTEE",
             "tk":"guid#820a5bd9-e669-41d4-b917-81212bc184a3",
             "form":{
-                "lat": 42.9688029487, 
-                "lon": -85.6761931983, 
+                "lat": 1.0, 
+                "lon": 1.0, 
                 "name": "abc", 
                 "type": "adoptee", 
                 "drain_id": "GR_40107671", 
                 "adopter_key": "duckduckgoose"
+            },
+            "owner":"duckduckgoose"
+        }], 
+        "adoptee-get-tmbr": [{
+            "pk":"drain_id#gr_40107671",
+            "sk":"const#ADOPTEE",
+            "tk":"guid#820a5bd9-e669-41d4-b917-81212bc184a3",
+            "form":{
+                "lat": 1.0, 
+                "lon": 1.0, 
+                "name": "abc", 
+                "type": "adoptee", 
+                "drain_id": "GR_40107671", 
+                "adopter_key": "duckduckgoose"
+            },
+            "owner":"duckduckgoose"
+        }],       
+        "dep-adoptee-get-tmbr-mbr": [{
+                "north": 2.0, 
+                "south": 0.0, 
+                "west": 0.0, 
+                "east": 2.0 
+        }],  
+        "dep-adoptee-get-tmbr": [{
+            "pk":"drain_id#gr_40107671",
+            "sk":"const#ADOPTEE",
+            "tk":"guid#820a5bd9-e669-41d4-b917-81212bc184a3",
+            "form":{
+                "north": 2.0, 
+                "south": 0.0, 
+                "west": 0.0, 
+                "east": 2.0 
             },
             "owner":"duckduckgoose"
         }],
@@ -94,8 +126,8 @@
             "sk":"const#ADOPTEE",
             "tk":"guid#820a5bd9-e669-41d4-b917-81212bc184a3",
             "form":{
-                "lat": 42.9688029487, 
-                "lon": -85.6761931983, 
+                "lat": 1.0, 
+                "lon": 1.0, 
                 "name": "abc", 
                 "type": "adoptee", 
                 "drain_id": "GR_40107671", 
@@ -108,8 +140,8 @@
             "sk":"const#ADOPTEE",
             "tk":"guid#820a5bd9-e669-41d4-b917-81212bc184a3",
             "form":{
-                "lat": 42.9688029487, 
-                "lon": -85.6761931983, 
+                "lat": 1.0, 
+                "lon": 1.0, 
                 "name": "abc", 
                 "type": "adoptee", 
                 "drain_id": "GR_40107671", 
@@ -122,8 +154,8 @@
             "sk":"const#ADOPTEE",
             "tk":"guid#820a5bd9-e669-41d4-b917-81212bc184a3",
             "form":{
-                "lat": 42.9688029487, 
-                "lon": -85.6761931983, 
+                "lat": 1.0, 
+                "lon": 1.0, 
                 "name": "abc", 
                 "type": "adoptee", 
                 "drain_id": "GR_40107671", 

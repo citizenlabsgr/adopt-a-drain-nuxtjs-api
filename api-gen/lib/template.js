@@ -5,7 +5,7 @@
 module.exports = class Template {
     // constructor(token_name, claim, api_settings) {
     constructor(token_name, claim, api_settings, chelate) {
-        console.log('---------------------IN');
+         console.log('---------------------IN ', this.constructor.name);
         this.token_name = token_name;
         this.claim = claim;
         this.api_settings = api_settings;
@@ -21,6 +21,7 @@ module.exports = class Template {
         this.token = false;
         this.id = false;
         this.form = false;
+        this.mbr = false;
         this.ownerId = false;
         // /////////////////////
         // Configure Test Values
@@ -34,55 +35,82 @@ module.exports = class Template {
         if (this.token_name) { 
             this.token = this.getToken();
         }
-        console.log('chelate',chelate);
+        // console.log('chelate' , this.chelate);
+        // console.log('chelate 1',chelate);
         if (this.chelate) {
-            // console.log('chelate', this.chelate);
+            // console.log('chelate 2', this.chelate);
             if (this.chelate.form) {
+              //  console.log('chelate 3');
               // 2 chelate  
               // POST, PUT require chelate
               this.id = this.chelate.pk.split('#')[1];
               this.form = JSON.stringify(this.chelate.form);
-              this.ownerId = `${this.chelate.owner}`|| '';
+              this.ownerId = `${this.chelate.owner}`;
+              // this.mbr = this.chelate.form;
+
+              // this.mbr=;
             } else { // this is form not a chelate
+                // console.log('chelate 4');
+
                 // 3 criteria
                 // GET can accept a critera {username:"", password:""} 
                 //                  mbr {north:N.N,south:N.N,west:N.N,east:N.N}
                 this.form = JSON.stringify(chelate);
+                // this.mbr = chelate;
             }
         } 
-console.log('class', this.constructor.name);
-console.log('A id',this.id);
-console.log('A form', this.form);
-console.log('A ownerId',this.ownerId);
+// console.log('class', this.constructor.name);
+// console.log('A id',this.id);
+ // console.log('A form', this.form);
+// console.log('A mbr', this.mbr);
 
+// console.log('A ownerId',this.ownerId);
+        // this.mbr = this.form;
+        if (this.hasType('MBR') && this.api_settings.mbr) {
+            this.mbr = this.api_settings.mbr;
+            // console.log('mbr found', this.mbr);
+            // console.log('north', this.mbr.north);
+            this.mbr = `,'(${this.mbr.north},${this.mbr.south},${this.mbr.west},${this.mbr.east})'::MBR`;
+            // console.log('mbr',this.mbr);
+        } else if (this.hasType('MBR') && !this.api_settings.mbr) {
+           // missing mbr
+           throw new Error('Api_settings is missing mbr key and value');
+
+        } else {
+            this.mbr = '';
+        }
+        
         if (this.hasType('IDENTITY')) {
             // PUT, GET, DELETE accept have id
             this.id = `,'("${this.id}")'::IDENTITY`;
         } else if (this.hasType('VARCHAR')) {
-            console.log(`Template Varchar "${this.id}"`);
+            // console.log(`Template Varchar "${this.id}"`);
             // DELETE 
             this.id = `,'${this.id}'::VARCHAR`;
         }  else {
-            // console.log('NO OWNER_ID');
             this.id = '';
         }
-
+        
         if (this.hasType('JSON')) {
             this.form = `,'${this.form}'::JSON`;
-        }  else {
-            // console.log('NO JSON');
+        } if (this.hasType('JSONB')) {
+            this.form = `,'${this.form}'::JSONB`;
+        } else {
             this.form = '';
         }
+        
         if (this.hasType('OWNER_ID')) {
             this.ownerId = `,'("${this.ownerId}")'::OWNER_ID`;
-          }  else {
-            // console.log('NO OWNER_ID');
+        } else {
             this.ownerId = '';
-          }
-        console.log('E id',this.id);
-        console.log('E form', this.form);
-        console.log('E ownerId',this.ownerId);
-        console.log('---------------------OUT');
+        }
+        console.log('        E function_name',this.function_name);
+        console.log('        E id', this.id);
+        console.log('        E form', this.form);
+        console.log('        E ownerId', this.ownerId);
+        console.log('        E mbr', this.mbr);
+
+     console.log('---------------------OUT');
 
     }
     getClassName() {

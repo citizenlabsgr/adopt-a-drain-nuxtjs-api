@@ -2,20 +2,30 @@
     'use strict';
     // this file was generated
     const Step = require('../../lib/runner/step.js');
-    module.exports = class FunctionAdopterPostTjoAdminTokenTest extends Step {
+    module.exports = class FunctionAdopteeDeleteTvoAdminTokenTest extends Step {
         constructor(kind, version, baseVersion) {    
             super(kind, version);
             this.baseVersion = baseVersion;
             this.sql = `
     BEGIN;
       -- token : token
-      -- function: adopter
+      -- function: adoptee
       -- chelate: 
-      -- method: POST
+      -- method: DELETE
       -- expected: 
       -- setup: 
 
-      /* no setup */
+      
+        insert into base_0_0_1.one
+        (pk, sk, tk, form, owner)
+        values (
+            'drain_id#gr_40107671',
+            'const#ADOPTEE',
+            'guid#820a5bd9-e669-41d4-b917-81212bc184a3',
+            '{"lat":1,"lon":1,"name":"abc","type":"adoptee","drain_id":"GR_40107671","adopter_key":"duckduckgoose"}'::JSONB,
+            'duckduckgoose'
+        );
+        
 
       SELECT plan(2);
 
@@ -25,26 +35,26 @@
   
             'api_0_0_1',
       
-            'adopter',
+            'adoptee',
       
-            ARRAY[TOKEN,JSON,OWNER_ID],
+            ARRAY[TOKEN,VARCHAR,OWNER_ID],
       
-            'DB Function POST adopter (TOKEN,JSON,OWNER_ID) exists'
+            'DB Function DELETE adoptee (TOKEN,VARCHAR,OWNER_ID) exists'
       
         );
         */
         
-        SELECT is (
-            (api_0_0_1.adopter(
+          SELECT is (
+  
+            (api_0_0_1.adoptee(
               base_0_0_1.sign('{"aud":"citizenlabs-api","iss":"citizenlabs","sub":"client-api","user":"adopter@user.com","scope":"api_admin","key":"duckduckgoose"}'::JSON, base_0_0_1.get_jwt_secret()::TEXT)::TOKEN
-              ,'{"username":"adopter@user.com","displayname":"J","scope":"api_user","password":"$2a$06$TXVF4CDfUcHXvTeOIGrEn.BSGbbCzLxMu2t8tyZimKtsBRxxyeQBK"}'::JSON
+              ,'gr_40107671'::VARCHAR
               ,'("duckduckgoose")'::OWNER_ID
-            )::JSONB - 'insertion'),
+            )::JSONB - '{deletion,criteria}'::TEXT[]),
         
             '{"msg":"OK","status":"200"}'::JSONB,
         
-            'DB adopter POST 200 0_0_1'::TEXT
-        
+            'DB adoptee DELETE 200 0_0_1'::TEXT
           );
         
       

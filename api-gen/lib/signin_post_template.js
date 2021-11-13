@@ -11,8 +11,8 @@ module.exports = class SigninPostTemplate extends Template {
     }
     validate() {
       super.validate();
-      if (!this.hasType('JSON')) {
-        throw new Error(`JSON parameter required in ${this.api_settings.name.name} `);
+      if (!this.hasType('JSONB')) {
+        throw new Error(`JSONB parameter required in ${this.api_settings.name.name} `);
       }
       /*
       if (this.hasType('IDENTITY')) {
@@ -30,7 +30,7 @@ module.exports = class SigninPostTemplate extends Template {
             (api_${this.version}.${this.function_name}(
               ${this.token}
               ${this.form}
-              ${this.ownerId}
+              
             )::JSONB - 'token'),
         
             '{"msg":"OK","status":"200"}'::JSONB,

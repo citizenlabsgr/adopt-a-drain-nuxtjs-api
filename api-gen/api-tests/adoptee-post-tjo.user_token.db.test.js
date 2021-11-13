@@ -2,14 +2,14 @@
     'use strict';
     // this file was generated
     const Step = require('../../lib/runner/step.js');
-    module.exports = class FunctionSignupPostGuestTokenTest extends Step {
+    module.exports = class FunctionAdopteePostTjoUserTokenTest extends Step {
         constructor(kind, version, baseVersion) {    
             super(kind, version);
             this.baseVersion = baseVersion;
             this.sql = `
     BEGIN;
       -- token : token
-      -- function: signup
+      -- function: adoptee
       -- chelate: 
       -- method: POST
       -- expected: 
@@ -25,25 +25,25 @@
   
             'api_0_0_1',
       
-            'signup',
+            'adoptee',
       
-            ARRAY[TOKEN,JSON],
+            ARRAY[TOKEN,JSONB,OWNER_ID],
       
-            'DB Function POST signup (TOKEN,JSON) exists'
+            'DB Function POST adoptee (TOKEN,JSONB,OWNER_ID) exists'
       
         );
         */
         
         SELECT is (
-            (api_0_0_1.signup(
-              base_0_0_1.sign('{"aud":"citizenlabs-api","iss":"citizenlabs","sub":"client-api","user":"guest","scope":"api_guest","key":"0"}'::JSON, base_0_0_1.get_jwt_secret()::TEXT)::TOKEN
-              ,'{"username":"adopter@user.com","displayname":"J","scope":"api_user","password":"a1A!aaaa"}'::JSON
-              
+            (api_0_0_1.adoptee(
+              base_0_0_1.sign('{"aud":"citizenlabs-api","iss":"citizenlabs","sub":"client-api","user":"adopter@user.com","scope":"api_user","key":"duckduckgoose"}'::JSON, base_0_0_1.get_jwt_secret()::TEXT)::TOKEN
+              ,'{"lat":1,"lon":1,"name":"abc","type":"adoptee","drain_id":"GR_40107671","adopter_key":"duckduckgoose"}'::JSONB
+              ,'("duckduckgoose")'::OWNER_ID
             )::JSONB - 'insertion'),
         
             '{"msg":"OK","status":"200"}'::JSONB,
         
-            'DB signup POST 200 0_0_1'::TEXT
+            'DB adoptee POST 200 0_0_1'::TEXT
         
           );
         

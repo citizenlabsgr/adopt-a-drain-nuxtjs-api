@@ -9,6 +9,18 @@ module.exports = class DropFunction extends Step {
     
     this.sql = `
     -- DROP TYPE if exists owner_id; issue with depenency
+    DROP FUNCTION if exists base_0_0_1.query(mbr);
+
+    DROP FUNCTION if exists function api_0_0_1.adoptee(token, jsonb) ;
+    
+    DROP FUNCTION if exists api_0_0_1.adoptee(TOKEN,JSON);
+
+    DROP FUNCTION if exists api_0_0_1.adoptee(TOKEN,MBR);
+
+    DROP FUNCTION if exists api_0_0_1.adoptee(TOKEN,VARCHAR);
+
+    DROP FUNCTION if exists api_0_0_1.adoptee(TOKEN,IDENTITY,JSON);
+
     DROP FUNCTION if exists base_0_0_1.query(jsonb);
 
     DROP FUNCTION if exists base_0_0_1.query(jsonb,owner_id);

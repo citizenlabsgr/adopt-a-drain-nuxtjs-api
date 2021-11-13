@@ -4,19 +4,17 @@ const Step = require('../../../../lib/runner/step');
 module.exports = class FunctionAdopterPost extends Step {
   constructor(baseName, baseVersion) {
     super(baseName, baseVersion);
-    // this.kind = kind;
     this.name = 'adopter';
     this.name = `${this.kind}_${this.version}.${this.name}`;
     this.baseKind='base';
     this.baseVersion=baseVersion;
-    this.params = 'token TOKEN, form JSON, owner OWNER_ID';
+    this.params = 'token TOKEN, form JSONB, owner OWNER_ID';
     this.method = 'POST';
     this.roles = 'api_admin';
     this.scope = 'api_admin';
     this.sql = `
     CREATE OR REPLACE FUNCTION ${this.name}(${this.params})  RETURNS JSONB AS $$
     
-        Declare _form JSONB; 
         Declare result JSONB; 
         Declare chelate JSONB := '{"pk":"username", 
                                    "sk":"const#USER", 
@@ -28,7 +26,7 @@ module.exports = class FunctionAdopterPost extends Step {
                                    "active": true}'::JSONB;
         
     BEGIN
-      -- [Function: adopter given an admin_token TOKEN and form JSON]
+      -- [Function: adopter given an admin_token TOKEN and form JSONB]
       -- [Description: Add a new user by Admin]
 
       -- [Validate Token]
@@ -57,28 +55,27 @@ module.exports = class FunctionAdopterPost extends Step {
       end if;
 
     -- [* Validate Form with user's credentials]
-      _form := form::JSONB;
 
     -- [* Validate Requred POST form fields]
-      if not(_form ? 'username') then
+      if not(form ? 'username') then
           -- [* Fail 400 when form is missing username field]
           return '{"status":"400","msg":"Bad Request"}'::JSONB;
       end if;
 
-      if not(_form ? 'password') then
+      if not(form ? 'password') then
           -- [* Fail 400 when form is missing password field]
           return '{"status":"400","msg":"Bad Request"}'::JSONB;
       end if;
 
       -- [* Hash password]
 
-      _form := _form || format('{"password": "%s"}',crypt(form ->> 'password', gen_salt('bf')) )::JSONB;
+      form := form || format('{"password": "%s"}',crypt(form ->> 'password', gen_salt('bf')) )::JSONB;
       
     -- [* Assign Scope]
-      _form := _form || format('{"scope":"%s"}','api_user')::JSONB;
+      form := form || format('{"scope":"%s"}','api_user')::JSONB;
 
     -- [* Assemble Data]
-      chelate := base_${this.baseVersion}.chelate(chelate, _form);
+      chelate := base_${this.baseVersion}.chelate(chelate, form);
 
     -- [* Execute insert]
       result := base_${this.baseVersion}.insert(chelate, owner);
@@ -90,7 +87,7 @@ module.exports = class FunctionAdopterPost extends Step {
 
     $$ LANGUAGE plpgsql;
     /* Doesnt work in Hobby
-    grant EXECUTE on FUNCTION ${this.name}(TOKEN,JSON,OWNER_ID) to api_guest;
+    grant EXECUTE on FUNCTION ${this.name}(TOKEN,JSONB,OWNER_ID) to api_guest;
     */
     `;
     // console.log('CreateFunction', this.sql);

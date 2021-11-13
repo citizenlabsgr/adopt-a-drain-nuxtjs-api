@@ -50,6 +50,7 @@
               base_0_0_1.sign('{"aud":"citizenlabs-api","iss":"citizenlabs","sub":"client-api","user":"adopter@user.com","scope":"api_admin","key":"duckduckgoose"}'::JSON, base_0_0_1.get_jwt_secret()::TEXT)::TOKEN
               ,'("adopter@user.com")'::IDENTITY
               
+              
               ,'("duckduckgoose")'::OWNER_ID
             )::JSONB - 'selection'),
         
