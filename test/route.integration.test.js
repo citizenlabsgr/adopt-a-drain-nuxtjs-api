@@ -27,6 +27,7 @@ const { init } = require('../lib/server');
 const GuestTokenPayload = require('../lib/auth/token_payload_guest.js');
 const UserTokenPayload = require('../lib/auth/token_payload_user.js');
 const AdminTokenPayload = require('../lib/auth/token_payload_admin.js');
+/*
 const adoptee_post_data = {
   "owners":{
     "duckduckgoose":{
@@ -57,7 +58,7 @@ const adoptee_post_data = {
    } 
   ]
 };
-
+*/
 experiment('API Route Tests', () => {
   let server = null;
   
@@ -636,7 +637,36 @@ experiment('API Route Tests', () => {
 
   test('6 API /adoptee POST MBR, api_guest, 200', async () => {
     //  find adoptee in mbr /adoptees to POST  
-
+    const data = {
+      "owners":{
+        "duckduckgoose":{
+           "username":"get@user.com",
+           "displayname":"A",
+           "password":"a1A!aaaa",
+           "scope": "api_user"
+        }
+      },
+      "data": [
+        {"pk":"drain_id#oneget", 
+         "sk":"const#ADOPTEE", 
+         "tk":"guid#1", 
+         "form": {"name":"One", "drain_id":"Oneget","type":"TestDrain", "lat":1.0, "lon":1.0}, 
+         "owner":"duckduckgoose"
+        }, 
+        {"pk":"drain_id#twoget", 
+         "sk":"const#ADOPTEE", 
+         "tk":"guid#2", 
+         "form": {"name":"Two", "drain_id":"Twoget","type":"TestDrain","lat":1.0, "lon":1.0}, 
+         "owner":"duckduckgoose"
+        }, 
+        {"pk":"drain_id#threeget", 
+        "sk":"const#ADOPTEE", 
+        "tk":"guid#3", 
+        "form": {"name":"Three", "drain_id":"Threeget","type":"TestDrain","lat":1.0, "lon":1.0}, 
+        "owner":"duckduckgoose"
+       } 
+      ]
+    };
      // const payload = new TestTokenPayload().guestTokenPayload();
      const payload = new GuestTokenPayload().payload();
 
@@ -652,7 +682,7 @@ experiment('API Route Tests', () => {
          authorization: token,
          owner: '0',
          rollback: true,
-         test: JSON.stringify(adoptee_post_data)
+         test: JSON.stringify(data)
        },
        payload: form,
      });
