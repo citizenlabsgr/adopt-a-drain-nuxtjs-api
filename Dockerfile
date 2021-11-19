@@ -19,6 +19,6 @@ COPY . .
 EXPOSE 5555
 
 # allow browser connection to docker
-CMD ["npm", "run", "start"]
+CMD ["npm", "run", "start", "host", "0.0.0.0"]
 
 
