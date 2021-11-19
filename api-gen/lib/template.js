@@ -5,7 +5,7 @@
 module.exports = class Template {
     // constructor(token_name, claim, api_settings) {
     constructor(token_name, claim, api_settings, chelate) {
-         console.log('---------------------IN ', this.constructor.name);
+         // console.log('---------------------IN ', this.constructor.name);
         this.token_name = token_name;
         this.claim = claim;
         this.api_settings = api_settings;
@@ -83,10 +83,10 @@ module.exports = class Template {
         if (this.hasType('IDENTITY')) {
             // PUT, GET, DELETE accept have id
             this.id = `,'("${this.id}")'::IDENTITY`;
-        } else if (this.hasType('VARCHAR')) {
+        // } else if (this.hasType('VARCHAR')) {
             // console.log(`Template Varchar "${this.id}"`);
             // DELETE 
-            this.id = `,'${this.id}'::VARCHAR`;
+            // this.id = `,'${this.id}'::VARCHAR`;
         }  else {
             this.id = '';
         }
@@ -104,6 +104,7 @@ module.exports = class Template {
         } else {
             this.ownerId = '';
         }
+        /*
         console.log('        E function_name',this.function_name);
         console.log('        E id', this.id);
         console.log('        E form', this.form);
@@ -111,13 +112,13 @@ module.exports = class Template {
         console.log('        E mbr', this.mbr);
 
      console.log('---------------------OUT');
-
+        */
     }
     getClassName() {
         return this.constructor.name;
     }
     validate() {
-        console.log('     - ', this.getClassName());
+        console.log('          - ', this.getClassName());
         if (!this.hasType('TOKEN')) {
             throw new Error(`Token parameter required in ${this.api_settings.name.name} `);
         }

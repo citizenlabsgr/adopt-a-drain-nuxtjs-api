@@ -17,7 +17,7 @@
 
       /* no setup */
 
-      SELECT plan(2);
+      SELECT plan(1);
 
       
         /* Work-around pgtap bug with user defined types and hasFunction

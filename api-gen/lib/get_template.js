@@ -44,15 +44,16 @@ module.exports = class GetTemplate extends Template {
   
             (${this.kind}_${this.version}.${this.function_name}(
               ${this.token}
+              ${this.ownerId}
               ${this.id}
               ${this.form}
               ${this.mbr}
-              ${this.ownerId}
+              
             )::JSONB - 'selection'),
         
             '{"msg":"OK","status":"200"}'::JSONB,
         
-            'DB ${this.function_name} ${this.method} 200 0_0_1'::TEXT
+            'DB ${this.function_name}(${this.parameter_types}) ${this.method} ${this.claim.scope} 200 0_0_1'::TEXT
           );
         `; 
     }

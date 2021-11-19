@@ -9,7 +9,7 @@
     "db-unit-test": "node models/db.unit.test.js",
     "predev": "npm install",
     "dev": "nodemon",
-    "start": "node server.js",
+    "start": "node --trace-warnings server.js",
     "test": "lab -v test/*.test.js",
     "test1": "lab -v */*.unit.test.js",
     "test-unit": "lab -v */*.unit.test.js",

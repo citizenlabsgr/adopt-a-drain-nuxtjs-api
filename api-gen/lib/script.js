@@ -12,7 +12,7 @@ module.exports = class Script {
     this.insertTemplate = false; // insertTemplate.toString() || false;
   }
   count() {
-    return this.list.length; 
+    return this.list.length - 1; // -1 is for the token workaround 
   }
   setData(insertTemplate) {
     
@@ -66,7 +66,7 @@ module.exports = class Script {
     //  this.client.end();
     // console.log('* ScriptRunner out');
     // let function_name = '';
-    let test_count = this.count();
+    let test_count = this.count(); 
     
     return `
     BEGIN;

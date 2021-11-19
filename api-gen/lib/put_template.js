@@ -2,7 +2,7 @@
 
 const Template = require('./template.js');
 
-module.exports = class PuttTemplate extends Template {
+module.exports = class PutTemplate extends Template {
     constructor(token_name, claim, api_settings, chelate) {
         super(token_name, claim, api_settings, chelate);
         // console.log('PostTemplate data', data);
@@ -26,14 +26,14 @@ module.exports = class PuttTemplate extends Template {
         SELECT is (
             (api_${this.version}.${this.function_name}(
               ${this.token}
+              ${this.ownerId}
               ${this.id}
               ${this.form}
-              ${this.ownerId}
             )::JSONB - 'updation'),
         
             '{"msg":"OK","status":"200"}'::JSONB,
         
-            'DB ${this.function_name} ${this.method} 200 0_0_1'::TEXT
+            'DB ${this.function_name}(${this.parameter_types}) ${this.method} ${this.claim.scope} 200 0_0_1'::TEXT
         
           );
         `;

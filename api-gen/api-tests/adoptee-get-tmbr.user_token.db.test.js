@@ -27,7 +27,7 @@
         );
         
 
-      SELECT plan(2);
+      SELECT plan(1);
 
       
         /* Work-around pgtap bug with user defined types and hasFunction
@@ -50,13 +50,14 @@
               base_0_0_1.sign('{"aud":"citizenlabs-api","iss":"citizenlabs","sub":"client-api","user":"adopter@user.com","scope":"api_user","key":"duckduckgoose"}'::JSON, base_0_0_1.get_jwt_secret()::TEXT)::TOKEN
               
               
+              
               ,'(2,0,0,2)'::MBR
               
             )::JSONB - 'selection'),
         
             '{"msg":"OK","status":"200"}'::JSONB,
         
-            'DB adoptee GET 200 0_0_1'::TEXT
+            'DB adoptee(TOKEN,MBR) GET api_user 200 0_0_1'::TEXT
           );
         
       

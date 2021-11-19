@@ -27,7 +27,7 @@
         );
         
 
-      SELECT plan(2);
+      SELECT plan(1);
 
       
         /* Work-around pgtap bug with user defined types and hasFunction
@@ -56,7 +56,7 @@
         
             '{"msg":"OK","status":"200"}'::JSONB,
         
-            'DB adopter GET 200 0_0_1'::TEXT
+            'DB adopter(TOKEN,IDENTITY,OWNER_ID) GET api_admin 200 0_0_1'::TEXT
           );
         
       
