@@ -57,40 +57,25 @@ const FunctionSignup = require(`./db/signup/${signup_version}/function_signup_po
 // const FunctionAdoptees = require(`./db/adoptees/${adoptees_version}/function_adoptees.js`);
 
 // Adopter
-let adopter_version = '005';
-const FunctionAdopterDeleteTv = require(`./db/adopter/${adopter_version}/function_adopter_delete_tv.js`);
-const FunctionAdopterDeleteTvo = require(`./db/adopter/${adopter_version}/function_adopter_delete_tvo.js`);
-const FunctionAdopterGetTIO = require(`./db/adopter/${adopter_version}/function_adopter_get_tio.js`);
-const FunctionAdopterGetTI = require(`./db/adopter/${adopter_version}/function_adopter_get_ti.js`);
-const FunctionAdopterPost = require(`./db/adopter/${adopter_version}/function_adopter_post_tjo.js`);
-const FunctionAdopterPutTIJO = require(`./db/adopter/${adopter_version}/function_adopter_put_tijo.js`);
-const FunctionAdopterPutTIJ = require(`./db/adopter/${adopter_version}/function_adopter_put_tij.js`);
+let adopter_version = '006';
+// const FunctionAdopterDeleteTv = require(`./db/adopter/${adopter_version}/function_adopter_delete_toi.js`);
+const FunctionAdopterDeleteToi = require(`./db/adopter/${adopter_version}/function_adopter_delete_toi.js`);
+const FunctionAdopterGetToi = require(`./db/adopter/${adopter_version}/function_adopter_get_toi.js`);
+// const FunctionAdopterGetTI = require(`./db/adopter/${adopter_version}/function_adopter_get_ti.js`);
+const FunctionAdopterPostTj = require(`./db/adopter/${adopter_version}/function_adopter_post_toj.js`);
+const FunctionAdopterPutToij = require(`./db/adopter/${adopter_version}/function_adopter_put_toij.js`);
 
-/*
-const FunctionAdopterDeleteTvo = require('./db/adopter/function_adopter_delete_tvo_002.js');
-const FunctionAdopterGetTIO = require('./db/adopter/function_adopter_get_TIO_003.js');
-const FunctionAdopterGetTI = require('./db/adopter/function_adopter_get_TI_003.js');
-const FunctionAdopterPost = require('./db/adopter/function_adopter_post_005.js');
-const FunctionAdopterPut = require('./db/adopter/function_adopter_put_005.js');
-*/
 // Adoptee
-let adoptee_version = '005';
-const FunctionAdopteeDeleteTVO = require(`./db/adoptee/${adoptee_version}/function_adoptee_delete_tvo.js`);
+let adoptee_version = '006';
+const FunctionAdopteeDeleteToi = require(`./db/adoptee/${adoptee_version}/function_adoptee_delete_toi.js`);
 
-const FunctionAdopteeGetTI = require(`./db/adoptee/${adoptee_version}/function_adoptee_get_tio.js`);
+const FunctionAdopteeGetToi = require(`./db/adoptee/${adoptee_version}/function_adoptee_get_toi.js`);
 // const FunctionAdopteeGetTJ = require(`./db/adoptee/${adoptee_version}/function_adoptee_get_tj.js`);
-const FunctionAdopteeGetTO = require(`./db/adoptee/${adoptee_version}/function_adoptee_get_to.js`);
+const FunctionAdopteeGetTo = require(`./db/adoptee/${adoptee_version}/function_adoptee_get_to.js`);
 const FunctionAdopteeGetTMbr = require(`./db/adoptee/${adoptee_version}/function_adoptee_get_tmbr.js`);
+const FunctionAdopteePostToj = require(`./db/adoptee/${adoptee_version}/function_adoptee_post_toj.js`);
+const FunctionAdopteePutToij = require(`./db/adoptee/${adoptee_version}/function_adoptee_put_toij.js`);
 
-const FunctionAdopteePostTJO = require(`./db/adoptee/${adoptee_version}/function_adoptee_post_tjo.js`);
-
-const FunctionAdopteePutTIJO = require(`./db/adoptee/${adoptee_version}/function_adoptee_put_tijo.js`);
-// const FunctionAdopteePutTIJ = require(`./db/adoptee/${adoptee_version}/function_adoptee_put_tij.js`);
-
-
-// const TestTable = require('./db/table_test_001.js');
-// const BaseTests = require('./tests/test_base.js');
-// const ApiTests = require('./tests/test_api.js');
 const DatabaseUrl = require('../lib/plugins/postgres/database_url.js');
 
 // run all scripts
@@ -206,24 +191,23 @@ const runner = new SqlRunner(DB_URL)
 
        .add(new FunctionSignup('api', apiVersion))
        .add(new FunctionSignin('api', apiVersion))
+       // Adopter
+       .add(new FunctionAdopterDeleteToi('api', apiVersion, baseVersion))
+       .add(new FunctionAdopterGetToi('api', apiVersion, baseVersion))
+       // .add(new FunctionAdopterGetTI('api', apiVersion, baseVersion))
+       .add(new FunctionAdopterPostTj('api', apiVersion, baseVersion))
+       .add(new FunctionAdopterPutToij('api', apiVersion, baseVersion))
 
-       .add(new FunctionAdopterPost('api', apiVersion, baseVersion))
-       .add(new FunctionAdopterPutTIJ('api', apiVersion, baseVersion))
-       .add(new FunctionAdopterPutTIJO('api', apiVersion, baseVersion))
-       .add(new FunctionAdopterDeleteTv('api', apiVersion, baseVersion))
-       .add(new FunctionAdopterDeleteTvo('api', apiVersion, baseVersion))
+       // .add(new FunctionAdopterPutTIJ('api', apiVersion, baseVersion))
 
-       .add(new FunctionAdopterGetTIO('api', apiVersion, baseVersion))
-       .add(new FunctionAdopterGetTI('api', apiVersion, baseVersion))
-       
-       .add(new FunctionAdopteePostTJO('api', apiVersion, baseVersion))
-       .add(new FunctionAdopteePutTIJO('api', apiVersion, baseVersion))
-       .add(new FunctionAdopteeDeleteTVO('api', apiVersion, baseVersion))
-       
-       .add(new FunctionAdopteeGetTO('api', apiVersion, baseVersion))
-       .add(new FunctionAdopteeGetTI('api', apiVersion, baseVersion))
-       // .add(new FunctionAdopteeGetTJ('api', apiVersion, baseVersion))
+       // Adoptee
+       .add(new FunctionAdopteeDeleteToi('api', apiVersion, baseVersion))
        .add(new FunctionAdopteeGetTMbr('api', apiVersion, baseVersion))
+       .add(new FunctionAdopteeGetTo('api', apiVersion, baseVersion))
+       .add(new FunctionAdopteeGetToi('api', apiVersion, baseVersion))
+       // .add(new FunctionAdopteeGetTJ('api', apiVersion, baseVersion))
+       .add(new FunctionAdopteePostToj('api', apiVersion, baseVersion))
+       .add(new FunctionAdopteePutToij('api', apiVersion, baseVersion))
 
        
        

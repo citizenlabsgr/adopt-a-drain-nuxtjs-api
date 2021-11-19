@@ -7,19 +7,19 @@ const Extension = require('../../models/db/extension.js');
 const FunctionSignupPostGuestTokenTest = require('./signup-post.guest_token.db.test.js');
 const FunctionSigninPostGuestTokenTest = require('./signin-post.guest_token.db.test.js');
 const FunctionAdopteeGetTmbrGuestTokenTest = require('./adoptee-get-tmbr.guest_token.db.test.js');
-const FunctionAdopterDeleteTvUserTokenTest = require('./adopter-delete-tv.user_token.db.test.js');
-const FunctionAdopterGetTiUserTokenTest = require('./adopter-get-ti.user_token.db.test.js');
-const FunctionAdopterPutTijUserTokenTest = require('./adopter-put-tij.user_token.db.test.js');
-const FunctionAdopteeDeleteTvoUserTokenTest = require('./adoptee-delete-tvo.user_token.db.test.js');
-const FunctionAdopteeGetTioUserTokenTest = require('./adoptee-get-tio.user_token.db.test.js');
+const FunctionAdopterDeleteToiUserTokenTest = require('./adopter-delete-toi.user_token.db.test.js');
+const FunctionAdopterGetToiUserTokenTest = require('./adopter-get-toi.user_token.db.test.js');
+const FunctionAdopterPutToijUserTokenTest = require('./adopter-put-toij.user_token.db.test.js');
+const FunctionAdopteeDeleteToiUserTokenTest = require('./adoptee-delete-toi.user_token.db.test.js');
+const FunctionAdopteeGetToiUserTokenTest = require('./adoptee-get-toi.user_token.db.test.js');
 const FunctionAdopteeGetTmbrUserTokenTest = require('./adoptee-get-tmbr.user_token.db.test.js');
-const FunctionAdopteePostTjoUserTokenTest = require('./adoptee-post-tjo.user_token.db.test.js');
-const FunctionAdopteePutTijoUserTokenTest = require('./adoptee-put-tijo.user_token.db.test.js');
-const FunctionAdopterDeleteTvoAdminTokenTest = require('./adopter-delete-tvo.admin_token.db.test.js');
-const FunctionAdopterGetTioAdminTokenTest = require('./adopter-get-tio.admin_token.db.test.js');
-const FunctionAdopterPostTjoAdminTokenTest = require('./adopter-post-tjo.admin_token.db.test.js');
-const FunctionAdopterPutTijoAdminTokenTest = require('./adopter-put-tijo.admin_token.db.test.js');
-const FunctionAdopteeDeleteTvoAdminTokenTest = require('./adoptee-delete-tvo.admin_token.db.test.js');
+const FunctionAdopteePostTojUserTokenTest = require('./adoptee-post-toj.user_token.db.test.js');
+const FunctionAdopteePutToijUserTokenTest = require('./adoptee-put-toij.user_token.db.test.js');
+const FunctionAdopterDeleteToiAdminTokenTest = require('./adopter-delete-toi.admin_token.db.test.js');
+const FunctionAdopterGetToiAdminTokenTest = require('./adopter-get-toi.admin_token.db.test.js');
+const FunctionAdopterPostTojAdminTokenTest = require('./adopter-post-toj.admin_token.db.test.js');
+const FunctionAdopterPutToijAdminTokenTest = require('./adopter-put-toij.admin_token.db.test.js');
+const FunctionAdopteeDeleteToiAdminTokenTest = require('./adoptee-delete-toi.admin_token.db.test.js');
 
 module.exports = class ApiTests extends Array {
 
@@ -34,19 +34,19 @@ module.exports = class ApiTests extends Array {
             this.push(new FunctionSignupPostGuestTokenTest('api', apiVersion, baseVersion));
       this.push(new FunctionSigninPostGuestTokenTest('api', apiVersion, baseVersion));
       this.push(new FunctionAdopteeGetTmbrGuestTokenTest('api', apiVersion, baseVersion));
-      this.push(new FunctionAdopterDeleteTvUserTokenTest('api', apiVersion, baseVersion));
-      this.push(new FunctionAdopterGetTiUserTokenTest('api', apiVersion, baseVersion));
-      this.push(new FunctionAdopterPutTijUserTokenTest('api', apiVersion, baseVersion));
-      this.push(new FunctionAdopteeDeleteTvoUserTokenTest('api', apiVersion, baseVersion));
-      this.push(new FunctionAdopteeGetTioUserTokenTest('api', apiVersion, baseVersion));
+      this.push(new FunctionAdopterDeleteToiUserTokenTest('api', apiVersion, baseVersion));
+      this.push(new FunctionAdopterGetToiUserTokenTest('api', apiVersion, baseVersion));
+      this.push(new FunctionAdopterPutToijUserTokenTest('api', apiVersion, baseVersion));
+      this.push(new FunctionAdopteeDeleteToiUserTokenTest('api', apiVersion, baseVersion));
+      this.push(new FunctionAdopteeGetToiUserTokenTest('api', apiVersion, baseVersion));
       this.push(new FunctionAdopteeGetTmbrUserTokenTest('api', apiVersion, baseVersion));
-      this.push(new FunctionAdopteePostTjoUserTokenTest('api', apiVersion, baseVersion));
-      this.push(new FunctionAdopteePutTijoUserTokenTest('api', apiVersion, baseVersion));
-      this.push(new FunctionAdopterDeleteTvoAdminTokenTest('api', apiVersion, baseVersion));
-      this.push(new FunctionAdopterGetTioAdminTokenTest('api', apiVersion, baseVersion));
-      this.push(new FunctionAdopterPostTjoAdminTokenTest('api', apiVersion, baseVersion));
-      this.push(new FunctionAdopterPutTijoAdminTokenTest('api', apiVersion, baseVersion));
-      this.push(new FunctionAdopteeDeleteTvoAdminTokenTest('api', apiVersion, baseVersion));
+      this.push(new FunctionAdopteePostTojUserTokenTest('api', apiVersion, baseVersion));
+      this.push(new FunctionAdopteePutToijUserTokenTest('api', apiVersion, baseVersion));
+      this.push(new FunctionAdopterDeleteToiAdminTokenTest('api', apiVersion, baseVersion));
+      this.push(new FunctionAdopterGetToiAdminTokenTest('api', apiVersion, baseVersion));
+      this.push(new FunctionAdopterPostTojAdminTokenTest('api', apiVersion, baseVersion));
+      this.push(new FunctionAdopterPutToijAdminTokenTest('api', apiVersion, baseVersion));
+      this.push(new FunctionAdopteeDeleteToiAdminTokenTest('api', apiVersion, baseVersion));
 
       
       /* $lab:coverage:on$ */

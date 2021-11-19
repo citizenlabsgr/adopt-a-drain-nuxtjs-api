@@ -29,13 +29,13 @@ module.exports = class PostTemplate extends Template {
         SELECT is (
             (api_${this.version}.${this.function_name}(
               ${this.token}
-              ${this.form}
               ${this.ownerId || 'missing ownerid'}
+              ${this.form}
             )::JSONB - 'insertion'),
         
             '{"msg":"OK","status":"200"}'::JSONB,
         
-            'DB ${this.function_name} ${this.method} 200 0_0_1'::TEXT
+            'DB ${this.function_name}(${this.parameter_types}) ${this.method} ${this.claim.scope} 200 0_0_1'::TEXT
         
           );
         `;

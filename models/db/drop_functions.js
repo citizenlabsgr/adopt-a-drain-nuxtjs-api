@@ -8,7 +8,10 @@ module.exports = class DropFunction extends Step {
     // [Function drops occur when a function's name or parameters change]
     
     this.sql = `
-    
+    DROP FUNCTION if exists api_0_0_1.adopter(TOKEN,VARCHAR,OWNER_ID);
+    DROP FUNCTION if exists api_0_0_1.adoptee(token,owner_id,identity);
+    DROP FUNCTION if exists api_0_0_1.adopter(token,identity,json,owner_id);
+
     DROP FUNCTION if exists base_0_0_1.query(mbr);
 
     -- DROP FUNCTION if exists function api_0_0_1.adoptee(token, jsonb) ;

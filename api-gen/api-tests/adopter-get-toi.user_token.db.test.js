@@ -2,7 +2,7 @@
     'use strict';
     // this file was generated
     const Step = require('../../lib/runner/step.js');
-    module.exports = class FunctionAdopterDeleteTvoAdminTokenTest extends Step {
+    module.exports = class FunctionAdopterGetToiUserTokenTest extends Step {
         constructor(kind, version, baseVersion) {    
             super(kind, version);
             this.baseVersion = baseVersion;
@@ -11,7 +11,7 @@
       -- token : token
       -- function: adopter
       -- chelate: 
-      -- method: DELETE
+      -- method: GET
       -- expected: 
       -- setup: 
 
@@ -27,7 +27,7 @@
         );
         
 
-      SELECT plan(2);
+      SELECT plan(1);
 
       
         /* Work-around pgtap bug with user defined types and hasFunction
@@ -37,9 +37,9 @@
       
             'adopter',
       
-            ARRAY[TOKEN,VARCHAR,OWNER_ID],
+            ARRAY[TOKEN,OWNER_ID,IDENTITY],
       
-            'DB Function DELETE adopter (TOKEN,VARCHAR,OWNER_ID) exists'
+            'DB Function GET adopter (TOKEN,OWNER_ID,IDENTITY) exists'
       
         );
         */
@@ -47,14 +47,17 @@
           SELECT is (
   
             (api_0_0_1.adopter(
-              base_0_0_1.sign('{"aud":"citizenlabs-api","iss":"citizenlabs","sub":"client-api","user":"adopter@user.com","scope":"api_admin","key":"duckduckgoose"}'::JSON, base_0_0_1.get_jwt_secret()::TEXT)::TOKEN
-              ,'adopter@user.com'::VARCHAR
+              base_0_0_1.sign('{"aud":"citizenlabs-api","iss":"citizenlabs","sub":"client-api","user":"adopter@user.com","scope":"api_user","key":"duckduckgoose"}'::JSON, base_0_0_1.get_jwt_secret()::TEXT)::TOKEN
               ,'("duckduckgoose")'::OWNER_ID
-            )::JSONB - '{deletion,criteria}'::TEXT[]),
+              ,'("adopter@user.com")'::IDENTITY
+              
+              
+              
+            )::JSONB - 'selection'),
         
             '{"msg":"OK","status":"200"}'::JSONB,
         
-            'DB adopter DELETE 200 0_0_1'::TEXT
+            'DB adopter(TOKEN,OWNER_ID,IDENTITY) GET api_user 200 0_0_1'::TEXT
           );
         
       

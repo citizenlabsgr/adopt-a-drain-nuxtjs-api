@@ -14,22 +14,19 @@ const PutTemplate = require('./lib/put_template.js');
 const GetTemplate = require('./lib/get_template.js');
 const DeleteTemplate = require('./lib/delete_template.js');
 const FileHelper = require('./lib/file_helper.js');
+const Settings = require('./lib/settings.js');
 // const TokenTemplate = require('./lib/token_template.js');
 // missing :PutTemplate
 console.log('[Load Settings]');
-let settings = JSON.parse(fs.readFileSync(`${__dirname}/settings/settings.json`));
-console.log('[Load Test Data]');
 
-let testdata = JSON.parse(fs.readFileSync(`${__dirname}/settings/settings.data.json`));
-console.log('[Merge Test Data into Settings] ',);
+let settings = new Settings().get();
+
+console.log('settings', settings);
+
 let util = new Util();
-settings['data'] = testdata['data']; 
-// console.log('testdata', testdata);
-testdata = undefined;
-let i = 1;
-// console.log('settings', settings);
-console.log('[Validate Settings]');
 
+let i = 1;
+console.log('[Validate Settings]');
 
 console.log('[Process tests for the Token/user types]');
 let fileList = [];
@@ -45,10 +42,10 @@ if (!validateSettings(settings, functionFolder)) {
     console.log('Invalid Settings');
 }
 // GENERATE DATABASE TESTS
+    console.log('# Tests');
     for (let t in settings.tokens) {    
         // Process Tokens with Claims
         
-
         // console.log('JSON 4');
         let token_name = settings.tokens[t].name;
         let claim = settings.tokens[t].claim;
@@ -99,7 +96,7 @@ if (!validateSettings(settings, functionFolder)) {
             settings.api_settings[api_key].roles.push(role);
 
             let api_settings = settings.api_settings[api_key];
-            console.log('api_settings add role', api_settings);
+            // console.log('api_settings add role', api_settings);
 
             if (!api_settings) {
                 console.error('Api_Settigs[',api_key,'] Not Found');
@@ -112,7 +109,7 @@ if (!validateSettings(settings, functionFolder)) {
 
             let method = api_settings.method.toUpperCase();
 
-            console.log(`${i} [* Write ${file_name}]`);
+            console.log(`    ${i} [* Write ${file_name}]`);
 
             script.add(new HasFunctionTemplate(api_settings));
             
@@ -245,7 +242,7 @@ if (!validateSettings(settings, functionFolder)) {
         // console.log('--');
         // break;
     }
-console.log('[Generate active tests]');
+console.log('# Test Files');
 console.log('fileList', fileList);
 console.log('classList', classList);
 console.log('tokenNameList', tokenNameList);
@@ -356,7 +353,7 @@ function validateSettings(settings,functionFolder) {
                 rc = false;
             }
             if(!hasRoles(settings.api_settings[api_key])){
-                status = 'Add roles to api_settings';
+                status = `Add roles to api_settings: ${api_key}`;
             }
             
             // console.log(`api_key ${api_key} Primary: ${primary} hasDefault: ${has_default}`); 
@@ -397,9 +394,9 @@ function validateSettings(settings,functionFolder) {
             let status = '';
             let api_key =settings.tokens[t].api[a];
             let api_setting = settings.api_settings[api_key];
-
             let function_name = api_setting.name.name;
-            let folder = `${functionFolder}/${function_name}/${settings.api_settings[api_key].version}`;
+            let group_name = api_setting.name.group;
+            let folder = `${functionFolder}/${group_name}/${settings.api_settings[api_key].version}`;
             let filename = getFunctionFileName(folder, api_key) ;
             let paramTypes = formatFunctionParametersTypes(api_setting);
                 
