@@ -88,6 +88,7 @@ experiment('API Route Tests', () => {
     let token = Jwt.token.generate(payload, secret);
 
     token = `Bearer ${token}`;
+
     const res = await server.inject({
       method: 'post',
       url: '/signup',
@@ -122,19 +123,16 @@ experiment('API Route Tests', () => {
     // Goal: Singin  application user
     // Strategy: only guest token can signin
     //           set validation in route route.options.auth
-    // let username = 'signin@user.com';
+    
     const email = 'existing2@user.com';
-    // const payload = new TestTokenPayload().guestTokenPayload();
-    // const payload = new TokenPayloadGuest().payload;
     const payload = new GuestTokenPayload().payload();
 
     const secret = process.env.JWT_SECRET;
-    // const token_timeout = process.env.TOKEN_TIMEOUT;
-    // const old_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJjaXRpemVubGFicy1hcGkiLCJpc3MiOiJjaXRpemVubGFicyIsInN1YiI6ImNsaWVudC1hcGkiLCJ1c2VyIjoiZXhpc3RpbmcyQHVzZXIuY29tIiwic2NvcGUiOiJhcGlfdXNlciIsImp0aSI6InVzZXJuYW1lI2V4aXN0aW5nMkB1c2VyLmNvbSIsImtleSI6Imd1aWQjOWNiMTI0NzgtM2EzYS00ODVlLTgzYjEtZTkwMjcyMzJhZDllIiwiZXhwIjoxNjMyNDczMzM2LjI5ODk3Nn0.RrT7xOsoe_xHxgwXPgDv34MrPO1CQuZBGXcRRSf25No';
+
     let token = Jwt.token.generate(payload, secret);
 
     token = `Bearer ${token}`;
-
+    
     const testForm = {
       username: email,
       displayname: email,
