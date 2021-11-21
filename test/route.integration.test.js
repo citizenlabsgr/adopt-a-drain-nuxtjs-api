@@ -633,7 +633,7 @@ experiment('API Route Tests', () => {
   // [Test adoptee guest with MBR]
  
 
-  test('6 API /adoptee POST MBR, api_guest, 200', async () => {
+  test('6 API /adoptee/mbr POST MBR, api_guest, 200', async () => {
     //  find adoptee in mbr /adoptees to POST  
     const data = {
       "owners":{
@@ -665,27 +665,25 @@ experiment('API Route Tests', () => {
        } 
       ]
     };
-     // const payload = new TestTokenPayload().guestTokenPayload();
      const payload = new GuestTokenPayload().payload();
 
      const secret = process.env.JWT_SECRET;
      const token = `Bearer ${Jwt.token.generate(payload, secret)}`;
      
-     let form = {"north":4.0, "south":0.0, "west":0.0, "east":4.0};     
+     // let form = {"north":4.0, "south":0.0, "west":0.0, "east":4.0};     
+     const form = {north:4.0, south:0.0, west:0.0, east:4.0};     
      
      const res = await server.inject({
        method: 'post',
-       url: '/adoptee',
+       url: '/adoptee/mbr',
        headers: {
          authorization: token,
-         owner: '0',
-         rollback: true,
          test: JSON.stringify(data)
        },
        payload: form,
      });
      
-     // console.log('TEST API /adoptee MBR POST', res.result);
+     // console.log('TEST API /adoptee/mbr MBR POST', res.result);
  
      expect(res.result.status).to.equal('200');
      expect(res.result.selection).to.exist();
