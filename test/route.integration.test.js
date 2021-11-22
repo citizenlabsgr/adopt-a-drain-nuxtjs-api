@@ -690,22 +690,20 @@ experiment('API Route Tests', () => {
      expect(res.result.selection).to.not.equal([]);
  
    });
-   
 
-  test('7 API /adoptee POST payload, api_user, 200', async () => {
+  test('7 API /adoptee/owner POST payload, api_user, 200', async () => {
    //  change /adoptees to POST  
 
     const key = 'duckduckgoose'; // adoptee_data.data[0].owner;
-    const username = 'adopter@user.com' ;// adoptee_data.owners[key].username;
+    const username = 'adopter@user.com' ; // adoptee_data.owners[key].username;
 
     const payload = new UserTokenPayload(username, key).payload();
-
 
     const secret = process.env.JWT_SECRET;
     let token = Jwt.token.generate(payload, secret);    
 
-    let form = {"name":"ABC", "drain_id":"ABC","type":"TestDrain","lat":1.0, "lon":1.0};
-    
+    // let form = {"name":"ABC", "drain_id":"ABC","type":"TestDrain","lat":1.0, "lon":1.0};
+    let form = {type: 'adoptee', lat: 42.9704549894, lon: -85.6766804204, drain_id: 'CGR_2059902', name: 'zzzz'};
     token = `Bearer ${token}`;
 
     const res = await server.inject({
@@ -713,13 +711,14 @@ experiment('API Route Tests', () => {
       url: `/adoptee/${key}`,
       headers: {
         authorization: token,
-        
+        accept: "application/json",
+        'Content-Type': 'application/json',
         rollback: true
       },
       payload: form,
     });
     
-    // console.log('API /adoptee POST', res.result);
+    console.log('API /adoptee POST', res.result);
 
     expect(res.result.status).to.equal('200');
     expect(res.result.insertion).to.exist();
@@ -727,6 +726,57 @@ experiment('API Route Tests', () => {
 
   });
   
+  test('8 API /adoptee/owner POST Duplicate payload, api_user, 200', async () => {
+    //  change /adoptees to POST  
+    const data = {
+      "owners":{
+        "duckduckgoose":{
+           "username":"get@user.com",
+           "displayname":"A",
+           "password":"a1A!aaaa",
+           "scope": "api_user"
+        }
+      },
+      "data": [
+        {"pk":"drain_id#onedup", 
+         "sk":"const#ADOPTEE", 
+         "tk":"guid#1", 
+         "form": {"name":"One", "drain_id":"TEST_2059902","type":"TestDrain", "lat":1.0, "lon":1.0}, 
+         "owner":"duckduckgoose"
+        }
+      ]
+    };
+     const key = 'duckduckgoose'; // adoptee_data.data[0].owner;
+     const username = 'adopter@user.com' ; // adoptee_data.owners[key].username;
+ 
+     const payload = new UserTokenPayload(username, key).payload();
+ 
+     const secret = process.env.JWT_SECRET;
+     let token = Jwt.token.generate(payload, secret);    
+ 
+     // let form = {"name":"ABC", "drain_id":"ABC","type":"TestDrain","lat":1.0, "lon":1.0};
+     let form = {type: 'adoptee', lat: 42.9704549894, lon: -85.6766804204, drain_id: 'TEST_2059902', name: 'zzzz'};
+     token = `Bearer ${token}`;
+ 
+     const res = await server.inject({
+       method: 'post',
+       url: `/adoptee/${key}`,
+       headers: {
+         authorization: token,
+         accept: "application/json",
+         'Content-Type': 'application/json',
+         rollback: true,
+         test: JSON.stringify(data)
+       },
+       payload: form,
+     });
+     
+     console.log('API /adoptee POST', res.result);
+ 
+     expect(res.result.status).to.equal('409');
+     expect(res.result.insertion).to.not.exist();
+ 
+   });
   // ---------------------------------
   // adoptee PUT
   // write sql: function_adoptee_put_tijo
