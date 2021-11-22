@@ -157,7 +157,7 @@ experiment('API Route Tests', () => {
       },
     });
     
-    // console.log('res', res.result);
+    console.log('res', res.result);
 
     expect(res.statusCode).to.equal(200);
     expect(res.result.status).to.equal('200');

@@ -58,8 +58,7 @@ module.exports = class CreateFunctionSignin extends Step {
                    _token ->> 'sub' as sub,
                    _credentials ->> 'username' as user,
                    _credentials ->> 'scope' as scope,
-                   pk as jti,
-                   tk as key,
+                   replace(tk,'guid#','') as key,
                    (extract(epoch from now()) + lapse_in_millisec) as exp
                    
                  from base_${this.baseVersion}.one
