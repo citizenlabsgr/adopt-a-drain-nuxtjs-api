@@ -157,7 +157,7 @@ experiment('API Route Tests', () => {
       },
     });
     
-    console.log('res', res.result);
+    // console.log('res', res.result);
 
     expect(res.statusCode).to.equal(200);
     expect(res.result.status).to.equal('200');
@@ -695,12 +695,8 @@ experiment('API Route Tests', () => {
   test('7 API /adoptee POST payload, api_user, 200', async () => {
    //  change /adoptees to POST  
 
-    // const payload = new TestTokenPayload().userTokenPayload();
-  
     const key = 'duckduckgoose'; // adoptee_data.data[0].owner;
     const username = 'adopter@user.com' ;// adoptee_data.owners[key].username;
-    // const lapse_in_millisec=5000;
-    // const scope = 'api_user';
 
     const payload = new UserTokenPayload(username, key).payload();
 
@@ -714,10 +710,10 @@ experiment('API Route Tests', () => {
 
     const res = await server.inject({
       method: 'post',
-      url: '/adoptee',
+      url: `/adoptee/${key}`,
       headers: {
         authorization: token,
-        owner: key,
+        
         rollback: true
       },
       payload: form,
