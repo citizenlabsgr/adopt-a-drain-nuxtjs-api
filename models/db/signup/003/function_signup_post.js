@@ -11,6 +11,9 @@ module.exports = class CreateFunctionSignup extends Step {
     this.baseVersion=baseVersion;
     this.params = 'token TOKEN, form JSONB';
     this.method = 'POST';
+
+
+
     this.sql = `CREATE OR REPLACE FUNCTION ${this.name}(${this.params})  RETURNS JSONB AS $$
         Declare _form JSONB; 
         Declare result JSONB; 
@@ -35,10 +38,10 @@ module.exports = class CreateFunctionSignup extends Step {
         -- not available in hobby RESET ROLE;
         return format('{"status":"403","msg":"Forbidden","extra":"Invalid token","user":"%s"}',CURRENT_USER)::JSONB;
       end if;
-    /*    
+        
     -- [* Assign owner from token]
-      chelate := chelate || format('{"owner": "%s"}', result ->> 'key')::JSONB;
-    */
+    -- chelate := chelate || format('{"owner": "%s"}', result ->> 'key')::JSONB;
+    
     -- [* Generate owner key]
     -- [* posting existing users is not allowed via api ]
     chelate := chelate || format('{"owner": "%s"}', uuid_generate_v4())::JSONB;
@@ -80,6 +83,11 @@ module.exports = class CreateFunctionSignup extends Step {
 
     -- [* Assign Scope]
       _form := _form || format('{"scope":"%s"}','api_user')::JSONB;
+
+    -- [Generate and owner key]
+    chelate := chelate || format('{"owner": "%s"}', uuid_generate_v4())::JSONB;
+    -- [Sync tk and owner]
+    chelate := chelate || format('{"tk": "guid#%s"}', chelate ->> 'owner')::JSONB;
 
     -- [* Assemble Data]
       chelate := base_${this.baseVersion}.chelate(chelate, _form); -- add form to chelate, generate owner_key

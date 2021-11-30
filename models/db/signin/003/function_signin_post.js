@@ -16,7 +16,7 @@ module.exports = class CreateFunctionSignin extends Step {
     Declare _user_token TOKEN;
     Declare _token JSONB;
     Declare expected_scope TEXT := 'api_user';
-    Declare lapse_in_millisec INTEGER := 1800;
+    Declare lapse_in_millisec INTEGER := 1800; -- 1.8 seconds
     
   BEGIN
     -- [Function: Signin given token and credentials]

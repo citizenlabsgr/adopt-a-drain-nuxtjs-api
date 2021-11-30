@@ -4,6 +4,7 @@ const Step = require('../../../../lib/runner/step');
 module.exports = class FunctionAdopterPost extends Step {
   constructor(baseName, baseVersion) {
     super(baseName, baseVersion);
+
     this.name = 'adopter';
     this.name = `${this.kind}_${this.version}.${this.name}`;
     this.baseKind='base';
@@ -38,15 +39,16 @@ module.exports = class FunctionAdopterPost extends Step {
         return format('{"status":"403","msg":"Forbidden","extra":"Invalid token","user":"%s"}',CURRENT_USER)::JSONB;
       end if;
    
-    -- [* Assign owner from parameter]
-      chelate := chelate || format('{"owner": "%s"}', owner.id)::JSONB;
+    -- [* Determine the owner key]
 
-    -- [* Assign owner from token]
-    
-    -- [* Generate owner key]
-    -- [* posting existing users is not allowed via api ]
-    -- chelate := chelate || format('{"owner": "%s"}', uuid_generate_v4())::JSONB;
-    
+    if owner.id = '*' then
+      owner := format('(%s)',uuid_generate_v4())::OWNER_ID;
+    end if;
+   
+    -- [Sync tk and owner only needed for adopter]
+    chelate := chelate || format('{"tk": "guid#%s", "owner": "%s" }', owner.id, owner.id)::JSONB;
+
+
     -- [* Validate form parameter]
       if form is NULL then
           -- [Fail 400 when form is NULL]
@@ -67,7 +69,7 @@ module.exports = class FunctionAdopterPost extends Step {
           return '{"status":"400","msg":"Bad Request"}'::JSONB;
       end if;
 
-      -- [* Hash password]
+    -- [* Hash password]
 
       form := form || format('{"password": "%s"}',crypt(form ->> 'password', gen_salt('bf')) )::JSONB;
       
