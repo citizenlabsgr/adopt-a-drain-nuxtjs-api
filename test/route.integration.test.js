@@ -718,7 +718,7 @@ experiment('API Route Tests', () => {
       payload: form,
     });
     
-    console.log('API /adoptee POST', res.result);
+    // console.log('API /adoptee POST', res.result);
 
     expect(res.result.status).to.equal('200');
     expect(res.result.insertion).to.exist();
@@ -771,7 +771,7 @@ experiment('API Route Tests', () => {
        payload: form,
      });
      
-     console.log('API /adoptee POST', res.result);
+     // console.log('API /adoptee POST', res.result);
  
      expect(res.result.status).to.equal('409');
      expect(res.result.insertion).to.not.exist();
