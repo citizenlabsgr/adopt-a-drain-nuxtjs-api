@@ -77,7 +77,7 @@ experiment('API Route Tests', () => {
   
   test('1 API /signup POST, api_guest, 200', async () => {
     // Goal: Create an application user
-    // Strategy: only guest token can signin
+    // Strategy: only guest token can signup
     //           set validation in route route.options.auth
     
     const username = 'john.newhouser45@newuser.com';
@@ -166,6 +166,15 @@ experiment('API Route Tests', () => {
 
   });
   
+  // -----------------------------------------
+  // signin, after an update
+  //    /signup   POST
+  //    /adopter  PUT
+  //    /signin   POST
+  // -----------------------------------------
+
+  
+
   // ---------------------------------
 
   
