@@ -593,8 +593,7 @@ experiment('API Route Tests', () => {
 
     const key = data.data[0].owner;
     const user = data.owners[key].username; 
-    // const scope = 'api_user';
-    // const lapse_in_millisec = 5000; // 5 seconds
+    
     const secret = process.env.JWT_SECRET;
      
     const payload = new UserTokenPayload(user, 
@@ -603,14 +602,11 @@ experiment('API Route Tests', () => {
                                          
     let token = `Bearer ${Jwt.token.generate(payload, secret)}`;
        
-    // let token = Jwt.token.generate(payload, secret);
     // [Set owner and id]
     const owner = key;  
     const id = data.data[0].form.drain_id;
-    // console.log(`owner ${owner} id ${id}`);
     // [Inject Test into Server]
-    // console.log(`B token ${token} `);
-    // console.log(`url /adoptee/${owner}/${id}`);
+ 
     const a_url = `/adoptee/${encodeURI(owner)}/${encodeURI(id)}`;
 
     const res = await server.inject({
@@ -630,7 +626,81 @@ experiment('API Route Tests', () => {
     expect(res.result.selection).to.exist();
     expect(res.result.selection).to.not.equal([]);
   });  
+// ---------------------------------
+  // adoptee GET 
+  // Model: function_adoptee_get_toi.js
+  // Route: adoptee_route_get.js
+  // ---------------------------------
+  test('4 API /adoptee/owner GET 200', async () => {
+    // [Add Test data]
+    const data = {
+      "owners":{
+        "duckduckgoose":{
+           "username":"get@user.com",
+           "displayname":"A",
+           "password":"a1A!aaaa",
+           "scope": "api_user"
+        }
+      },
+      "data": [
+        {"pk":"drain_id#oneget", 
+         "sk":"const#ADOPTEE", 
+         "tk":"guid#1", 
+         "form": {"name":"One", "drain_id":"Oneget","type":"TestDrain", "lat":1.0, "lon":1.0}, 
+         "owner":"duckduckgoose"
+        }, 
+        {"pk":"drain_id#twoget", 
+         "sk":"const#ADOPTEE", 
+         "tk":"guid#2", 
+         "form": {"name":"Two", "drain_id":"Twoget","type":"TestDrain","lat":1.0, "lon":1.0}, 
+         "owner":"duckduckgoose"
+        }, 
+        {"pk":"drain_id#threeget", 
+        "sk":"const#ADOPTEE", 
+        "tk":"guid#3", 
+        "form": {"name":"Three", "drain_id":"Threeget","type":"TestDrain","lat":1.0, "lon":1.0}, 
+        "owner":"duckduckgoose"
+       } 
+      ]
+    };
+ 
+    // [Setup Test Token]
 
+    const key = data.data[0].owner;
+    const user = data.owners[key].username; 
+    
+    const secret = process.env.JWT_SECRET;
+     
+    const payload = new UserTokenPayload(user, 
+                                         key)
+                                         .payload();
+                                         
+    let token = `Bearer ${Jwt.token.generate(payload, secret)}`;
+       
+    // [Set owner and id]
+    const owner = key;  
+    // const id = data.data[0].form.drain_id;
+    // [Inject Test into Server]
+ 
+    const a_url = `/adoptee/${encodeURI(owner)}`;
+
+    const res = await server.inject({
+      method: 'get',
+      url: a_url,
+      headers: {
+        authorization: token,
+        debug: false,
+        test: JSON.stringify(data)
+      }
+    });
+
+    // [Check results]
+    // console.log('API /adoptee/owner/id GET results', res.result);
+
+    expect(res.result.status).to.equal('200');
+    expect(res.result.selection).to.exist();
+    expect(res.result.selection).to.not.equal([]);
+  });  
   // -----------------------------------------
   // adoptee POST
   // -----------------------------------------
