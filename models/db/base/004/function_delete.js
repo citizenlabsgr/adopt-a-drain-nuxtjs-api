@@ -9,7 +9,7 @@ module.exports = class CreateFunctionDelete001 extends Step {
     this.name = 'delete';
     this.name = `${this.kind}_${this.version}.${this.name}`;
     // this.params = 'criteria JSONB, owner_key OWNER_ID, ';
-    this.params = 'criteria JSONB, owner_key OWNER_ID, id IDENTITY';
+    this.params = 'criteria JSONB, owner_key OWNER_ID';
     this.sql = `
     CREATE OR REPLACE FUNCTION ${this.name}(${this.params}) RETURNS JSONB
 
