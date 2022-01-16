@@ -10,7 +10,7 @@
         "criteria JSONB",
         "id IDENTITY",
         "owner OWNER_ID",
-        "m_b_r MBR" 
+        "m_b_r MBR"
     ],
     "version": "0_0_1",
     "api_settings": {
@@ -18,27 +18,29 @@
             "active": true,
             "description":"post one adopter for guest",
             "version":"003",
-            "name": {"group":"signup", "name":"signup","kind":"api","version":"0_0_1"}, 
-            "method": "post", 
-            "return":"JSONB", 
+            "name": {"group":"signup", "name":"signup","kind":"api","version":"0_0_1"},
+            "method": "post",
+            "return":"JSONB",
             "params":[
-                {"name":"token","type":"TOKEN"},        
+                {"name":"token","type":"TOKEN"},
                 {"name":"form","type":"JSONB"}
             ],
-            "roles":[]
+            "roles":[],
+            "test_type": "single"
         },
         "signin-post": {
             "active": true,
             "description":"get user token for guest",
             "version":"003",
-                "name": {"group":"signin", "name":"signin","kind":"api","version":"0_0_1"}, 
-                "method": "post", 
-                "return":"JSONB", 
+                "name": {"group":"signin", "name":"signin","kind":"api","version":"0_0_1"},
+                "method": "post",
+                "return":"JSONB",
                 "params":[
                     {"name":"token","type":"TOKEN"},
                     {"name":"critera","type":"JSONB"}
                 ],
-                "roles":[]
+                "roles":[],
+                "test_type": "single"
         },
         "dep-adopter-delete-to":{
             "active": true,
@@ -51,21 +53,23 @@
                     {"name":"token","type":"TOKEN"},
                     {"name":"owner","type":"OWNER_ID"}
             ],
-            "roles":[]
+            "roles":[],
+            "test_type": "single"
         },
         "adopter-delete-toi":{
             "active": true,
             "description":"delete one by id for owner",
             "version":"006",
-            "name": {"group":"adopter", "name":"adopter_del","kind":"api","version":"0_0_1"}, 
-            "method": "delete", 
+            "name": {"group":"adopter", "name":"adopter_del","kind":"api","version":"0_0_1"},
+            "method": "delete",
             "return":"JSONB",
             "params":[
                 {"name":"token","type":"TOKEN"},
                 {"name":"owner","type":"OWNER_ID"},
                 {"name":"id","type":"IDENTITY"}
             ],
-            "roles":[]
+            "roles":[],
+            "test_type": "single"
         },
         "dep-adopter-get-ti":{
             "active": true,
@@ -78,35 +82,38 @@
                 {"name":"token","type":"TOKEN"},
                 {"name":"id","type":"IDENTITY"}
             ],
-            "roles":[]
+            "roles":[],
+            "test_type": "single"
         },
         "adopter-get-toi":{
             "active": true,
             "description":"get one by id and for owner",
             "version":"006",
-            "name": {"group":"adopter", "name":"adopter","kind":"api","version":"0_0_1"}, 
-            "method": "get", 
+            "name": {"group":"adopter", "name":"adopter","kind":"api","version":"0_0_1"},
+            "method": "get",
             "return":"JSONB",
             "params":[
                 {"name":"token","type":"TOKEN"},
                 {"name":"owner","type":"OWNER_ID"},
                 {"name":"id","type":"IDENTITY"}
             ],
-            "roles":[]
+            "roles":[],
+            "test_type": "single"
         },
-        
+
         "dep-adopter-post-tj":{
             "active": true,
             "description":"post one for owner",
             "version":"006",
-            "name": {"group":"adopter", "name":"adopter","kind":"api","version":"0_0_1"}, 
-            "method": "post", 
+            "name": {"group":"adopter", "name":"adopter","kind":"api","version":"0_0_1"},
+            "method": "post",
             "return":"JSONB",
             "params":[
                 {"name":"token","type":"TOKEN"},
                 {"name":"form","type":"JSONB"}
             ],
-            "roles":[]
+            "roles":[],
+            "test_type": "single"
         },
         "adopter-post-toj":{
             "active": true,
@@ -120,21 +127,23 @@
                 {"name":"form","type":"JSONB"},
                 {"name":"owner","type":"OWNER_ID"}
             ],
-            "roles":[]
+            "roles":[],
+            "test_type": "single"
         },
         "dep-adopter-put-tij":{
             "active": true,
             "description":"put by id",
             "version":"006",
-            "name": {"group":"adopter", "name":"adopter","kind":"api","version":"0_0_1"}, 
-            "method": "put", 
+            "name": {"group":"adopter", "name":"adopter","kind":"api","version":"0_0_1"},
+            "method": "put",
             "return":"JSONB",
             "params":[
                 {"name":"token","type":"TOKEN"},
                 {"name":"id","type":"IDENTITY"},
                 {"name":"form","type":"JSONB"}
             ],
-            "roles":[]
+            "roles":[],
+            "test_type": "single"
         },
         "adopter-put-toij":{
             "active": true,
@@ -149,7 +158,8 @@
                 {"name":"id","type":"IDENTITY"},
                 {"name":"form","type":"JSONB"}
             ],
-            "roles":[]
+            "roles":[],
+            "test_type": "single"
         },
         "adoptee-delete-toi": {
             "active": true,
@@ -163,63 +173,67 @@
                 {"name":"owner","type":"OWNER_ID"},
                 {"name":"id","type":"IDENTITY"}
             ],
-            "roles":[]
+            "roles":[],
+            "test_type": "single"
         },
         "adoptee-get-toi":{
             "active": true,
             "description":"Get adpotee by owner and identity",
             "version":"006",
-            "name": {"group":"adoptee", "name":"adoptee","kind":"api","version":"0_0_1"}, 
-            "method": "get", 
+            "name": {"group":"adoptee", "name":"adoptee","kind":"api","version":"0_0_1"},
+            "method": "get",
             "return":"JSONB",
             "params":[
                 {"name":"token","type":"TOKEN"},
                 {"name":"owner","type":"OWNER_ID"},
                 {"name":"id","type":"IDENTITY"}
             ],
-            "roles":[]
-        },       
+            "roles":[],
+            "test_type": "single"
+        },
         "adoptee-get-tmbr":{
             "active": true,
             "description":"",
             "version":"006",
-            "name": {"group":"adoptee", "name":"adoptee","kind":"api","version":"0_0_1"}, 
-            "method": "get", 
+            "name": {"group":"adoptee", "name":"adoptee","kind":"api","version":"0_0_1"},
+            "method": "get",
             "return":"JSONB",
             "params":[
                 {"name":"token","type":"TOKEN"},
                 {"name":"m_b_r","type":"MBR"}
             ],
             "roles":[],
+            "test_type": "single",
             "mbr":{
-                "north": 2.0, 
-                "south": 0.0, 
-                "west": 0.0, 
-                "east": 2.0 
+                "north": 2.0,
+                "south": 0.0,
+                "west": 0.0,
+                "east": 2.0
             }
-            
+
         },
         "adoptee-post-toj":{
             "active": true,
             "description":"post one adoptee for owner",
             "version":"006",
-            "name": {"group":"adoptee", "name":"adoptee","kind":"api","version":"0_0_1"}, 
-            "method": "post", 
+            "name": {"group":"adoptee", "name":"adoptee","kind":"api","version":"0_0_1"},
+            "method": "post",
             "return":"JSONB",
             "params":[
                 {"name":"token","type":"TOKEN"},
                 {"name":"owner","type":"OWNER_ID"},
                 {"name":"form","type":"JSONB"}
-                
+
             ],
-            "roles":[]
+            "roles":[],
+            "test_type": "single"
         },
         "adoptee-put-toij":{
             "active": true,
             "description":"put by owner and id",
             "version":"006",
-            "name": {"group":"adoptee", "name":"adoptee","kind":"api","version":"0_0_1"}, 
-            "method": "put", 
+            "name": {"group":"adoptee", "name":"adoptee","kind":"api","version":"0_0_1"},
+            "method": "put",
             "return":"JSONB",
             "params":[
                 {"name":"token","type":"TOKEN"},
@@ -227,10 +241,59 @@
                 {"name":"id","type":"IDENTITY"},
                 {"name":"form","type":"JSONB"}
             ],
-            "roles":[]
+            "roles":[],
+            "test_type": "single"
+        },
+
+        "document-delete-toi": {
+            "active": true,
+            "description":"delete document by owner and id ",
+            "version":"000",
+            "name": {"group":"document", "name":"document_del","kind":"api","version":"0_0_1"},
+            "method": "delete",
+            "return":"JSONB",
+            "params":[
+                {"name":"token","type":"TOKEN"},
+                {"name":"owner","type":"OWNER_ID"},
+                {"name":"id","type":"IDENTITY"}
+            ],
+            "roles":[],
+            "test_type": "multipart"
+        },
+        "document-get-toi":{
+            "active": true,
+            "description":"Get document by owner and identity",
+            "version":"000",
+            "name": {"group":"document", "name":"document","kind":"api","version":"0_0_1"},
+            "method": "get",
+            "return":"JSONB",
+            "params":[
+                {"name":"token","type":"TOKEN"},
+                {"name":"owner","type":"OWNER_ID"},
+                {"name":"id","type":"IDENTITY"}
+            ],
+            "roles":[],
+            "test_type": "multipart"
+        },
+        "document-post-toj":{
+            "active": true,
+            "description":"post document for owner",
+            "version":"000",
+            "name": {"group":"document", "name":"document","kind":"api","version":"0_0_1"},
+            "method": "post",
+            "return":"JSONB",
+            "params":[
+                {"name":"token","type":"TOKEN"},
+                {"name":"owner","type":"OWNER_ID"},
+                {"name":"form","type":"JSONB"}
+
+            ],
+            "roles":[],
+            "test_type": "multipart"
         }
+
     },
-    
+
     "tokens": [
         {
             "name":"guest_token",
@@ -238,8 +301,12 @@
             "claim": {"aud":"citizenlabs-api", "iss":"citizenlabs", "sub":"client-api", "user":"guest", "scope":"api_guest", "key":"0"},
             "api": [
                 "signup-post",
+
                 "signin-post",
-                "adoptee-get-tmbr"
+
+                "adoptee-get-tmbr",
+
+                "document-get-ti"
             ]
         },
         {
@@ -254,9 +321,11 @@
                 "adoptee-delete-toi",
                 "adoptee-get-toi",
                 "adoptee-get-tmbr",
-                
+
                 "adoptee-post-toj",
-                "adoptee-put-toij"
+                "adoptee-put-toij",
+
+                "document-get-toi"
             ]
         },
         {
@@ -268,8 +337,12 @@
                 "adopter-get-toi",
                 "adopter-post-toj",
                 "adopter-put-toij",
-                "adoptee-delete-toi"
-                
+
+                "adoptee-delete-toi",
+
+                "document-delete-toi",
+                "document-get-toi",
+                "document-post-toj"
             ]
         }
     ],

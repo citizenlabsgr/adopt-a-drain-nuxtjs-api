@@ -5,7 +5,7 @@
 
 // This test has trouble connecting to database
 // test manually with swagger
-// process.emitter.setMaxListeners(15); 
+// process.emitter.setMaxListeners(15);
 // process.setMaxListeners(15);  // fail
 
 const Jwt = require('@hapi/jwt');
@@ -38,30 +38,30 @@ const adoptee_post_data = {
     }
   },
   "data": [
-    {"pk":"drain_id#one", 
-     "sk":"const#ADOPTEE", 
-     "tk":"guid#1", 
-     "form": {"name":"One", "drain_id":"One","type":"TestDrain", "lat":1.0, "lon":1.0}, 
+    {"pk":"drain_id#one",
+     "sk":"const#ADOPTEE",
+     "tk":"guid#1",
+     "form": {"name":"One", "drain_id":"One","type":"TestDrain", "lat":1.0, "lon":1.0},
      "owner":"duckduckgoose"
-    }, 
-    {"pk":"drain_id#two", 
-     "sk":"const#ADOPTEE", 
-     "tk":"guid#2", 
-     "form": {"name":"Two", "drain_id":"Two","type":"TestDrain","lat":1.0, "lon":1.0}, 
+    },
+    {"pk":"drain_id#two",
+     "sk":"const#ADOPTEE",
+     "tk":"guid#2",
+     "form": {"name":"Two", "drain_id":"Two","type":"TestDrain","lat":1.0, "lon":1.0},
      "owner":"duckduckgoose"
-    }, 
-    {"pk":"drain_id#three", 
-    "sk":"const#ADOPTEE", 
-    "tk":"guid#3", 
-    "form": {"name":"Three", "drain_id":"Three","type":"TestDrain","lat":1.0, "lon":1.0}, 
+    },
+    {"pk":"drain_id#three",
+    "sk":"const#ADOPTEE",
+    "tk":"guid#3",
+    "form": {"name":"Three", "drain_id":"Three","type":"TestDrain","lat":1.0, "lon":1.0},
     "owner":"duckduckgoose"
-   } 
+   }
   ]
 };
 */
 experiment('API Route Tests', () => {
   let server = null;
-  
+
   before(async () => {
     server = await init();
   });
@@ -70,19 +70,18 @@ experiment('API Route Tests', () => {
     await server.stop();
     // delete record
   });
-  
+
   // -----------------------------------------
   // signup
   // -----------------------------------------
-  
+
   test('1 API /signup POST, api_guest, 200', async () => {
     // Goal: Create an application user
     // Strategy: only guest token can signup
     //           set validation in route route.options.auth
-    
+
     const username = 'john.newhouser45@newuser.com';
     const payload = new GuestTokenPayload().payload();
-
     const secret = process.env.JWT_SECRET;
 
     let token = Jwt.token.generate(payload, secret);
@@ -94,10 +93,10 @@ experiment('API Route Tests', () => {
       url: '/signup',
       headers: {
         authorization: token,
-        
+
           rollback: true,
           debug: false
-        
+
       },
       payload: {
         username,
@@ -113,7 +112,7 @@ experiment('API Route Tests', () => {
     // expect(res.result.token).toBeDefined();
 
   });
-  
+
   // -----------------------------------------
   // signin
   // -----------------------------------------
@@ -123,7 +122,7 @@ experiment('API Route Tests', () => {
     // Goal: Singin  application user
     // Strategy: only guest token can signin
     //           set validation in route route.options.auth
-    
+
     const email = 'existing2@user.com';
     const payload = new GuestTokenPayload().payload();
 
@@ -132,7 +131,7 @@ experiment('API Route Tests', () => {
     let token = Jwt.token.generate(payload, secret);
 
     token = `Bearer ${token}`;
-    
+
     const testForm = {
       username: email,
       displayname: email,
@@ -146,7 +145,7 @@ experiment('API Route Tests', () => {
       url: '/signin',
       headers: {
         authorization: token,
-       
+
         debug: false,
         test: JSON.stringify(testForm),
         timeout: 1
@@ -156,16 +155,16 @@ experiment('API Route Tests', () => {
         password: 'a1A!aaaa',
       },
     });
-    
+
     // console.log('res', res.result);
 
     expect(res.statusCode).to.equal(200);
     expect(res.result.status).to.equal('200');
-    
+
     expect(res.result.token).to.exist();
 
   });
-  
+
   // -----------------------------------------
   // signin, after an update
   //    /signup   POST
@@ -173,37 +172,37 @@ experiment('API Route Tests', () => {
   //    /signin   POST
   // -----------------------------------------
 
-  
+
 
   // ---------------------------------
 
-  
+
   // ---------------------------------
 
   // ---------------------------------
-  
+
   // ---------------------------------
   // adopter POST
   // ---------------------------------
-  test('8 API /adopter POST user_token, 200', async () => {
+  test('3 API /adopter POST user_token, 200', async () => {
 
     // Goal: adopter  application user
-    // Strategy: only admin can post using adopter 
-    
-    
+    // Strategy: only admin can post using adopter
+
+
     const username = 'adopterB@user.com';
     const key = 'duckduckgoose';
     // const scope = 'api_admin';
     // const lapse_in_millisec = 5000; // 5 seconds
-        
-    const payload = new AdminTokenPayload(username, 
+
+    const payload = new AdminTokenPayload(username,
                                          key)
                                          .payload();
-    const secret = process.env.JWT_SECRET;    
+    const secret = process.env.JWT_SECRET;
     const token = `Bearer ${Jwt.token.generate(payload, secret)}`;
 
     // token = `Bearer ${token}`;
-    
+
     // test is just for testing dont use in production
 
     const res = await server.inject({
@@ -211,18 +210,18 @@ experiment('API Route Tests', () => {
       url: '/adopter',
       headers: {
         authorization: token,
-        
+
           debug: false,
           rollback: true,
-        
+
         owner: key
       },
       payload: {
-        
+
           username: username,
           displayname: username,
           password: 'a1A!aaaa'
-        
+
       }
     });
     // console.log('/adopter POST test 3');
@@ -239,8 +238,8 @@ experiment('API Route Tests', () => {
   // ---------------------------------
   // adopter DELETE
   // ---------------------------------
-  
-  test('10 API /adopter/owner/id DELETE user_token, 200', async () => {
+
+  test('4 API /adopter/owner/id DELETE user_token, 200', async () => {
 
     // Goal: adopter  application user
     // Strategy: Insert dummy user, and then remove it.
@@ -255,33 +254,33 @@ experiment('API Route Tests', () => {
            }
       },
       "data": [
-          {"pk":"username#joeadmin@user.com", 
-          "sk":"const#USER", 
-          "tk":"guid#1", 
-          "form": {"username":"joeadmin@user.com", "displayname":"J","password":"a1A!aaaa"}, 
+          {"pk":"username#joeadmin@user.com",
+          "sk":"const#USER",
+          "tk":"guid#1",
+          "form": {"username":"joeadmin@user.com", "displayname":"J","password":"a1A!aaaa"},
           "owner":"duckduckgoose"
          }
       ]
-  };
-    
+    };
+
     const username = 'joeadmin@user.com';
     const id = username;
     const key = 'duckduckgoose';
     // const scope = 'api_user';
     // const lapse_in_millisec = 5000; // 5 seconds
-    
-    const payload = new UserTokenPayload(username, 
+
+    const payload = new UserTokenPayload(username,
                                          key)
                                          .payload();
-    
-    const secret = process.env.JWT_SECRET;    
+
+    const secret = process.env.JWT_SECRET;
 
     let token = Jwt.token.generate(payload, secret);
     let owner = 'duckduckgoose';
 
     token = `Bearer ${token}`;
- 
-  
+
+
     // test is just for testing dont use in production
 
     const res = await server.inject({
@@ -289,18 +288,18 @@ experiment('API Route Tests', () => {
       url: `/adopter/${owner}/${id}`,
       headers: {
         authorization: token,
-        
+
           debug: false,
           test: JSON.stringify(adopter_data)
-        
+
       }
     });
 
     // console.log('res DELETE ', res.result);
-    
+
     expect(res.statusCode).to.equal(200);
     expect(res.result.status).to.equal('200');
-    
+
     // expect(res.result.token).to.exist();
     // console.log('/adopter DElETE test out');
 
@@ -312,12 +311,12 @@ experiment('API Route Tests', () => {
   // [Setup Test Token]
   // [Inject Test into Server]
   // [Check results]
-  
-  test('11 API /adopter/owner/id GET user_token, 200', async () => {
 
-    // Goal: adopter 
-    // Strategy: add test adopter, get adopter, rollback db 
-    // Role: 
+  test('5 API /adopter/owner/id GET user_token, 200', async () => {
+
+    // Goal: adopter
+    // Strategy: add test adopter, get adopter, rollback db
+    // Role:
     const adopter_data = {
       "owners": {
           "duckduckgoose":{
@@ -328,10 +327,10 @@ experiment('API Route Tests', () => {
            }
       },
       "data": [
-          {"pk":"username#user@user.com", 
-          "sk":"const#USER", 
-          "tk":"guid#1", 
-          "form": {"username":"user@user.com", "displayname":"J","password":"a1A!aaaa"}, 
+          {"pk":"username#user@user.com",
+          "sk":"const#USER",
+          "tk":"guid#1",
+          "form": {"username":"user@user.com", "displayname":"J","password":"a1A!aaaa"},
           "owner":"duckduckgoose"
          }
       ]
@@ -342,29 +341,29 @@ experiment('API Route Tests', () => {
     // const scope = 'api_user';
     // const lapse_in_millisec = 5000; // 5 seconds
     const secret = process.env.JWT_SECRET;
-     
-    const payload = new UserTokenPayload(username, 
+
+    const payload = new UserTokenPayload(username,
                                          key)
                                          .payload();
-                                         
-    
+
+
     let userToken = Jwt.token.generate(payload, secret);
     const owner = key;
     // --------------------------
     // [Admin token...generate]
     // let adminToken = Jwt.token.generate(
-    //  new TestTokenPayload().adminTokenPayload(username, key), 
+    //  new TestTokenPayload().adminTokenPayload(username, key),
     //  secret);
 
     userToken = `Bearer ${userToken}`;
-    
+
     // const testForm = {
     //   username: username,
     //  displayname: username,
     //  password: 'a1A!aaaa',
     // };
-    
-    // 
+
+    //
     // test is just for testing dont use in production
 
     const res = await server.inject({
@@ -372,38 +371,38 @@ experiment('API Route Tests', () => {
       url: `/adopter/${owner}/${id}`,
       headers: {
         authorization: userToken,
-        
+
           debug: false,
           test: JSON.stringify(adopter_data)
-        
+
       }
     });
 
     // console.log('res GET ', res.result);
-    
+
     expect(res.statusCode).to.equal(200);
     expect(res.result.status).to.equal('200');
     expect(res.result.selection).to.exist();
 
   });
 
-  
+
 
   // ---------------------------------
   // adopter PUT
   // ---------------------------------
-  
-  test('12 API /adopter/owner/id with payload PUT user_token 200', async () => {
+
+  test('6 API /adopter/owner/id with payload PUT user_token 200', async () => {
 
     // Goal: adopter  application user
-    // Strategy: 
-    // - signup a user, get user id, 
+    // Strategy:
+    // - signup a user, get user id,
     // - make user token, provide user-token to update
-    // - use rollback to get rid of signup          
+    // - use rollback to get rid of signup
     // Role: api_user
     // MODEL:function_adopter_put_
     // DB TEST:
-    // API TEST: route.integration.test.js 
+    // API TEST: route.integration.test.js
     // [data]
     const adopter_data = {
       "owners": {
@@ -415,10 +414,10 @@ experiment('API Route Tests', () => {
            }
       },
       "data": [
-          {"pk":"username#putter@user.com", 
-          "sk":"const#USER", 
-          "tk":"guid#1", 
-          "form": {"username":"putter@user.com", "displayname":"J","password":"a1A!aaaa"}, 
+          {"pk":"username#putter@user.com",
+          "sk":"const#USER",
+          "tk":"guid#1",
+          "form": {"username":"putter@user.com", "displayname":"J","password":"a1A!aaaa"},
           "owner":"duckduckgoose"
          }
       ]
@@ -433,17 +432,17 @@ experiment('API Route Tests', () => {
     // [Two tokens required to run test guestToken and userToken]
     // [User token calculated from test values]
     const userPayload = new UserTokenPayload(
-                                         username, 
+                                         username,
                                          key)
                                          .payload();
-    let userToken  = Jwt.token.generate(userPayload, 
-                                        secret);    
+    let userToken  = Jwt.token.generate(userPayload,
+                                        secret);
     const owner = key;
     // [Admin token...generate]
     // let adminToken = Jwt.token.generate(new TestTokenPayload().adminTokenPayload(username, key), secret);
-    
+
     // let adminToken = Jwt.token.generate(
-    //    new AdminTokenPayload(username, key).payload(), 
+    //    new AdminTokenPayload(username, key).payload(),
     //    secret);
     userToken = `Bearer ${userToken}`;
     // [Existing user required to run test]
@@ -465,14 +464,14 @@ experiment('API Route Tests', () => {
 
           debug: false,
           test: JSON.stringify(adopter_data),
-        
+
       },
       payload: changeForm
     });
 
     // console.log('res PUT ', res.result);
     // console.log('res PUT ', res.result.updation.form.scope);
-    
+
     expect(res.statusCode).to.equal(200);
     expect(res.result.status).to.equal('200');
     expect(res.result.updation.form.username).to.equal(changeForm.username);
@@ -490,11 +489,11 @@ experiment('API Route Tests', () => {
   // ---------------------------------
   // adoptee DELETE
   // ---------------------------------
-  
-  test('3 API /adoptee_del/owner/id DElETE (Owner, Id) api_user, 200', async () => {
 
-    // Goal: delete one specific adoptee by owner 
-    // Strategy: Using a user_token, insert dummy adoptee, and then remove it.  
+  test('7 API /adoptee_del/owner/id DElETE (Owner, Id) api_user, 200', async () => {
+
+    // Goal: delete one specific adoptee by owner
+    // Strategy: Using a user_token, insert dummy adoptee, and then remove it.
     // Role: api_user
     const adoptee_delete_data = {
       "owners":{
@@ -506,24 +505,24 @@ experiment('API Route Tests', () => {
         }
       },
       "data": [
-        {"pk":"drain_id#one_delete", 
-         "sk":"const#ADOPTEE", 
-         "tk":"guid#1", 
-         "form": {"name":"One", "drain_id":"Onedelete","type":"TestDrain", "lat":1.0, "lon":1.0}, 
+        {"pk":"drain_id#one_delete",
+         "sk":"const#ADOPTEE",
+         "tk":"guid#1",
+         "form": {"name":"One", "drain_id":"Onedelete","type":"TestDrain", "lat":1.0, "lon":1.0},
          "owner":"duckduckgoose"
         }
       ]
     };
-   
-    const user = adoptee_delete_data.owners[adoptee_delete_data.data[0].owner].username; 
+
+    const user = adoptee_delete_data.owners[adoptee_delete_data.data[0].owner].username;
     const owner = adoptee_delete_data.data[0].owner ;// 'duckduckgoose';
     // const lapse_in_millisec = 5000; // 5 seconds
-    
-    const payload = new UserTokenPayload(user, 
+
+    const payload = new UserTokenPayload(user,
                                          owner)
                                          .payload();
-    
-    const secret = process.env.JWT_SECRET;    
+
+    const secret = process.env.JWT_SECRET;
     let token = `Bearer ${Jwt.token.generate(payload, secret)}`;
     let id = adoptee_delete_data.data[0].form.drain_id;
 
@@ -537,7 +536,7 @@ experiment('API Route Tests', () => {
       url: a_url,
       headers: {
         authorization: token,
-        
+
           debug: false,
           test: JSON.stringify(adoptee_delete_data)
       }
@@ -547,16 +546,16 @@ experiment('API Route Tests', () => {
     expect(res.result.status).to.equal('200');
     expect(res.result.deletion).to.exist();
     expect(res.result.deletion).to.not.equal([]);
- 
+
   });
-  
-  
+
+
   // ---------------------------------
-  // adoptee GET 
+  // adoptee GET
   // Model: function_adoptee_get_toi.js
   // Route: adoptee_route_get.js
   // ---------------------------------
-  test('4 API /adoptee/owner/id GET 200', async () => {
+  test('8 API /adoptee/owner/id GET 200', async () => {
     // [Add Test data]
     const data = {
       "owners":{
@@ -568,45 +567,45 @@ experiment('API Route Tests', () => {
         }
       },
       "data": [
-        {"pk":"drain_id#oneget", 
-         "sk":"const#ADOPTEE", 
-         "tk":"guid#1", 
-         "form": {"name":"One", "drain_id":"Oneget","type":"TestDrain", "lat":1.0, "lon":1.0}, 
+        {"pk":"drain_id#oneget",
+         "sk":"const#ADOPTEE",
+         "tk":"guid#1",
+         "form": {"name":"One", "drain_id":"Oneget","type":"TestDrain", "lat":1.0, "lon":1.0},
          "owner":"duckduckgoose"
-        }, 
-        {"pk":"drain_id#twoget", 
-         "sk":"const#ADOPTEE", 
-         "tk":"guid#2", 
-         "form": {"name":"Two", "drain_id":"Twoget","type":"TestDrain","lat":1.0, "lon":1.0}, 
+        },
+        {"pk":"drain_id#twoget",
+         "sk":"const#ADOPTEE",
+         "tk":"guid#2",
+         "form": {"name":"Two", "drain_id":"Twoget","type":"TestDrain","lat":1.0, "lon":1.0},
          "owner":"duckduckgoose"
-        }, 
-        {"pk":"drain_id#threeget", 
-        "sk":"const#ADOPTEE", 
-        "tk":"guid#3", 
-        "form": {"name":"Three", "drain_id":"Threeget","type":"TestDrain","lat":1.0, "lon":1.0}, 
+        },
+        {"pk":"drain_id#threeget",
+        "sk":"const#ADOPTEE",
+        "tk":"guid#3",
+        "form": {"name":"Three", "drain_id":"Threeget","type":"TestDrain","lat":1.0, "lon":1.0},
         "owner":"duckduckgoose"
-       } 
+       }
       ]
     };
- 
+
     // [Setup Test Token]
 
     const key = data.data[0].owner;
-    const user = data.owners[key].username; 
-    
+    const user = data.owners[key].username;
+
     const secret = process.env.JWT_SECRET;
-     
-    const payload = new UserTokenPayload(user, 
+
+    const payload = new UserTokenPayload(user,
                                          key)
                                          .payload();
-                                         
+
     let token = `Bearer ${Jwt.token.generate(payload, secret)}`;
-       
+
     // [Set owner and id]
-    const owner = key;  
+    const owner = key;
     const id = data.data[0].form.drain_id;
     // [Inject Test into Server]
- 
+
     const a_url = `/adoptee/${encodeURI(owner)}/${encodeURI(id)}`;
 
     const res = await server.inject({
@@ -625,13 +624,13 @@ experiment('API Route Tests', () => {
     expect(res.result.status).to.equal('200');
     expect(res.result.selection).to.exist();
     expect(res.result.selection).to.not.equal([]);
-  });  
+  });
 // ---------------------------------
-  // adoptee GET 
+  // adoptee GET
   // Model: function_adoptee_get_toi.js
   // Route: adoptee_route_get.js
   // ---------------------------------
-  test('4 API /adoptee/owner GET 200', async () => {
+  test('9 API /adoptee/owner GET 200', async () => {
     // [Add Test data]
     const data = {
       "owners":{
@@ -643,45 +642,45 @@ experiment('API Route Tests', () => {
         }
       },
       "data": [
-        {"pk":"drain_id#oneget", 
-         "sk":"const#ADOPTEE", 
-         "tk":"guid#1", 
-         "form": {"name":"One", "drain_id":"Oneget","type":"TestDrain", "lat":1.0, "lon":1.0}, 
+        {"pk":"drain_id#oneget",
+         "sk":"const#ADOPTEE",
+         "tk":"guid#1",
+         "form": {"name":"One", "drain_id":"Oneget","type":"TestDrain", "lat":1.0, "lon":1.0},
          "owner":"duckduckgoose"
-        }, 
-        {"pk":"drain_id#twoget", 
-         "sk":"const#ADOPTEE", 
-         "tk":"guid#2", 
-         "form": {"name":"Two", "drain_id":"Twoget","type":"TestDrain","lat":1.0, "lon":1.0}, 
+        },
+        {"pk":"drain_id#twoget",
+         "sk":"const#ADOPTEE",
+         "tk":"guid#2",
+         "form": {"name":"Two", "drain_id":"Twoget","type":"TestDrain","lat":1.0, "lon":1.0},
          "owner":"duckduckgoose"
-        }, 
-        {"pk":"drain_id#threeget", 
-        "sk":"const#ADOPTEE", 
-        "tk":"guid#3", 
-        "form": {"name":"Three", "drain_id":"Threeget","type":"TestDrain","lat":1.0, "lon":1.0}, 
+        },
+        {"pk":"drain_id#threeget",
+        "sk":"const#ADOPTEE",
+        "tk":"guid#3",
+        "form": {"name":"Three", "drain_id":"Threeget","type":"TestDrain","lat":1.0, "lon":1.0},
         "owner":"duckduckgoose"
-       } 
+       }
       ]
     };
- 
+
     // [Setup Test Token]
 
     const key = data.data[0].owner;
-    const user = data.owners[key].username; 
-    
+    const user = data.owners[key].username;
+
     const secret = process.env.JWT_SECRET;
-     
-    const payload = new UserTokenPayload(user, 
+
+    const payload = new UserTokenPayload(user,
                                          key)
                                          .payload();
-                                         
+
     let token = `Bearer ${Jwt.token.generate(payload, secret)}`;
-       
+
     // [Set owner and id]
-    const owner = key;  
+    const owner = key;
     // const id = data.data[0].form.drain_id;
     // [Inject Test into Server]
- 
+
     const a_url = `/adoptee/${encodeURI(owner)}`;
 
     const res = await server.inject({
@@ -700,20 +699,20 @@ experiment('API Route Tests', () => {
     expect(res.result.status).to.equal('200');
     expect(res.result.selection).to.exist();
     expect(res.result.selection).to.not.equal([]);
-  });  
+  });
   // -----------------------------------------
   // adoptee POST
   // -----------------------------------------
   /*
   test('5 API /adoptee POST MBR Guest 200', async () => {
 
-  });  
+  });
 */
   // [Test adoptee guest with MBR]
- 
 
-  test('6 API /adoptee/mbr POST MBR, api_guest, 200', async () => {
-    //  find adoptee in mbr /adoptees to POST  
+
+  test('10 API /adoptee/mbr POST MBR, api_guest, 200', async () => {
+    //  find adoptee in mbr /adoptees to POST
     const data = {
       "owners":{
         "duckduckgoose":{
@@ -724,34 +723,34 @@ experiment('API Route Tests', () => {
         }
       },
       "data": [
-        {"pk":"drain_id#oneget", 
-         "sk":"const#ADOPTEE", 
-         "tk":"guid#1", 
-         "form": {"name":"One", "drain_id":"Oneget","type":"TestDrain", "lat":1.0, "lon":1.0}, 
+        {"pk":"drain_id#oneget",
+         "sk":"const#ADOPTEE",
+         "tk":"guid#1",
+         "form": {"name":"One", "drain_id":"Oneget","type":"TestDrain", "lat":1.0, "lon":1.0},
          "owner":"duckduckgoose"
-        }, 
-        {"pk":"drain_id#twoget", 
-         "sk":"const#ADOPTEE", 
-         "tk":"guid#2", 
-         "form": {"name":"Two", "drain_id":"Twoget","type":"TestDrain","lat":1.0, "lon":1.0}, 
+        },
+        {"pk":"drain_id#twoget",
+         "sk":"const#ADOPTEE",
+         "tk":"guid#2",
+         "form": {"name":"Two", "drain_id":"Twoget","type":"TestDrain","lat":1.0, "lon":1.0},
          "owner":"duckduckgoose"
-        }, 
-        {"pk":"drain_id#threeget", 
-        "sk":"const#ADOPTEE", 
-        "tk":"guid#3", 
-        "form": {"name":"Three", "drain_id":"Threeget","type":"TestDrain","lat":1.0, "lon":1.0}, 
+        },
+        {"pk":"drain_id#threeget",
+        "sk":"const#ADOPTEE",
+        "tk":"guid#3",
+        "form": {"name":"Three", "drain_id":"Threeget","type":"TestDrain","lat":1.0, "lon":1.0},
         "owner":"duckduckgoose"
-       } 
+       }
       ]
     };
      const payload = new GuestTokenPayload().payload();
 
      const secret = process.env.JWT_SECRET;
      const token = `Bearer ${Jwt.token.generate(payload, secret)}`;
-     
-     // let form = {"north":4.0, "south":0.0, "west":0.0, "east":4.0};     
-     const form = {north:4.0, south:0.0, west:0.0, east:4.0};     
-     
+
+     // let form = {"north":4.0, "south":0.0, "west":0.0, "east":4.0};
+     const form = {north:4.0, south:0.0, west:0.0, east:4.0};
+
      const res = await server.inject({
        method: 'post',
        url: '/adoptee/mbr',
@@ -761,17 +760,17 @@ experiment('API Route Tests', () => {
        },
        payload: form,
      });
-     
+
      // console.log('TEST API /adoptee/mbr MBR POST', res.result);
- 
+
      expect(res.result.status).to.equal('200');
      expect(res.result.selection).to.exist();
      expect(res.result.selection).to.not.equal([]);
- 
+
    });
 
-  test('7 API /adoptee/owner POST payload, api_user, 200', async () => {
-   //  change /adoptees to POST  
+  test('11 API /adoptee/owner POST payload, api_user, 200', async () => {
+   //  change /adoptees to POST
 
     const key = 'duckduckgoose'; // adoptee_data.data[0].owner;
     const username = 'adopter@user.com' ; // adoptee_data.owners[key].username;
@@ -779,9 +778,9 @@ experiment('API Route Tests', () => {
     const payload = new UserTokenPayload(username, key).payload();
 
     const secret = process.env.JWT_SECRET;
-    let token = Jwt.token.generate(payload, secret);    
+    // [user user token]
+    let token = Jwt.token.generate(payload, secret);
 
-    // let form = {"name":"ABC", "drain_id":"ABC","type":"TestDrain","lat":1.0, "lon":1.0};
     let form = {type: 'adoptee', lat: 42.9704549894, lon: -85.6766804204, drain_id: 'CGR_2059902', name: 'zzzz'};
     token = `Bearer ${token}`;
 
@@ -796,7 +795,7 @@ experiment('API Route Tests', () => {
       },
       payload: form,
     });
-    
+
     // console.log('API /adoptee POST', res.result);
 
     expect(res.result.status).to.equal('200');
@@ -804,9 +803,9 @@ experiment('API Route Tests', () => {
     expect(res.result.insertion).to.not.equal([]);
 
   });
-  
-  test('8 API /adoptee/owner POST Duplicate payload, api_user, 200', async () => {
-    //  change /adoptees to POST  
+
+  test('12 API /adoptee/owner POST Duplicate payload, api_user, 200', async () => {
+    //  change /adoptees to POST
     const data = {
       "owners":{
         "duckduckgoose":{
@@ -817,26 +816,26 @@ experiment('API Route Tests', () => {
         }
       },
       "data": [
-        {"pk":"drain_id#onedup", 
-         "sk":"const#ADOPTEE", 
-         "tk":"guid#1", 
-         "form": {"name":"One", "drain_id":"TEST_2059902","type":"TestDrain", "lat":1.0, "lon":1.0}, 
+        {"pk":"drain_id#onedup",
+         "sk":"const#ADOPTEE",
+         "tk":"guid#1",
+         "form": {"name":"One", "drain_id":"TEST_2059902","type":"TestDrain", "lat":1.0, "lon":1.0},
          "owner":"duckduckgoose"
         }
       ]
     };
      const key = 'duckduckgoose'; // adoptee_data.data[0].owner;
      const username = 'adopter@user.com' ; // adoptee_data.owners[key].username;
- 
+
      const payload = new UserTokenPayload(username, key).payload();
- 
+
      const secret = process.env.JWT_SECRET;
-     let token = Jwt.token.generate(payload, secret);    
- 
+     let token = Jwt.token.generate(payload, secret);
+
      // let form = {"name":"ABC", "drain_id":"ABC","type":"TestDrain","lat":1.0, "lon":1.0};
      let form = {type: 'adoptee', lat: 42.9704549894, lon: -85.6766804204, drain_id: 'TEST_2059902', name: 'zzzz'};
      token = `Bearer ${token}`;
- 
+
      const res = await server.inject({
        method: 'post',
        url: `/adoptee/${key}`,
@@ -849,26 +848,26 @@ experiment('API Route Tests', () => {
        },
        payload: form,
      });
-     
+
      // console.log('API /adoptee POST', res.result);
- 
+
      expect(res.result.status).to.equal('409');
      expect(res.result.insertion).to.not.exist();
- 
+
    });
   // ---------------------------------
   // adoptee PUT
   // write sql: function_adoptee_put_tijo
-  // configure test: adoptee-put-toi in settings.json 
+  // configure test: adoptee-put-toi in settings.json
   // -- prepare post data in api test
   // write route test: in route.integration.js
   //
-  
-  test('API /adoptee api_user(TOKEN,OWNER,IDENTITY,JSONB) PUT, 200', async () => {
+
+  test('13 API /adoptee api_user(TOKEN,OWNER,IDENTITY,JSONB) PUT, 200', async () => {
 
     // Goal: adoptee
-    // Strategy: 
-    // - post an adopter, update the adoptee.name, rollback 
+    // Strategy:
+    // - post an adopter, update the adoptee.name, rollback
     // [data]
     const data = {
       "owners":{
@@ -880,20 +879,20 @@ experiment('API Route Tests', () => {
         }
       },
       "data": [
-        {"pk":"drain_id#oneput", 
-         "sk":"const#ADOPTEE", 
-         "tk":"guid#1", 
-         "form": {"name":"One", "drain_id":"One_put","type":"TestDrain", "lat":1.0, "lon":1.0}, 
+        {"pk":"drain_id#oneput",
+         "sk":"const#ADOPTEE",
+         "tk":"guid#1",
+         "form": {"name":"One", "drain_id":"One_put","type":"TestDrain", "lat":1.0, "lon":1.0},
          "owner":"duckduckgoose"
         }
       ]
     };
     // [Token values ]
-    
+
     const key = data.data[0].owner;
-    const user = data.owners[key].username; 
+    const user = data.owners[key].username;
     const id = data.data[0].form.drain_id;
-    
+
     const secret = process.env.JWT_SECRET;
 
     // [User token calculated from test values]
@@ -905,7 +904,7 @@ experiment('API Route Tests', () => {
     const token = `Bearer ${Jwt.token.generate(payload, secret)}`;
 
     // [Any value can be changed]
-    
+
     const changeForm = {name:"Two", drain_id:"Two_put",type:"Test-Drain", lat:2.0, lon:2.0};
     // [Start the test]
     const aurl = `/adoptee/${owner}/${id}`;
@@ -914,7 +913,7 @@ experiment('API Route Tests', () => {
       url: aurl,
       headers: {
         authorization: token,
-        
+
         debug: false,
         test: JSON.stringify(data)
       },
@@ -923,7 +922,7 @@ experiment('API Route Tests', () => {
 
     // console.log('res PUT ', res.result);
     // console.log('res PUT ', res.result.updation.form.scope);
-    
+
     expect(res.statusCode).to.equal(200);
     expect(res.result.status).to.equal('200');
     expect(res.result.updation.pk).to.equal('drain_id#Two_put');
@@ -933,4 +932,369 @@ experiment('API Route Tests', () => {
 
   });
 
-});  
+  // ---------------------------------
+  // document DELETE
+  // ---------------------------------
+
+  test('14 API /document/owner/id DELETE admin_token, 200', async () => {
+
+    // Goal: document  application user
+    // Strategy: Insert dummy user, and then remove it.
+    // Role: api_user
+    const document_data = {
+      "owners": {
+          "duckduckgoose":{
+              "username": "joeadmin@user.com",
+              "displayname": "A",
+              "password": "a1A!aaaa",
+              "scope": "api_admin"
+           }
+      },
+      "data": [
+          {"pk":"username#joeadmin@user.com",
+          "sk":"const#USER",
+          "tk":"guid#1",
+          "form": {"username":"joeadmin@user.com", "displayname":"J","password":"a1A!aaaa"},
+          "owner":"duckduckgoose"
+         }
+      ]
+    };
+
+    const username = 'joeadmin@user.com';
+    const id = username;
+    const key = 'duckduckgoose';
+    // const scope = 'api_user';
+    // const lapse_in_millisec = 5000; // 5 seconds
+
+    const payload = new UserTokenPayload(username,
+                                         key)
+                                         .payload();
+
+    const secret = process.env.JWT_SECRET;
+
+    let token = Jwt.token.generate(payload, secret);
+    let owner = 'duckduckgoose';
+
+    token = `Bearer ${token}`;
+
+
+    // test is just for testing dont use in production
+
+    const res = await server.inject({
+      method: 'delete',
+      url: `/adopter/${owner}/${id}`,
+      headers: {
+        authorization: token,
+
+          debug: false,
+          test: JSON.stringify(document_data)
+
+      }
+    });
+
+    // console.log('res DELETE ', res.result);
+
+    expect(res.statusCode).to.equal(200);
+    expect(res.result.status).to.equal('200');
+
+    // expect(res.result.token).to.exist();
+    // console.log('/document DElETE test out');
+
+  });
+
+
+    // ---------------------------------
+    // document GET
+    // ---------------------------------
+    // [Add Test data]
+    // [Setup Test Token]
+    // [Inject Test into Server]
+    // [Check results]
+
+  test('15 API /document/0/id GET guest_token, 200', async () => {
+
+      // Goal: document
+      // Strategy: add test document, get document, rollback db
+      // Role:
+      const document_data = {
+        "owners": {
+            "duckduckgoose":{
+                "username": "joeadmin@user.com",
+                "displayname": "A",
+                "password": "a1A!aaaa",
+                "scope": "api_admin"
+             }
+        },
+        "data": [
+          {
+              "pk": "doc_id#tou",
+              "sk": "i#00000",
+              "tk": "w#terms-of-use",
+              "form": {"doc_id":"tou","p":0, "i":"00000","w": "Terms-of-Use"},
+              "owner": "duckduckgoose"
+          },
+          {
+              "pk": "doc_id#tou",
+              "sk": "i#00001",
+              "tk": "w#tou",
+              "form": {"doc_id":"tou","p": 1,"i": "00001","w": "TOU"},
+              "owner": "duckduckgoose"
+          },
+          {
+              "pk": "doc_id#tou",
+              "sk": "i#00002",
+              "tk": "w##",
+              "form": {"doc_id":"tou","p":2,"i":"00002","w": "#"},
+              "owner": "duckduckgoose"
+          },
+          {
+              "pk": "doc_id#tou",
+              "sk": "i#00003",
+              "tk": "w##",
+              "form": {"doc_id":"tou","p":2,"i":"00003","w": "Terms"},
+              "owner": "duckduckgoose"
+          }
+        ]
+      };
+
+      const id = 'tou';
+      const secret = process.env.JWT_SECRET;
+      const payload = new GuestTokenPayload().payload();
+      const owner = payload.key;
+
+      let token = Jwt.token.generate(payload, secret);
+
+      const guest_token = `Bearer ${token}`;
+
+      // console.log('/document/0/id GET secret ', secret);
+      // console.log('/document/0/id GET payload ',payload);
+      // console.log('/document/0/id GET owner ',owner);
+      // console.log(`/document/${owner}/${id}`);
+      // --------------------------
+
+      // test is just for testing dont use in production
+
+      const res = await server.inject({
+        method: 'get',
+        url: `/document/${owner}/${id}`,
+        headers: {
+          authorization: guest_token,
+            debug: false,
+            test: JSON.stringify(document_data)
+        }
+      });
+
+      // console.log('res GET ', res.result);
+
+      expect(res.statusCode).to.equal(200);
+      expect(res.result.status).to.equal('200');
+      expect(res.result.selection).to.exist();
+
+    });
+
+
+
+  // ---------------------------------
+
+  // document POST
+
+  // ---------------------------------
+  test('16 API /document/0 POST admin_token, 200', async () => {
+
+    // Goal: add a public document
+    // Strategy: only admin can post using document
+    // post a public document as an admin
+    const username = 'admin@user.com';
+    const key = 'duckduckgoose';
+    // const aid = 'tou';
+
+    const payload = new AdminTokenPayload(username,
+                                         key)
+                                         .payload();
+    const secret = process.env.JWT_SECRET;
+    // [use admin token]
+    const token = `Bearer ${Jwt.token.generate(payload, secret)}`;
+
+    // test is just for testing dont use in production
+    const a_url = `/document`;
+// console.log('a_url ', a_url);
+// console.log('payload ', payload);
+// console.log('secret ', secret);
+// console.log('token ',token);
+    const res = await server.inject({
+      method: 'post',
+      url: a_url,
+      headers: {
+        authorization: token,
+        accept: "application/json",
+        'Content-Type': 'application/json',
+        rollback: true,
+        owner: key
+      },
+      payload: {
+        "doc_id":"tou",
+        "p":0,
+        "i":"00000",
+        "w": "Terms-of-Use"
+      },
+    });
+
+    // console.log('res POST ', res.result);
+
+    expect(res.statusCode).to.equal(200);
+    expect(res.result.status).to.equal('200');
+    // doesnt return a token... use signin for that
+    expect(res.result.insertion).to.exist();
+
+  });
+
+
+/*
+  test('17 API /document/owner/id GET user_token, 200', async () => {
+
+    // Goal: document
+    // Strategy: add test document, get document, rollback db
+    // Role:
+    const document_data = {
+      "owners": {
+          "duckduckgoose":{
+              "username": "user@user.com",
+              "displayname": "A",
+              "password": "a1A!aaaa",
+              "scope": "api_admin"
+           }
+      },
+      "data": [
+          {"pk":"username#user@user.com",
+          "sk":"const#USER",
+          "tk":"guid#1",
+          "form": {"username":"user@user.com", "displayname":"J","password":"a1A!aaaa"},
+          "owner":"duckduckgoose"
+         }
+      ]
+    };
+    const username = document_data.data[0].form.username; // 'userC@user.com';
+    const id = username;
+    const key = document_data.data[0].owner;
+    // const scope = 'api_user';
+    // const lapse_in_millisec = 5000; // 5 seconds
+    const secret = process.env.JWT_SECRET;
+
+    const payload = new UserTokenPayload(username,
+                                         key)
+                                         .payload();
+
+
+    let userToken = Jwt.token.generate(payload, secret);
+    const owner = key;
+    // --------------------------
+    // [Admin token...generate]
+    // let adminToken = Jwt.token.generate(
+    //  new TestTokenPayload().adminTokenPayload(username, key),
+    //  secret);
+
+    userToken = `Bearer ${userToken}`;
+
+    // const testForm = {
+    //   username: username,
+    //  displayname: username,
+    //  password: 'a1A!aaaa',
+    // };
+
+    //
+    // test is just for testing dont use in production
+
+    const res = await server.inject({
+      method: 'get',
+      url: `/document/${owner}/${id}`,
+      headers: {
+        authorization: userToken,
+
+          debug: false,
+          test: JSON.stringify(document_data)
+
+      }
+    });
+
+    // console.log('res GET ', res.result);
+
+    expect(res.statusCode).to.equal(200);
+    expect(res.result.status).to.equal('200');
+    expect(res.result.selection).to.exist();
+
+  });
+  test('18 API /document/owner/id GET admin_token, 200', async () => {
+
+    // Goal: document
+    // Strategy: add test document, get document, rollback db
+    // Role:
+    const document_data = {
+      "owners": {
+          "duckduckgoose":{
+              "username": "user@user.com",
+              "displayname": "A",
+              "password": "a1A!aaaa",
+              "scope": "api_admin"
+           }
+      },
+      "data": [
+          {"pk":"username#user@user.com",
+          "sk":"const#USER",
+          "tk":"guid#1",
+          "form": {"username":"user@user.com", "displayname":"J","password":"a1A!aaaa"},
+          "owner":"duckduckgoose"
+         }
+      ]
+    };
+    const username = document_data.data[0].form.username; // 'userC@user.com';
+    const id = username;
+    const key = document_data.data[0].owner;
+    // const scope = 'api_user';
+    // const lapse_in_millisec = 5000; // 5 seconds
+    const secret = process.env.JWT_SECRET;
+
+    const payload = new UserTokenPayload(username,
+                                         key)
+                                         .payload();
+
+
+    let userToken = Jwt.token.generate(payload, secret);
+    const owner = key;
+    // --------------------------
+    // [Admin token...generate]
+    // let adminToken = Jwt.token.generate(
+    //  new TestTokenPayload().adminTokenPayload(username, key),
+    //  secret);
+
+    userToken = `Bearer ${userToken}`;
+
+    // const testForm = {
+    //   username: username,
+    //  displayname: username,
+    //  password: 'a1A!aaaa',
+    // };
+
+    //
+    // test is just for testing dont use in production
+
+    const res = await server.inject({
+      method: 'get',
+      url: `/document/${owner}/${id}`,
+      headers: {
+        authorization: userToken,
+
+          debug: false,
+          test: JSON.stringify(document_data)
+
+      }
+    });
+
+    // console.log('res GET ', res.result);
+
+    expect(res.statusCode).to.equal(200);
+    expect(res.result.status).to.equal('200');
+    expect(res.result.selection).to.exist();
+
+  });
+*/
+});

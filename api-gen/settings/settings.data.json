@@ -162,7 +162,104 @@
                 "adopter_key": "duckduckgoose"
             },
             "owner":"duckduckgoose"
-        }]
+        }],
+        "document-get": [
+            {
+                "pk": "doc_id#tou",
+                "sk": "i#00000",
+                "tk": "w#terms-of-use",
+                "form": {"doc_id":"tou","p":"0", "i":"00000", "w": "Terms-of-Use"},
+                "owner": "duckduckgoose"
+            },
+            {
+                "pk": "doc_id#tou",
+                "sk": "i#00001",
+                "tk": "w#tou",
+                "form": {"doc_id":"tou", "p": 1,"i":"00001","w": "TOU"},
+                "owner": "duckduckgoose"
+            },
+            {
+                "pk": "doc_id#tou",
+                "sk": "i#00002",
+                "tk": "w##",
+                "form": {"doc_id":"tou", "p":2,"i":"00002","w": "#"},
+                "owner": "duckduckgoose"
+            },
+            {
+                "pk": "doc_id#tou",
+                "sk": "i#00003",
+                "tk": "w##",
+                "form": {"doc_id":"tou", "p":2,"i":"00003","w": "Terms"},
+                "owner": "duckduckgoose"
+            },
+            {
+                "pk": "doc_id#tou",
+                "sk": "i#00004",
+                "tk": "w#of",
+                "form": {"doc_id":"tou", "p":2,"i":"00004","w": "of"},
+                "owner": "duckduckgoose"
+            },
+            {
+                "pk": "doc_id#tou",
+                "sk": "i#00005",
+                "tk": "w#use",
+                "form": {"doc_id":"tou", "p":2,"i":"00005","w": "Use"},
+                "owner": "duckduckgoose"
+            },
+            {
+                "pk": "doc_id#tou",
+                "sk": "i#00006",
+                "tk": "w###",
+                "form": {"doc_id":"tou", "p":3,"i":"00006","w": "##"},
+                "owner": "duckduckgoose"
+            },
+            {
+                "pk": "doc_id#tou",
+                "sk": "i#00007",
+                "tk": "w#title",
+                "form": {"doc_id":"tou", "p":3,"i":"00007","w":"Title"},
+                "owner": "duckduckgoose"
+            },
+            {
+                "pk": "doc_id#tou",
+                "sk": "i#00008",
+                "tk": "w#a",
+                "form": {"doc_id":"tou","p":3,"i":"00008","w": "A"},
+                "owner": "duckduckgoose"
+            }
+        ],
+        "document-post": [
+            {
+                "pk": "doc_id#tou",
+                "sk": "i#00000",
+                "tk": "w#terms-of-use",
+                "form": {"doc_id":"tou", "p":0, "i":"00000", "w": "Terms-of-Use"},
+                "owner": "duckduckgoose"
+            },
+            {
+                "pk": "doc_id#tou",
+                "sk": "i#00001",
+                "tk": "w#tou",
+                "form": {"doc_id":"tou", "p": 1,"i": "00001","w": "TOU"},
+                "owner": "duckduckgoose"
+            }
+        ],
+        "document-delete": [
+            {
+                "pk": "doc_id#tou",
+                "sk": "i#00000",
+                "tk": "w#terms-of-use",
+                "form": {"doc_id":"tou", "p":0, "i": "00000","w": "Terms-of-Use"},
+                "owner": "duckduckgoose"
+            },
+            {
+                "pk": "doc_id#tou",
+                "sk": "i#00001",
+                "tk": "w#tou",
+                "form": {"doc_id":"tou", "p": 1,"i": "00001","w": "TOU"},
+                "owner": "duckduckgoose"
+            }
+        ]
+
     }
-    
 }

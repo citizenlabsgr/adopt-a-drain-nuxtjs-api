@@ -22,6 +22,13 @@ Details is a master list of useful project information.
 * # sendgrid
     [sendgrid](https://sendgrid.com) is an email api
 
+# api_guest is token scope  
+# api_guest is role
+# api_user is token scope
+# api_user is role
+# api_admin is token scope
+# api_admin is role
+
 # Architecture
 ```
 [App] <---> [API] <---> [Database]
@@ -29,7 +36,7 @@ Details is a master list of useful project information.
 
 * Application (App)
 * Application Programming Interface (API)
-* Database (DB) 
+* Database (DB)
 * Chelate is {"pk":"", "sk":"", "tk":"", "form":"", "active": true, "owner_key": "created":"","updated":""}
 
 # Configuration Settings
@@ -40,7 +47,7 @@ Details is a master list of useful project information.
 * Setting: JWT_CLAIMS
 * Setting: NODE_ENV
 * Setting: NPM_CONFIG_PRODUCTION
-* Setting: PORT 
+* Setting: PORT
 * Setting: postdeploy
 * Setting: POSTGRES_DB
 * Setting: POSTGRES_USER
@@ -60,27 +67,27 @@ Details is a master list of useful project information.
 * Platform: __GitHub__ (GH)
 * Platform: __Heroku__ (HK)
 
-# Processes 
+# Processes
 
 * Process: Connect to GitHub
 * Process: Create Database
-* Process: Create JWT_CLAIMS 
-* Process: Create JWT_SECRET 
+* Process: Create JWT_CLAIMS
+* Process: Create JWT_SECRET
 * Process: Create API_TOKEN for Development
-    Use a python script to generate development token 
+    Use a python script to generate development token
     ```
     # eg
-    
+
     import uuid
     import jwt
 
     def main():
         # claim is same as POSTGRES_JWT_CLAIMS and JWT_CLAIMS
-        claim = {"aud":"citizenlabs-api", 
-                 "iss":"citizenlabs", 
-                 "sub":"client-api", 
-                 "user":"guest", 
-                 "scope":"api_guest", 
+        claim = {"aud":"citizenlabs-api",
+                 "iss":"citizenlabs",
+                 "sub":"client-api",
+                 "user":"guest",
+                 "scope":"api_guest",
                  "key":"0"}
         password = str(uuid.uuid4())
         # go get the from syslog_ident from heroku postgres (SHOW ALL;)
@@ -95,20 +102,20 @@ Details is a master list of useful project information.
         main()
     ```
 * Process: Create API_TOKEN for Production
-    Use a python script to generate production token 
+    Use a python script to generate production token
     ```
     # eg
-    
+
     import uuid
     import jwt
 
     def main():
         # claim is same as POSTGRES_JWT_CLAIMS and JWT_CLAIMS
-        claim = {"aud":"citizenlabs-api", 
-                 "iss":"citizenlabs", 
-                 "sub":"client-api", 
-                 "user":"guest", 
-                 "scope":"api_guest", 
+        claim = {"aud":"citizenlabs-api",
+                 "iss":"citizenlabs",
+                 "sub":"client-api",
+                 "user":"guest",
+                 "scope":"api_guest",
                  "key":"0"}
         password = str(uuid.uuid4())
         # go get the from syslog_ident from heroku postgres (SHOW ALL;)
@@ -135,12 +142,22 @@ Details is a master list of useful project information.
 
 * MBR is {"west": 0.0, "east": 0.0, "north": 0.0, "south": 0.0}
 * MBR is Minimum Bounding Rectangle
-* Minimum Bounding Rectangle is MBR 
+* Minimum Bounding Rectangle is MBR
 
 * Update GitHub Repository
-* Update API_TOKEN 
+* Update API_TOKEN
     * On change, update JWT_SECRET
-* Update JWT_CLAIMS 
-    * On change, update JWT_SECRET and create new API_TOKEN 
-* Update JWT_SECRET 
-    * On change, manually create new API_TOKEN 
+* Update JWT_CLAIMS
+    * On change, update JWT_SECRET and create new API_TOKEN
+* Update JWT_SECRET
+    * On change, manually create new API_TOKEN
+
+# Guest Role is api_guest
+# User Role is api_user
+# Admin Role is api_admin
+
+# guest_claims are {"aud":"citizenlabs-api","iss":"citizenlabs","sub":"client-api","user":"guest","scope":"api_guest","key":"0"}
+
+# admin_claims are {"aud":"citizenlabs-api","iss":"citizenlabs","sub":"client-api","user":"<user-email>","scope":"api_admin","key":"<admin-owner-key-value>"}
+
+# user_claims are {"aud":"citizenlabs-api","iss":"citizenlabs","sub":"client-api","user":"<user-email>","scope":"api_user","key":"<user-owner-key-value>"}
