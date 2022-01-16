@@ -1,5 +1,10 @@
 'use strict';
+/*
+Generates database tests
+for each token
+*
 
+*/
 const fs = require('fs');
 const Util = require('./lib/util.js');
 const Script = require('./lib/script.js');
@@ -12,6 +17,7 @@ const SignupPostTemplate = require('./lib/signup_post_template.js');
 const PutTemplate = require('./lib/put_template.js');
 
 const GetTemplate = require('./lib/get_template.js');
+const GetTemplateMultiPart = require('./lib/get_template_multi_part.js');
 const DeleteTemplate = require('./lib/delete_template.js');
 const FileHelper = require('./lib/file_helper.js');
 const Settings = require('./lib/settings.js');
@@ -43,29 +49,29 @@ if (!validateSettings(settings, functionFolder)) {
 }
 // GENERATE DATABASE TESTS
     console.log('# Tests');
-    for (let t in settings.tokens) {    
+    for (let t in settings.tokens) {
         // Process Tokens with Claims
-        
+
         // console.log('JSON 4');
         let token_name = settings.tokens[t].name;
         let claim = settings.tokens[t].claim;
         let role = settings.tokens[t].role; // get role from token settings
         // console.log('role', role);
         for (let a in settings.tokens[t].api) {
-            // iterate 
+            // iterate
             // Build filename
             // Build classname
             let api_key =settings.tokens[t].api[a];
             // let folder =  `${__dirname}/${apiTestFolder}`;
             // let filename =  getTestFileName(folder, api_key, token_name);
-            
+
 
             let file_name = `${api_key}.${token_name}.db.test.js`;
             let filename = `${__dirname}/${apiTestFolder}/${file_name}`;
-            
+
             let classname = `${util.toTitleCase(api_key)}`;
             let tokenname = `${util.toTitleCase(token_name.replace('_','-'))}`;
-  
+
             if (!settings.data) {
                 console.log(api_key, 'Data Not Defined');
             }
@@ -76,9 +82,19 @@ if (!validateSettings(settings, functionFolder)) {
                 // console.log('trim_after ', trim_after(api_key,'-'));
                 data = settings.data[trim_after(api_key,'-')];
             }
-            // get patch data 
+            // get patch data
             let patch_data = settings.data[`${api_key}-patch`];
-
+            // test type
+            try {
+                if (!hasTestType(settings.api_settings[api_key])){
+                    settings.api_settings[api_key].testtype;
+                }
+                // if (!settings.api_settings[api_key].roles) {
+                //    settings.api_settings[api_key].roles = [];
+                // }
+            } catch(err) {
+                throw new Error(`Api testtype not found in ${api_key}`);
+            }
             // inject role array into api_settings when not found
             // console.log('settings.api_settings',settings.api_settings);
             // console.log('api_key',api_key);
@@ -87,9 +103,9 @@ if (!validateSettings(settings, functionFolder)) {
                 if (!hasRoles(settings.api_settings[api_key])){
                     settings.api_settings[api_key].roles = [];
                 }
-                // if (!settings.api_settings[api_key].roles) { 
+                // if (!settings.api_settings[api_key].roles) {
                 //    settings.api_settings[api_key].roles = [];
-                // } 
+                // }
             } catch(err) {
                 throw new Error(`Api roles not found in ${api_key}`);
             }
@@ -112,27 +128,27 @@ if (!validateSettings(settings, functionFolder)) {
             console.log(`    ${i} [* Write ${file_name}]`);
 
             script.add(new HasFunctionTemplate(api_settings));
-            
+
             switch(method){
                 case 'DELETE':
                     if (!data) {
                         console.log('     -  method', method, ' data', api_key, ' is ', data);
                     }
                     // [Setup Tokens]
-                    // script.setTokens(new TokenTemplate(version,data)); 
+                    // script.setTokens(new TokenTemplate(version,data));
                     // [Insert a test record to delete]
                     script.setData(new InsertTemplate(version,data));
                     // [Handle multiple deletes]
                     // console.log('     -  data', api_key, ' is ', data);
-                    
+
                     for (let i in data) {
                         // console.log('    i',i);
                         script.add(new DeleteTemplate(
                         token_name,
                         claim,
-                        api_settings, 
+                        api_settings,
                         data[i]));
-                    } 
+                    }
                     break;
                 case 'GET':
                     // console.log('method', method);
@@ -141,31 +157,44 @@ if (!validateSettings(settings, functionFolder)) {
                     // script.setTokens(new TokenTemplate(version,data));
                     // [Insert a test record to query]
                     script.setData(new InsertTemplate(version,data));
-                    // [Get multiple]
-                    for (let i in data) {
-                        script.add(new GetTemplate(
-                        token_name,
-                        claim,
-                        api_settings, 
-                        data[i]));
-                    } 
-                    
+                    switch(api_settings.test_type) {
+                      case 'single':
+                        // [Get single]
+                        for (let i in data) {
+                            script.add(new GetTemplate(
+                            token_name,
+                            claim,
+                            api_settings,
+                            data[i]));
+                        }
+                        break;
+                      case 'multipart':
+                        // [Get Multiple]
+                        script.add(new GetTemplateMultiPart(
+                          token_name,
+                          claim,
+                          api_settings,
+                          data)
+                        );
+
+                        break;
+                    }
                     break;
                 case 'POST':
                     // console.log('method', method);
                     // [Setup Tokens]
                     // script.setTokens(new TokenTemplate(version,data));
-                    
+
                     // [Post multiple records]
                     if (api_settings.name.name === 'signup') {
                         for (let i in data) {
                             script.add(new SignupPostTemplate(
                             token_name,
                             claim,
-                            api_settings, 
+                            api_settings,
                             data[i]));
-                        } 
-                    
+                        }
+
                     } else if (api_settings.name.name === 'signin') { // signin patch
                         script.setData(new InsertTemplate(version,data));
                         // console.log('SignIn Patch');
@@ -173,22 +202,22 @@ if (!validateSettings(settings, functionFolder)) {
                             script.add(new SigninPostTemplate(
                             token_name,
                             claim,
-                            api_settings, 
+                            api_settings,
                             patch_data[i]));
-                        }  
+                        }
                     } else {
                         for (let i in data) {
                             script.add(new PostTemplate(
                             token_name,
                             claim,
-                            api_settings, 
+                            api_settings,
                             data[i]));
-                        } 
+                        }
                     }
                     break;
                 case 'PUT':
                     // console.log('method', method);
-                    
+
                     // [Setup Tokens]
                     // script.setTokens(new TokenTemplate(version,data));
                     // [Insert test data for put]
@@ -200,17 +229,17 @@ if (!validateSettings(settings, functionFolder)) {
                             api_settings,
                             data[i]));
                     }
-                    break;      
+                    break;
                 default:
-                    throw new Error(`Undefined Method ${method}`);      
-            }    
+                    throw new Error(`Undefined Method ${method}`);
+            }
             console.log('   ');
             // [Generate individual test files]
-            let scrpt = script.templatize();   
+            let scrpt = script.templatize();
             // [Generate active tests]
 
             let fileHelper = new FileHelper(`${__dirname}/${apiTestFolder}`, file_name);
-            
+
             if (api_settings.active) {
 
                 fileList.push(filename);
@@ -222,7 +251,7 @@ if (!validateSettings(settings, functionFolder)) {
     // this file was generated
     const Step = require('../../lib/runner/step.js');
     module.exports = class Function${classname}${tokenname}Test extends Step {
-        constructor(kind, version, baseVersion) {    
+        constructor(kind, version, baseVersion) {
             super(kind, version);
             this.baseVersion = baseVersion;
             this.sql = \`${scrpt}\`;
@@ -230,7 +259,7 @@ if (!validateSettings(settings, functionFolder)) {
     };
             `;
             fileHelper.write(ms);
-            
+
           } else {
               fileHelper.delete();
 
@@ -268,15 +297,15 @@ module.exports = class ApiTests extends Array {
     constructor(apiVersion, baseVersion) {
       /* $lab:coverage:off$ */
       super();
-  
+
       this.push(new Comment('-- Enable Api Testing'));
       this.push(new Extension('pgtap','public'));
 
-     
+
       ${instances}
-      
+
       /* $lab:coverage:on$ */
-    }    
+    }
   };
 `);
 
@@ -285,12 +314,22 @@ module.exports = class ApiTests extends Array {
 console.log('JSON out');
 function trim_after(value, delimeter) {
     // remove last delimeter and everything after
-    
+
     let parts = value.split(delimeter);
     parts = parts.splice(0,parts.length-1);
     return parts.join(delimeter);
 }
 
+function hasTestType(api_setting) {
+  // check api_settings
+  if (!api_setting) {
+      return false;
+  }
+  if (api_setting.test_type) {
+      return true;
+  }
+  return false;
+}
 function hasRoles(api_setting) {
     // check api_settings for role
     // console.log('hasRoles', api_setting);
@@ -340,7 +379,7 @@ function validateSettings(settings,functionFolder) {
     // [Check api_settings]
     console.log('# Api Settings');
     let i = 1;
-    for (let t in settings.tokens) {  
+    for (let t in settings.tokens) {
         for (let a in settings.tokens[t].api) {
             let api_key =settings.tokens[t].api[a];
             let status = 'Ok';
@@ -355,18 +394,18 @@ function validateSettings(settings,functionFolder) {
             if(!hasRoles(settings.api_settings[api_key])){
                 status = `Add roles to api_settings: ${api_key}`;
             }
-            
-            // console.log(`api_key ${api_key} Primary: ${primary} hasDefault: ${has_default}`); 
-            console.log(`    ${i} ${status} API ${api_key}(${data_key}) `); 
+
+            // console.log(`api_key ${api_key} Primary: ${primary} hasDefault: ${has_default}`);
+            console.log(`    ${i} ${status} API ${api_key}(${data_key}) `);
             i += 1;
-        }    
-        
-    } 
+        }
+
+    }
 
     // [Check data]
     console.log('# Data');
     i = 1;
-    for (let t in settings.tokens) {  
+    for (let t in settings.tokens) {
         for (let a in settings.tokens[t].api) {
             let api_key =settings.tokens[t].api[a];
             if (settings.data[api_key]) {
@@ -376,18 +415,18 @@ function validateSettings(settings,functionFolder) {
             } else {
                 rc = false;
             }
-            
-            // console.log(`api_key ${api_key} Primary: ${primary} hasDefault: ${has_default}`); 
-            console.log(`    ${i} api_key ${api_key} data_key: ${data_key}`); 
+
+            // console.log(`api_key ${api_key} Primary: ${primary} hasDefault: ${has_default}`);
+            console.log(`    ${i} api_key ${api_key} data_key: ${data_key}`);
             i++;
-        }    
-    }    
+        }
+    }
     // [Check functions]
     // function getFunctionFileName(folder, api_key, token_name) {
     // let folder = `${__dirname}/${functionFolder}`;
     console.log('# Expected Functions (found files)');
     i = 1;
-    for (let t in settings.tokens) {  
+    for (let t in settings.tokens) {
         // let token_name = settings.tokens[t].name;
 
         for (let a in settings.tokens[t].api) {
@@ -399,7 +438,7 @@ function validateSettings(settings,functionFolder) {
             let folder = `${functionFolder}/${group_name}/${settings.api_settings[api_key].version}`;
             let filename = getFunctionFileName(folder, api_key) ;
             let paramTypes = formatFunctionParametersTypes(api_setting);
-                
+
             // let api_name = settings.api_settings[api_key].name.name;
             // function_name = ;
             // console.log('name', api_name);
@@ -419,11 +458,11 @@ function validateSettings(settings,functionFolder) {
                 rc = false;
             }
             */
-            
-            // console.log(`api_key ${api_key} Primary: ${primary} hasDefault: ${has_default}`); 
-            // console.log(`    * api_key ${api_key} data_key: ${data_key}`); 
 
-        }    
-    } 
+            // console.log(`api_key ${api_key} Primary: ${primary} hasDefault: ${has_default}`);
+            // console.log(`    * api_key ${api_key} data_key: ${data_key}`);
+
+        }
+    }
     return rc;
 }

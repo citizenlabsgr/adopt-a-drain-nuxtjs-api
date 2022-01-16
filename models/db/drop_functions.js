@@ -4,9 +4,9 @@ const Step = require('../../lib/runner/step');
 module.exports = class DropFunction extends Step {
   constructor(baseName, baseVersion) {
     super(baseName, baseVersion);
-    
+
     // [Function drops occur when a function's name or parameters change]
-    
+
     this.sql = `
     DROP FUNCTION if exists api_0_0_1.adopter(TOKEN,VARCHAR,OWNER_ID);
     DROP FUNCTION if exists api_0_0_1.adoptee(token,owner_id,identity);
@@ -15,7 +15,7 @@ module.exports = class DropFunction extends Step {
     DROP FUNCTION if exists base_0_0_1.query(mbr);
 
     -- DROP FUNCTION if exists function api_0_0_1.adoptee(token, jsonb) ;
-    
+
     DROP FUNCTION if exists api_0_0_1.adoptee(TOKEN,JSON);
 
     DROP FUNCTION if exists api_0_0_1.adoptee(TOKEN,MBR);
@@ -30,6 +30,7 @@ module.exports = class DropFunction extends Step {
 
     DROP FUNCTION if exists base_0_0_1.sign(json,text,text);
 
+    DROP FUNCTION if exists base_0_0_1.delete(JSONB, OWNER_ID);
     DROP FUNCTION if exists base_0_0_1.delete(TOKEN, VARCHAR, OWNER_ID);
     DROP FUNCTION if exists base_0_0_1.delete(jsonb,text);
 
@@ -50,18 +51,18 @@ module.exports = class DropFunction extends Step {
 
     DROP FUNCTION if exists api_0_0_1.signin(token,json,integer) ;
 
-    DROP FUNCTION if exists api_0_0_1.signup(TEXT,JSON,TEXT); 
-    DROP FUNCTION if exists api_0_0_1.signin(TEXT,JSON); 
-    DROP FUNCTION if exists api_0_0_1.adopter(TEXT,JSON); 
+    DROP FUNCTION if exists api_0_0_1.signup(TEXT,JSON,TEXT);
+    DROP FUNCTION if exists api_0_0_1.signin(TEXT,JSON);
+    DROP FUNCTION if exists api_0_0_1.adopter(TEXT,JSON);
 
-    DROP FUNCTION if exists base_0_0_1.chelate(JSONB); 
-    DROP FUNCTION if exists base_0_0_1.chelate(JSONB,JSONB); 
-    DROP FUNCTION if exists base_0_0_1.insert(JSONB,TEXT); 
+    DROP FUNCTION if exists base_0_0_1.chelate(JSONB);
+    DROP FUNCTION if exists base_0_0_1.chelate(JSONB,JSONB);
+    DROP FUNCTION if exists base_0_0_1.insert(JSONB,TEXT);
     `;
-  }    
-  
+  }
+
   getName() {
     return 'Drop Functions that have changed.';
   }
-  
+
 };

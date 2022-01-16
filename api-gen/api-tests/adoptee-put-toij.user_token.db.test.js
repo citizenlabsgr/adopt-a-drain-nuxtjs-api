@@ -3,7 +3,7 @@
     // this file was generated
     const Step = require('../../lib/runner/step.js');
     module.exports = class FunctionAdopteePutToijUserTokenTest extends Step {
-        constructor(kind, version, baseVersion) {    
+        constructor(kind, version, baseVersion) {
             super(kind, version);
             this.baseVersion = baseVersion;
             this.sql = `

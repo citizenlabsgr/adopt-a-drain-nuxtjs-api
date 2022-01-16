@@ -5,7 +5,7 @@
 module.exports = class Template {
     // constructor(token_name, claim, api_settings) {
     constructor(token_name, claim, api_settings, chelate) {
-         // console.log('---------------------IN ', this.constructor.name);
+        // console.log('---------------------IN ', this.constructor.name);
         this.token_name = token_name;
         this.claim = claim;
         this.api_settings = api_settings;
@@ -17,7 +17,7 @@ module.exports = class Template {
         this.parameter_types = this.getParameterTypes(this.api_settings.params);
         this.parameters = this.getParameters(this.api_settings.params);
         this.method = this.api_settings.method.toUpperCase();
-        
+
         this.token = false;
         this.id = false;
         this.form = false;
@@ -27,45 +27,49 @@ module.exports = class Template {
         // Configure Test Values
         // ////////////////////
         // 1 token
-        // Token required by all API methods 
+        // Token required by all API methods
         // api_setting.params must contain {"name":"token", "type":"TOKEN"}
-        
+
         this.validate();
 
-        if (this.token_name) { 
+        if (this.token_name) {
             this.token = this.getToken();
         }
         // console.log('chelate' , this.chelate);
         // console.log('chelate 1',chelate);
+        // console.log('chelate 1 type ', typeof(chelate) );
+
         if (this.chelate) {
             // console.log('chelate 2', this.chelate);
             if (this.chelate.form) {
-              //  console.log('chelate 3');
-              // 2 chelate  
+              //  console.log('chelate 3.1');
+              // 2 chelate
               // POST, PUT require chelate
               this.id = this.chelate.pk.split('#')[1];
               this.form = JSON.stringify(this.chelate.form);
               this.ownerId = `${this.chelate.owner}`;
-              // this.mbr = this.chelate.form;
 
-              // this.mbr=;
+            } else if(Array.isArray(this.chelate) && this.chelate[0].form) {
+               // POST
+               // this is an array of words
+               // the first item in arry shold carry specifics in form
+               // [0].pk is doc_id#tou
+               // [0].sk is i#00000
+               this.id = this.chelate[0].pk.split('#')[1];
+
+               this.ownerId = this.chelate[0].owner;
+
             } else { // this is form not a chelate
-                // console.log('chelate 4');
+                // console.log('chelate 3.3');
 
                 // 3 criteria
-                // GET can accept a critera {username:"", password:""} 
+                // GET can accept a critera {username:"", password:""}
                 //                  mbr {north:N.N,south:N.N,west:N.N,east:N.N}
                 this.form = JSON.stringify(chelate);
                 // this.mbr = chelate;
             }
-        } 
-// console.log('class', this.constructor.name);
-// console.log('A id',this.id);
- // console.log('A form', this.form);
-// console.log('A mbr', this.mbr);
+        }
 
-// console.log('A ownerId',this.ownerId);
-        // this.mbr = this.form;
         if (this.hasType('MBR') && this.api_settings.mbr) {
             this.mbr = this.api_settings.mbr;
             // console.log('mbr found', this.mbr);
@@ -79,18 +83,18 @@ module.exports = class Template {
         } else {
             this.mbr = '';
         }
-        
+
         if (this.hasType('IDENTITY')) {
             // PUT, GET, DELETE accept have id
             this.id = `,'("${this.id}")'::IDENTITY`;
         // } else if (this.hasType('VARCHAR')) {
             // console.log(`Template Varchar "${this.id}"`);
-            // DELETE 
+            // DELETE
             // this.id = `,'${this.id}'::VARCHAR`;
         }  else {
             this.id = '';
         }
-        
+
         if (this.hasType('JSON')) {
             this.form = `,'${this.form}'::JSON`;
         } if (this.hasType('JSONB')) {
@@ -98,7 +102,7 @@ module.exports = class Template {
         } else {
             this.form = '';
         }
-        
+
         if (this.hasType('OWNER_ID')) {
             this.ownerId = `,'("${this.ownerId}")'::OWNER_ID`;
         } else {
@@ -123,28 +127,7 @@ module.exports = class Template {
             throw new Error(`Token parameter required in ${this.api_settings.name.name} `);
         }
     }
-    /*
-    getTestParameters() {
-        let rc= '';
-        for(let i in this.parameters) {
-            console.log('i', i);
-        }
-        return rc;
-    }
-    */
-    /*
-    formatParameter(param_name) {
-        // param is {name:"",type: "", [default:""]}
-        let rc = '';
 
-        for (let i in param) {
-            console.log('param ', i);
-            // rc += this.api_settings;
-        }
-        return rc;
-    }
-    */
-    
     getToken() {
         // some templates dont use tokens
         if (!this.token_name || !this.claim) {
@@ -160,7 +143,7 @@ module.exports = class Template {
         for (let i in this.api_settings.params) {
             let param_name = this.api_settings.params[i].name;
             console.log('getParameter param_name', param_name);
-            if (pname === param_name) {   
+            if (pname === param_name) {
                 return this.api_settings.params[i];
             }
         }
@@ -170,17 +153,17 @@ module.exports = class Template {
         for (let i in this.api_settings.params) {
             let param_type = this.api_settings.params[i].type;
             console.log('getParameter param_name', param_type);
-            if (ptype === param_type) {   
+            if (ptype === param_type) {
                 return this.api_settings.params[i];
             }
         }
         return false;
     }
     hasType(param_type) {
-        
+
         for (let i in this.api_settings.params) {
             let ptype = this.api_settings.params[i].type;
-            if (ptype === param_type) {   
+            if (ptype === param_type) {
                 return true;
             }
         }
@@ -202,13 +185,13 @@ module.exports = class Template {
             if(parameters.length > 0) { parameters += ',';}
             parameters += params[ps].type;
           }
-        return parameters;  
+        return parameters;
     }
 
 
     templatize() {
 
         return `overload`;
-        
+
     }
 };

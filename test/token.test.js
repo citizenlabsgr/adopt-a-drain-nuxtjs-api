@@ -30,31 +30,31 @@ const adoptee_post_data = {
     }
   },
   "data": [
-    {"pk":"drain_id#one", 
-     "sk":"const#ADOPTEE", 
-     "tk":"guid#1", 
-     "form": {"name":"One", "drain_id":"One","type":"TestDrain", "lat":1.0, "lon":1.0}, 
+    {"pk":"drain_id#one",
+     "sk":"const#ADOPTEE",
+     "tk":"guid#1",
+     "form": {"name":"One", "drain_id":"One","type":"TestDrain", "lat":1.0, "lon":1.0},
      "owner":"duckduckgoose"
-    }, 
-    {"pk":"drain_id#two", 
-     "sk":"const#ADOPTEE", 
-     "tk":"guid#2", 
-     "form": {"name":"Two", "drain_id":"Two","type":"TestDrain","lat":1.0, "lon":1.0}, 
+    },
+    {"pk":"drain_id#two",
+     "sk":"const#ADOPTEE",
+     "tk":"guid#2",
+     "form": {"name":"Two", "drain_id":"Two","type":"TestDrain","lat":1.0, "lon":1.0},
      "owner":"duckduckgoose"
-    }, 
-    {"pk":"drain_id#three", 
-    "sk":"const#ADOPTEE", 
-    "tk":"guid#3", 
-    "form": {"name":"Three", "drain_id":"Three","type":"TestDrain","lat":1.0, "lon":1.0}, 
+    },
+    {"pk":"drain_id#three",
+    "sk":"const#ADOPTEE",
+    "tk":"guid#3",
+    "form": {"name":"Three", "drain_id":"Three","type":"TestDrain","lat":1.0, "lon":1.0},
     "owner":"duckduckgoose"
-   } 
+   }
   ]
 };
 
 describe('Token Tests', () => {
   /*
     let server = null;
-  
+
   before(async () => {
     server = await init();
   });
@@ -68,9 +68,9 @@ describe('Token Tests', () => {
   // -----------------------------------------
   // userToken
   // -----------------------------------------
-  
+
   it('API User Token ', async () => {
-    //  change /adoptees to POST  
+    //  change /adoptees to POST
      // const payload = new TestTokenPayload().userTokenPayload();
      const key = adoptee_post_data.data[0].owner;
      const username = adoptee_post_data.owners[key].username;
@@ -80,7 +80,7 @@ describe('Token Tests', () => {
      const secret = process.env.JWT_SECRET;
      const token = Jwt.token.generate(payload, secret);
      const artifacts = Jwt.token.decode(token);
-     
+
      expect(artifacts.decoded).to.equal({
        header: { alg: 'HS256', typ: 'JWT'},
        payload: { aud: 'citizenlabs-api',
@@ -90,12 +90,11 @@ describe('Token Tests', () => {
                    scope: 'api_user',
                    key: 'duckduckgoose',
                    exp: artifacts.decoded.payload.exp,
-                   iat: artifacts.decoded.payload.iat 
+                   iat: artifacts.decoded.payload.iat
        },
        signature: artifacts.decoded.signature
      });
- 
-   });   
-  
 
+   });
+  
 });

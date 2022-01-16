@@ -76,6 +76,12 @@ const FunctionAdopteeGetTMbr = require(`./db/adoptee/${adoptee_version}/function
 const FunctionAdopteePostToj = require(`./db/adoptee/${adoptee_version}/function_adoptee_post_toj.js`);
 const FunctionAdopteePutToij = require(`./db/adoptee/${adoptee_version}/function_adoptee_put_toij.js`);
 
+// Document
+let document_version = '000';
+const FunctionDocumentDeleteToi = require(`./db/document/${document_version}/function_document_delete_toi.js`);
+const FunctionDocumentGetToi = require(`./db/document/${document_version}/function_document_get_toi.js`);
+const FunctionDocumentPostToj = require(`./db/document/${document_version}/function_document_post_toj.js`);
+
 const DatabaseUrl = require('../lib/plugins/postgres/database_url.js');
 
 // run all scripts
@@ -112,7 +118,7 @@ if (!process.env.HEROKU_API_KEY) {
 
 // [* Switch to heroku color url when available]
 const databaseUrl = new DatabaseUrl(process);
-const DB_URL = databaseUrl.db_url; 
+const DB_URL = databaseUrl.db_url;
 // const testable = databaseUrl.testable;
 /*
 if (process.env.DATABASE_URL === DB_URL) {
@@ -161,7 +167,7 @@ const runner = new SqlRunner(DB_URL)
        .add(new Comment('Base Schema Table '))
        .add(new Table001('base',baseVersion))
        .add(new Comment('Base Schema Functions '))
-       
+
        .add(new DropFunctions('',''))
        .add(new FunctionUrlDecode('base', baseVersion))
        .add(new FunctionUrlEncode('base', baseVersion))
@@ -178,14 +184,14 @@ const runner = new SqlRunner(DB_URL)
 
        .add(new FunctionSign('base', baseVersion))
        .add(new FunctionUpdate('base', baseVersion))
-     
+
        .add(new FunctionValidateChelate('base', baseVersion))
        .add(new FunctionValidateCredentials('base', baseVersion))
        .add(new FunctionValidateCriteria('base', baseVersion))
        .add(new FunctionValidateForm('base', baseVersion))
        .add(new FunctionValidateToken('base', baseVersion))
        .add(new FunctionVerify('base', baseVersion))
-       
+
        .add(new Comment('Api Schema Functions '))
        .add(new FunctionTime('api', apiVersion))
 
@@ -209,11 +215,14 @@ const runner = new SqlRunner(DB_URL)
        .add(new FunctionAdopteePostToj('api', apiVersion, baseVersion))
        .add(new FunctionAdopteePutToij('api', apiVersion, baseVersion))
 
-       
-       
+       // Document
+       .add(new FunctionDocumentDeleteToi('api', apiVersion, baseVersion))
+       .add(new FunctionDocumentGetToi('api', apiVersion, baseVersion))
+       .add(new FunctionDocumentPostToj('api', apiVersion, baseVersion))
+
        ;
-       
-       
+
+
 // [* Tests]
 
 // if (process.env.NODE_ENV === 'development') {
@@ -225,6 +234,3 @@ const runner = new SqlRunner(DB_URL)
 runner.run().catch((err) => {
   console.log('db.deploy', err);
 });
-
-
-
