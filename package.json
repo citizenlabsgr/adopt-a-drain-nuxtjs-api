@@ -18,18 +18,19 @@
     "lint": "eslint '**/*.js?(x)' .",
     "lint1": "eslint '**/*.js?(x)' .",
     "scriptify": "node ./models/db.sql.js",
-    "api-gen": "node ./api-gen/generate-tests.js"
+    "api-gen": "node ./api-gen/generate-tests.js",
+    "app-setup": "node ./aad_admin/app.setup.js"
   },
   "author": "James Wilfong <wilfongjt@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "@hapi/hapi": "^20.1.5",
+    "@hapi/hapi": "^20.2.1",
     "@hapi/inert": "^6.0.3",
     "@hapi/jwt": "^2.0.1",
     "@hapi/vision": "^6.1.0",
     "atob": "^2.1.2",
     "core-js": "^2.6.12",
-    "hapi-swagger": "^14.2.1",
+    "hapi-swagger": "^14.2.4",
     "joi": "^17.4.1",
     "pg": "^8.7.1",
     "uuid": "^8.3.2"

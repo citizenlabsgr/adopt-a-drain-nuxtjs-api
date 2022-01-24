@@ -84,11 +84,24 @@ const FunctionDocumentPostToj = require(`./db/document/${document_version}/funct
 
 const DatabaseUrl = require('../lib/plugins/postgres/database_url.js');
 
+
 // run all scripts
 // s have an order
 // Add new or alters to end
 // Make new class for alters
 // [* set the verson ]
+
+const documentFolder = `${__dirname}/documents`;
+console.log('documentFolder ',documentFolder);
+const SetupRunner = require('../aad_admin/lib/runner.js');
+const BreakdownDocs = require('../aad_admin/lib/breakdown_docs.js');
+const StoreDocs = require('../aad_admin/lib/store_docs.js');
+const Util = require('../aad_admin/lib/util.js');
+
+const fileList = new Util().getFileList(documentFolder);
+
+
+
 
 const baseVersion='0_0_1';
 const apiVersion='0_0_1';
@@ -220,6 +233,9 @@ const runner = new SqlRunner(DB_URL)
        .add(new FunctionDocumentGetToi('api', apiVersion, baseVersion))
        .add(new FunctionDocumentPostToj('api', apiVersion, baseVersion))
 
+       // Data Loads
+       // TBD .add(new DataDocumentPost('api', apiVersion, baseVersion))
+
        ;
 
 
@@ -231,6 +247,20 @@ const runner = new SqlRunner(DB_URL)
 //  .load(new ApiTests(apiVersion, baseVersion));
 // }
 
-runner.run().catch((err) => {
+const setupRunner =  new SetupRunner(true)
+                  .setConnectionString(DB_URL)
+                  ;
+setupRunner
+  .add(new BreakdownDocs({fileList: fileList, documentFolder: documentFolder}))
+  .add(new StoreDocs(setupRunner.getOutputFrom(0)))
+  ;
+
+
+runner.run().then(() => {
+  setupRunner.run();
+  console.log('Ok');
+}).catch((err) => {
   console.log('db.deploy', err);
 });
+
+// const setupRunner = new SetupRunner();
