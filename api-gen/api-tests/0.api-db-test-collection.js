@@ -8,6 +8,7 @@ const FunctionSignupPostGuestTokenTest = require('./signup-post.guest_token.db.t
 const FunctionSigninPostGuestTokenTest = require('./signin-post.guest_token.db.test.js');
 const FunctionAdopteeGetTmbrGuestTokenTest = require('./adoptee-get-tmbr.guest_token.db.test.js');
 const FunctionDocumentGetToiGuestTokenTest = require('./document-get-toi.guest_token.db.test.js');
+const FunctionPageGetToiGuestTokenTest = require('./page-get-toi.guest_token.db.test.js');
 const FunctionAdopterDeleteToiUserTokenTest = require('./adopter-delete-toi.user_token.db.test.js');
 const FunctionAdopterGetToiUserTokenTest = require('./adopter-get-toi.user_token.db.test.js');
 const FunctionAdopterPutToijUserTokenTest = require('./adopter-put-toij.user_token.db.test.js');
@@ -17,6 +18,7 @@ const FunctionAdopteeGetTmbrUserTokenTest = require('./adoptee-get-tmbr.user_tok
 const FunctionAdopteePostTojUserTokenTest = require('./adoptee-post-toj.user_token.db.test.js');
 const FunctionAdopteePutToijUserTokenTest = require('./adoptee-put-toij.user_token.db.test.js');
 const FunctionDocumentGetToiUserTokenTest = require('./document-get-toi.user_token.db.test.js');
+const FunctionPageGetToiUserTokenTest = require('./page-get-toi.user_token.db.test.js');
 const FunctionAdopterDeleteToiAdminTokenTest = require('./adopter-delete-toi.admin_token.db.test.js');
 const FunctionAdopterGetToiAdminTokenTest = require('./adopter-get-toi.admin_token.db.test.js');
 const FunctionAdopterPostTojAdminTokenTest = require('./adopter-post-toj.admin_token.db.test.js');
@@ -25,6 +27,10 @@ const FunctionAdopteeDeleteToiAdminTokenTest = require('./adoptee-delete-toi.adm
 const FunctionDocumentDeleteToiAdminTokenTest = require('./document-delete-toi.admin_token.db.test.js');
 const FunctionDocumentGetToiAdminTokenTest = require('./document-get-toi.admin_token.db.test.js');
 const FunctionDocumentPostTojAdminTokenTest = require('./document-post-toj.admin_token.db.test.js');
+const FunctionPageDeleteToiAdminTokenTest = require('./page-delete-toi.admin_token.db.test.js');
+const FunctionPageGetToiAdminTokenTest = require('./page-get-toi.admin_token.db.test.js');
+const FunctionPagePostTojAdminTokenTest = require('./page-post-toj.admin_token.db.test.js');
+const FunctionPagePutToijAdminTokenTest = require('./page-put-toij.admin_token.db.test.js');
 
 module.exports = class ApiTests extends Array {
 
@@ -40,6 +46,7 @@ module.exports = class ApiTests extends Array {
       this.push(new FunctionSigninPostGuestTokenTest('api', apiVersion, baseVersion));
       this.push(new FunctionAdopteeGetTmbrGuestTokenTest('api', apiVersion, baseVersion));
       this.push(new FunctionDocumentGetToiGuestTokenTest('api', apiVersion, baseVersion));
+      this.push(new FunctionPageGetToiGuestTokenTest('api', apiVersion, baseVersion));
       this.push(new FunctionAdopterDeleteToiUserTokenTest('api', apiVersion, baseVersion));
       this.push(new FunctionAdopterGetToiUserTokenTest('api', apiVersion, baseVersion));
       this.push(new FunctionAdopterPutToijUserTokenTest('api', apiVersion, baseVersion));
@@ -49,6 +56,7 @@ module.exports = class ApiTests extends Array {
       this.push(new FunctionAdopteePostTojUserTokenTest('api', apiVersion, baseVersion));
       this.push(new FunctionAdopteePutToijUserTokenTest('api', apiVersion, baseVersion));
       this.push(new FunctionDocumentGetToiUserTokenTest('api', apiVersion, baseVersion));
+      this.push(new FunctionPageGetToiUserTokenTest('api', apiVersion, baseVersion));
       this.push(new FunctionAdopterDeleteToiAdminTokenTest('api', apiVersion, baseVersion));
       this.push(new FunctionAdopterGetToiAdminTokenTest('api', apiVersion, baseVersion));
       this.push(new FunctionAdopterPostTojAdminTokenTest('api', apiVersion, baseVersion));
@@ -57,6 +65,10 @@ module.exports = class ApiTests extends Array {
       this.push(new FunctionDocumentDeleteToiAdminTokenTest('api', apiVersion, baseVersion));
       this.push(new FunctionDocumentGetToiAdminTokenTest('api', apiVersion, baseVersion));
       this.push(new FunctionDocumentPostTojAdminTokenTest('api', apiVersion, baseVersion));
+      this.push(new FunctionPageDeleteToiAdminTokenTest('api', apiVersion, baseVersion));
+      this.push(new FunctionPageGetToiAdminTokenTest('api', apiVersion, baseVersion));
+      this.push(new FunctionPagePostTojAdminTokenTest('api', apiVersion, baseVersion));
+      this.push(new FunctionPagePutToijAdminTokenTest('api', apiVersion, baseVersion));
 
 
       /* $lab:coverage:on$ */

@@ -26,8 +26,10 @@ module.exports = class CreateFunctionDelete001 extends Step {
       declare _msg TEXT;
       declare _rc JSONB;
       declare _count integer;
+      -- declare _x TEXT;
 
       BEGIN
+        _count := 0;
         -- [Function: Delete by Primary Criteria {pk,sk} or {sk,tk}]
         -- [Description: Delete User by primary key {pk,sk}]
 
@@ -46,7 +48,7 @@ module.exports = class CreateFunctionDelete001 extends Step {
               -- strpos(criteria ->> 'sk', '*') > 0
               -- if criteria ? 'pk' and criteria ? 'sk' and criteria ->> 'sk' = '*' then
               if criteria ? 'pk' and criteria ? 'sk' and strpos(criteria ->> 'sk', '*') > 0 then
-              
+                  -- _x := 'A';
                   -- [Delete where pk and sk]
 
                   -- cant return more than one rec, so return a
@@ -59,33 +61,27 @@ module.exports = class CreateFunctionDelete001 extends Step {
                                     and owner=owner_key.id RETURNING *) SELECT count(*) into _count FROM deleted;
    
 
-                   return format('{"status":"200", "msg":"OK", "criteria":%s, "deletion":{"count":"%s"}}',criteria, _count)::JSONB ;
+                   -- return format('{"status":"200", "msg":"OK", "criteria":%s, "deletion":{"count":%s}}',criteria, _count)::JSONB ;
 
               elsif criteria ? 'pk' and criteria ? 'sk' then
-                -- [Delete where pk and sk]
-
-                  Delete from ${this.kind}_${this.version}.one
-                    where lower(pk)=lower(criteria ->> 'pk')
-                          and sk=criteria ->> 'sk'
-                          and owner=owner_key.id
-                    returning * into _result;
-
+                  -- _x := 'B';
+                  -- [Delete where pk and sk]
+                  WITH deleted AS (Delete from ${this.kind}_${this.version}.one
+                                    where lower(pk)=lower(criteria ->> 'pk')
+                                    and sk=criteria ->> 'sk' 
+                                    and owner=owner_key.id RETURNING *) SELECT count(*) into _count FROM deleted;
+               
               elsif criteria ? 'sk' and criteria ? 'tk' then
-                Delete from ${this.kind}_${this.version}.one
-                  where sk=criteria ->> 'sk' and tk=criteria ->> 'tk'
-                  and owner=owner_key.id
-                  returning * into _result;
+                -- _x := 'C';
+                 WITH deleted AS (Delete from ${this.kind}_${this.version}.one
+                                    where lower(sk)=lower(criteria ->> 'sk')
+                                    and tk=criteria ->> 'tk' 
+                                    and owner=owner_key.id RETURNING *) SELECT count(*) into _count FROM deleted;
+                
               else
                   return format('{"status":"400", "msg":"Bad Request", "criteria":%s}',criteria)::JSONB ;
               end if;
 
-              -- [Remove password from results when found]
-              _rc :=  to_jsonb(_result)  #- '{form,password}';
-              if _rc ->> 'pk' is NULL then
-                -- [Fail 404 when primary key is not found]
-                -- [Fail 404 when item is not owned by current]
-                return format('{"status":"404", "msg":"Not Found", "owner":"%s", "criteria":%s}', owner_key.id, criteria)::JSONB ;
-              end if;
           EXCEPTION
               when others then
                 RAISE NOTICE '5 Beyond here there be dragons! %', sqlstate;
@@ -93,7 +89,8 @@ module.exports = class CreateFunctionDelete001 extends Step {
           END;
 
           -- [Return {status,msg,criteria,deletion}]
-          return format('{"status":"200", "msg":"OK", "criteria":%s, "deletion":%s}',criteria,_rc::TEXT)::JSONB ;
+          
+          return format('{"status":"200", "msg":"OK", "method":"delete", "criteria":%s, "deletion":{"count":%s}}',criteria, _count)::JSONB ;
 
       END;
 

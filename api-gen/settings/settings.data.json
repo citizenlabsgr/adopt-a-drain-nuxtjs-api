@@ -259,7 +259,98 @@
                 "form": {"doc_id":"tou", "p": 1,"i": "00001","w": "TOU"},
                 "owner": "duckduckgoose"
             }
+        ],
+        "page-delete-toi":  [
+            {
+                "pk": "page_id#testppage",
+                "sk": "name#title",
+                "tk": "value#test-page",
+                "form": {"page_id":"testpage", "name":"title", "value": "Test-Page"},
+                "owner": "duckduckgoose"
+            },
+            {
+                "pk": "page_id#testppage",
+                "sk": "name#subtitle",
+                "tk": "value#test-test-test",
+                "form": {"page_id":"testpage", "name":"subtitle", "value": "test-test-test"},
+                "owner": "duckduckgoose"
+            },
+            {
+                "pk": "page_id#testppage",
+                "sk": "name#description",
+                "tk": "value#once-upon-a-time",
+                "form": {"page_id":"testpage", "name":"description", "value": "Once-upon-a-time"},
+                "owner": "duckduckgoose"
+            }
+        ],
+        "page-get-toi": [
+            {
+                "pk": "page_id#testppage",
+                "sk": "name#title",
+                "tk": "value#test-page",
+                "form": {"page_id":"testpage", "name":"title", "value": "Test-Page"},
+                "owner": "duckduckgoose"
+            },
+            {
+                "pk": "page_id#testppage",
+                "sk": "name#subtitle",
+                "tk": "value#test-test-test",
+                "form": {"page_id":"testpage", "name":"subtitle", "value": "test-test-test"},
+                "owner": "duckduckgoose"
+            },
+            {
+                "pk": "page_id#testppage",
+                "sk": "name#description",
+                "tk": "value#once-upon-a-time",
+                "form": {"page_id":"testpage", "name":"description", "value": "Once-upon-a-time"},
+                "owner": "duckduckgoose"
+            }
+        ],
+        "page-post-toj": [
+            {
+                "pk": "page_id#testppage",
+                "sk": "name#title",
+                "tk": "value#test-page",
+                "form": {"page_id":"testpage", "name":"title", "value": "Test-Page"},
+                "owner": "duckduckgoose"
+            },
+            {
+                "pk": "page_id#testppage",
+                "sk": "name#subtitle",
+                "tk": "value#test-test-test",
+                "form": {"page_id":"testpage", "name":"subtitle", "value": "test-test-test"},
+                "owner": "duckduckgoose"
+            },
+            {
+                "pk": "page_id#testppage",
+                "sk": "name#description",
+                "tk": "value#once-upon-a-time",
+                "form": {"page_id":"testpage", "name":"description", "value": "Once-upon-a-time"},
+                "owner": "duckduckgoose"
+            }
+        ],
+        "page-put-toij": [
+            {
+                "pk": "page_id#testppage",
+                "sk": "name#title",
+                "tk": "value#test-page",
+                "form": {"page_id":"testpage", "name":"title", "value": "Test-Page"},
+                "owner": "duckduckgoose"
+            },
+            {
+                "pk": "page_id#testppage",
+                "sk": "name#subtitle",
+                "tk": "value#test-test-test",
+                "form": {"page_id":"testpage", "name":"subtitle", "value": "test-test-test"},
+                "owner": "duckduckgoose"
+            },
+            {
+                "pk": "page_id#testppage",
+                "sk": "name#description",
+                "tk": "value#once-upon-a-time",
+                "form": {"page_id":"testpage", "name":"description", "value": "Once-upon-a-time"},
+                "owner": "duckduckgoose"
+            }
         ]
-
     }
 }
