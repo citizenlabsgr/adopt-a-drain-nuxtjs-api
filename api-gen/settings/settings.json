@@ -290,8 +290,78 @@
             ],
             "roles":[],
             "test_type": "multipart"
+        },
+        "page-delete-top":  {
+            "active": true,
+            "description":"delete page by owner and primarykey ",
+            "version":"000",
+            "name": {"group":"page", "name":"page_del","kind":"api","version":"0_0_0"},
+            "method": "delete",
+            "return":"JSONB",
+            "params":[
+                {"name":"token","type":"TOKEN"},
+                {"name":"owner","type":"OWNER_ID"},
+                {"name":"id","type":"PRIMARYKEY"}
+            ],
+            "primarykey": {"pk": "page_id", "sk": "name"},
+            "permissions": "api_admin",
+            "roles":[],
+            "test_type": "single"
+        },
+        "page-get-top": {
+            "active": true,
+            "description":"Get page by owner and primarykey",
+            "version":"000",
+            "name": {"group":"page", "name":"page","kind":"api","version":"0_0_0"},
+            "method": "get",
+            "return":"JSONB",
+            "params":[
+                {"name":"token","type":"TOKEN"},
+                {"name":"owner","type":"OWNER_ID"},
+                {"name":"id","type":"PRIMARYKEY"}
+            ],
+            "primarykey": {"pk": "page_id", "sk": "name"},
+            "permissions": "api_guest,api_user,api_admin",
+            "roles":[],
+            "test_type": "single"
+        },
+        "page-post-toj": {
+            "active": true,
+            "description":"post page for owner",
+            "version":"000",
+            "name": {"group":"page", "name":"page","kind":"api","version":"0_0_0"},
+            "method": "post",
+            "return":"JSONB",
+            "params":[
+                {"name":"token","type":"TOKEN"},
+                {"name":"owner","type":"OWNER_ID"},
+                {"name":"form","type":"JSONB"}
+            ],
+            "form": {"page_id":"string", "name":"string", "value": "string"},
+            "primarykey": {"pk": "page_id", "sk": "name"},
+            "secondarykey": {"sk": "name", "tk": "value"},
+            "roles":[],
+            "test_type": "single"
+        },
+        "page-put-topj": {
+            "active": true,
+            "description":"put page by owner, primarykey",
+            "version":"000",
+            "name": {"group":"page", "name":"page","kind":"api","version":"0_0_0"},
+            "method": "put",
+            "return":"JSONB",
+            "params":[
+                {"name":"token","type":"TOKEN"},
+                {"name":"owner","type":"OWNER_ID"},
+                {"name":"id","type":"PRIMARYKEY"},
+                {"name":"form","type":"JSONB"}
+            ],
+            "form": {"page_id":"string", "name":"string", "value": "string"},
+            "primarykey": {"pk": "page_id", "sk": "name"},
+            "secondarykey": {"sk": "name", "tk": "value"},
+            "roles":[],
+            "test_type": "single"
         }
-
     },
 
     "tokens": [
@@ -306,7 +376,9 @@
 
                 "adoptee-get-tmbr",
 
-                "document-get-ti"
+                "document-get-toi",
+
+                "page-get-top"
             ]
         },
         {
@@ -325,7 +397,9 @@
                 "adoptee-post-toj",
                 "adoptee-put-toij",
 
-                "document-get-toi"
+                "document-get-toi",
+
+                "page-get-top"
             ]
         },
         {
@@ -342,12 +416,16 @@
 
                 "document-delete-toi",
                 "document-get-toi",
-                "document-post-toj"
+                "document-post-toj",
+
+                "page-delete-top",
+                "page-get-top",
+                "page-post-toj",
+                "page-put-topj"
             ]
         }
     ],
     "get":[
-
         {"name":"get all", "params": "admin_token"},
         {"name":"get singleton for", "params": "admin_token"},
         {"name":"get all for owner", "params": "admin_token"},

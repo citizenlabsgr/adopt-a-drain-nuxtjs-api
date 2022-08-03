@@ -1,6 +1,14 @@
 'use strict';
 /*
 Generates database tests
+
+input: ./api-get/settings/settings
+input: ./api-get/setting.data.json
+
+combine setting.data.json with settings
+
+generate tests by token,
+
 for each token
 *
 
@@ -432,7 +440,9 @@ function validateSettings(settings,functionFolder) {
         for (let a in settings.tokens[t].api) {
             let status = '';
             let api_key =settings.tokens[t].api[a];
+            console.log('api_key ', api_key);
             let api_setting = settings.api_settings[api_key];
+            console.log('api_setting ', api_setting);
             let function_name = api_setting.name.name;
             let group_name = api_setting.name.group;
             let folder = `${functionFolder}/${group_name}/${settings.api_settings[api_key].version}`;

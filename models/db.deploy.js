@@ -20,8 +20,9 @@ const TypeOwnerId = require('./db/type_owner_id_001.js');
 const TypeIdentity = require('./db/type_identity_001.js');
 const TypeToken = require('./db/type_token_001.js');
 const TypeMbr = require('./db/type_mbr_001.js');
+const TypePrimaryKey = require('./db/type_primarykey_001.js');
 
-let base_version = '004';
+let base_version = '005';
 const FunctionAlgorithmSign = require(`./db/base/${base_version}/function_algorithm_sign.js`);
 const FunctionChangedKey = require(`./db/base/${base_version}/function_changed_key.js`);
 const FunctionChelate = require(`./db/base/${base_version}/function_chelate.js`);
@@ -34,6 +35,8 @@ const FunctionQueryMbr = require(`./db/base/${base_version}/function_query_mbr.j
 
 const FunctionSign = require(`./db/base/${base_version}/function_sign.js`);
 const FunctionUpdate = require(`./db/base/${base_version}/function_update.js`);
+const FunctionUpdateJOP = require(`./db/base/${base_version}/function_update_jop.js`);
+
 const FunctionUrlDecode = require(`./db/base/${base_version}/function_url_decode.js`);
 const FunctionUrlEncode = require(`./db/base/${base_version}/function_url_encode.js`);
 const FunctionValidateChelate = require(`./db/base/${base_version}/function_validate_chelate.js`);
@@ -81,6 +84,14 @@ let document_version = '000';
 const FunctionDocumentDeleteToi = require(`./db/document/${document_version}/function_document_delete_toi.js`);
 const FunctionDocumentGetToi = require(`./db/document/${document_version}/function_document_get_toi.js`);
 const FunctionDocumentPostToj = require(`./db/document/${document_version}/function_document_post_toj.js`);
+
+// Page
+let page_version = '000';
+const FunctionPageDeleteTop = require(`./db/page/${page_version}/function_page_delete_top.js`);
+const FunctionPageGetTop = require(`./db/page/${page_version}/function_page_get_top.js`);
+const FunctionPagePostToj = require(`./db/page/${page_version}/function_page_post_toj.js`);
+const FunctionPagePutTopj = require(`./db/page/${page_version}/function_page_put_topj.js`);
+
 
 const DatabaseUrl = require('../lib/plugins/postgres/database_url.js');
 
@@ -176,7 +187,7 @@ const runner = new SqlRunner(DB_URL)
        .add(new TypeIdentity('api', apiVersion))
        .add(new TypeToken('api', apiVersion))
        .add(new TypeMbr('api', apiVersion))
-
+        .add(new TypePrimaryKey('api', apiVersion))
        .add(new Comment('Base Schema Table '))
        .add(new Table001('base',baseVersion))
        .add(new Comment('Base Schema Functions '))
@@ -197,7 +208,7 @@ const runner = new SqlRunner(DB_URL)
 
        .add(new FunctionSign('base', baseVersion))
        .add(new FunctionUpdate('base', baseVersion))
-
+        .add(new FunctionUpdateJOP('base', baseVersion))
        .add(new FunctionValidateChelate('base', baseVersion))
        .add(new FunctionValidateCredentials('base', baseVersion))
        .add(new FunctionValidateCriteria('base', baseVersion))
@@ -233,6 +244,12 @@ const runner = new SqlRunner(DB_URL)
        .add(new FunctionDocumentGetToi('api', apiVersion, baseVersion))
        .add(new FunctionDocumentPostToj('api', apiVersion, baseVersion))
 
+       // Page
+        .add(new FunctionPageDeleteTop('api', apiVersion,baseVersion))
+        .add(new FunctionPageGetTop('api', apiVersion,baseVersion))
+        .add(new FunctionPagePostToj('api', apiVersion, baseVersion))
+        .add(new FunctionPagePutTopj('api',apiVersion, baseVersion))
+
        // Data Loads
        // TBD .add(new DataDocumentPost('api', apiVersion, baseVersion))
 
@@ -255,8 +272,8 @@ setupRunner
   .add(new StoreDocs(setupRunner.getOutputFrom(0)))
   ;
 
-
-runner.run().then(() => {
+const debug = false;
+runner.run(debug).then(() => {
   setupRunner.run();
   console.log('Ok');
 }).catch((err) => {

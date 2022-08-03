@@ -1,6 +1,8 @@
 'use strict';
 /* eslint-disable no-undef */
-
+// Deprecated
+// this script will not work
+/*
 console.log('db.sql');
 
 const SqlScripter = require('../lib/runner/scripter_sql.js');
@@ -155,6 +157,6 @@ const scripter = new SqlScripter(DB_URL)
 scripter.run().catch((err) => {
   console.log('db.sql', err);
 });
-
+*/
 
 
