@@ -66,7 +66,7 @@ module.exports = class FunctionQuery extends Step {
       end if;
 
       BEGIN
-
+      
         -- [Note sk, tk, yk key may contain wildcards *]
         -- [Remove password when found]
 
@@ -76,7 +76,7 @@ module.exports = class FunctionQuery extends Step {
       
       if pk and sk and owner and mbr and strpos(chelate ->> 'sk', '*') > 0 then
           -- 	format('{"pk":"","sk":"*","owner":"","mbr":%s}',mbr)::JSONB;
-        -- raise notice 'A';
+        raise notice 'A';
         --_result := '[{"res":"A"}]';
         SELECT array_to_json(array_agg(to_jsonb(u) #- '{form,password}' )) into _result
                         FROM base_${baseVersion}.one u
@@ -152,6 +152,7 @@ module.exports = class FunctionQuery extends Step {
       elsif pk and sk and strpos(chelate ->> 'sk', '*') > 0 then
         -- 	'{"pk":"","sk":"*"}'::JSONB
         -- raise notice 'G';
+        -- _result := '[{"res":"G"}]';
 
         SELECT array_to_json(array_agg(to_jsonb(u) #- '{form,password}' )) into _result
                         FROM base_${baseVersion}.one u

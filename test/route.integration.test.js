@@ -1394,6 +1394,8 @@ experiment('API Route Tests', () => {
             owner)
             .payload();
 
+        // console.log('payload ', payload);
+
         const secret = process.env.JWT_SECRET;
         let token = `Bearer ${Jwt.token.generate(payload, secret)}`;
 
@@ -1466,7 +1468,7 @@ experiment('API Route Tests', () => {
         };
 
         // const user = page_get_data.owners[page_get_data.data[0].owner].username;
-        const owner = page_get_data.data[0].owner ;// 'duckduckgoose';
+        // const owner = page_get_data.data[0].owner ;// 'duckduckgoose';
         // const lapse_in_millisec = 5000; // 5 seconds
 
         // const payload = new AdminTokenPayload(user,
@@ -1475,8 +1477,11 @@ experiment('API Route Tests', () => {
         const payload = new GuestTokenPayload().payload();
         const secret = process.env.JWT_SECRET;
         let token = `Bearer ${Jwt.token.generate(payload, secret)}`;
+        // console.log('Page owner ', payload);
+        const owner = payload.key; // page_get_data.data[0].owner ;// 'duckduckgoose';
 
         let id =  page_get_data.data[0].form.page_id;
+
         // test is just for testing dont use in production
         const a_url = `/page/${encodeURI(owner)}/PK/${encodeURI(id)}`;
 
@@ -1510,7 +1515,8 @@ experiment('API Route Tests', () => {
 
         // Goal: delete one page by owner and primarykey
         // Strategy: Using a user_token, insert dummy adoptee, and then remove it.
-        // Role: api_admin
+        // Role: api_user
+
         const page_get_data = {
             "owners":{
                 "duckduckgoose":{
@@ -1546,15 +1552,14 @@ experiment('API Route Tests', () => {
         };
 
         const user = page_get_data.owners[page_get_data.data[0].owner].username;
-        const owner = page_get_data.data[0].owner ;// 'duckduckgoose';
+        const owner = '0'; // user_token can be used but owner must be guest // 'duckduckgoose';
         // const lapse_in_millisec = 5000; // 5 seconds
 
         // const payload = new AdminTokenPayload(user,owner).payload();
         const payload = new UserTokenPayload(user, owner).payload();
-
+        // console.log('payload ', payload);
         const secret = process.env.JWT_SECRET;
         let token = `Bearer ${Jwt.token.generate(payload, secret)}`;
-
         let id =  page_get_data.data[0].form.page_id;
         // test is just for testing dont use in production
         const a_url = `/page/${encodeURI(owner)}/PK/${encodeURI(id)}`;
