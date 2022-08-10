@@ -7,6 +7,6 @@ module.exports = class CreateFunction extends Step {
     this.kind = kind;
     this.name = `one_${this.kind}`;
     this.sql = ``;
-    console.log('CreateFunction', this.sql);
+    // console.log('CreateFunction', this.sql);
   }    
 };

@@ -31,13 +31,14 @@ module.exports = class EnableDb extends Step {
       }
       return this.client;
     }
-
-    async deleteDocument(documentName, functionName) {
+    //     async deleteGroup(documentName, functionName) {
+    async deleteGroup(functionName, documentName) {
       try {
         let token = `("${this.token.replace('Bearer ','')}")`;
         let owner = `("${this.owner}")`;
-        let id = `("${documentName}")`;
-        let q = `select * from api_0_0_1.${functionName}($1::TOKEN,$2::OWNER_ID,$3::IDENTITY)`;
+        let id = `("${documentName}","*")`;
+        let q = `select * from api_0_0_1.${functionName}($1::TOKEN,$2::OWNER_ID,$3::PRIMARYKEY)`;
+        //         let q = `select * from api_0_0_1.${functionName}($1::TOKEN,$2::OWNER_ID,$3::IDENTITY)`;
         let queryObj;
 
         queryObj = {
