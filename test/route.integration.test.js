@@ -1121,24 +1121,24 @@ experiment('API Route Tests', () => {
             },
             "data": [
                 {
-                    "pk": "page_id#testpage",
+                    "pk": "page#testpage",
                     "sk": "name#title",
                     "tk": "value#test-page",
-                    "form": {"page_id":"testpage", "name":"title", "value": "Test-Page"},
+                    "form": {"id":"testpage", "name":"title", "value": "Test-Page"},
                     "owner": "duckduckgoose"
                 },
                 {
-                    "pk": "page_id#testpage",
+                    "pk": "page#testpage",
                     "sk": "name#subtitle",
                     "tk": "value#test-test-test",
-                    "form": {"page_id":"testpage", "name":"subtitle", "value": "test-test-test"},
+                    "form": {"id":"testpage", "name":"subtitle", "value": "test-test-test"},
                     "owner": "duckduckgoose"
                 },
                 {
-                    "pk": "page_id#testpage",
+                    "pk": "page#testpage",
                     "sk": "name#description",
                     "tk": "value#once-upon-a-time",
-                    "form": {"page_id":"testpage", "name":"description", "value": "Once-upon-a-time"},
+                    "form": {"id":"testpage", "name":"description", "value": "Once-upon-a-time"},
                     "owner": "duckduckgoose"
                 }
             ]
@@ -1155,13 +1155,14 @@ experiment('API Route Tests', () => {
         const secret = process.env.JWT_SECRET;
         let token = `Bearer ${Jwt.token.generate(payload, secret)}`;
         // let id = page_delete_data.data[0].form.drain_id;
-        // let id = `PK(${page_delete_data.data[0].form.page_id},*)`;
-        let id = page_delete_data.data[0].form.page_id;
+        // let id = `PK(${page_delete_data.data[0].form.id},*)`;
+        let id = page_delete_data.data[0].form.id;
 
         // test is just for testing dont use in production
         const a_url = `/page/${encodeURI(owner)}/PK/${encodeURI(id)}`;
         // console.log('page delete a_url ', a_url);
 
+        // e.g., {id: "page#<page-name>", name: "title", value: "<string>|<number>|<boolean>"}
         const res = await server.inject({
             method: 'delete',
             url: a_url,
@@ -1201,24 +1202,24 @@ experiment('API Route Tests', () => {
             },
             "data": [
                 {
-                    "pk": "page_id#testpage",
+                    "pk": "page#testpage",
                     "sk": "name#title",
                     "tk": "value#test-page",
-                    "form": {"page_id":"testpage", "name":"title", "value": "Test-Page"},
+                    "form": {"id":"testpage", "name":"title", "value": "Test-Page"},
                     "owner": "duckduckgoose"
                 },
                 {
-                    "pk": "page_id#testpage",
+                    "pk": "page#testpage",
                     "sk": "name#subtitle",
                     "tk": "value#test-test-test",
-                    "form": {"page_id":"testpage", "name":"subtitle", "value": "test-test-test"},
+                    "form": {"id":"testpage", "name":"subtitle", "value": "test-test-test"},
                     "owner": "duckduckgoose"
                 },
                 {
-                    "pk": "page_id#testpage",
+                    "pk": "page#testpage",
                     "sk": "name#description",
                     "tk": "value#once-upon-a-time",
-                    "form": {"page_id":"testpage", "name":"description", "value": "Once-upon-a-time"},
+                    "form": {"id":"testpage", "name":"description", "value": "Once-upon-a-time"},
                     "owner": "duckduckgoose"
                 }
             ]
@@ -1235,7 +1236,7 @@ experiment('API Route Tests', () => {
         const secret = process.env.JWT_SECRET;
         let token = `Bearer ${Jwt.token.generate(payload, secret)}`;
 
-        let pk = page_delete_data.data[0].form.page_id;
+        let pk = page_delete_data.data[0].form.id;
         let sk = page_delete_data.data[0].form.name;
 
         // test is just for testing dont use in production
@@ -1266,7 +1267,7 @@ experiment('API Route Tests', () => {
     // singleton
     // lib/routes/page_route_delete
 
-    test('6.DELETE.2 API /page/owner/PK/pk/* DElETE Bad Requestapi_admin, 200', async () => {
+    test('6.DELETE.3 API /page/owner/PK/pk/* DElETE Bad Requestapi_admin, 200', async () => {
 
         // Goal: delete one page part by owner and primarykey
         // Strategy: Using a user_token, insert dummy adoptee, and then remove it.
@@ -1282,24 +1283,24 @@ experiment('API Route Tests', () => {
             },
             "data": [
                 {
-                    "pk": "page_id#testpage",
+                    "pk": "page#testpage",
                     "sk": "name#title",
                     "tk": "value#test-page",
-                    "form": {"page_id":"testpage", "name":"title", "value": "Test-Page"},
+                    "form": {"id":"testpage", "name":"title", "value": "Test-Page"},
                     "owner": "duckduckgoose"
                 },
                 {
-                    "pk": "page_id#testpage",
+                    "pk": "page#testpage",
                     "sk": "name#subtitle",
                     "tk": "value#test-test-test",
-                    "form": {"page_id":"testpage", "name":"subtitle", "value": "test-test-test"},
+                    "form": {"id":"testpage", "name":"subtitle", "value": "test-test-test"},
                     "owner": "duckduckgoose"
                 },
                 {
-                    "pk": "page_id#testpage",
+                    "pk": "page#testpage",
                     "sk": "name#description",
                     "tk": "value#once-upon-a-time",
-                    "form": {"page_id":"testpage", "name":"description", "value": "Once-upon-a-time"},
+                    "form": {"id":"testpage", "name":"description", "value": "Once-upon-a-time"},
                     "owner": "duckduckgoose"
                 }
             ]
@@ -1316,7 +1317,7 @@ experiment('API Route Tests', () => {
         const secret = process.env.JWT_SECRET;
         let token = `Bearer ${Jwt.token.generate(payload, secret)}`;
 
-        let pk = 'badpk'; // page_delete_data.data[0].form.page_id;
+        let pk = 'badpk'; // page_delete_data.data[0].form.id;
         let sk = 'badsk'; // page_delete_data.data[0].form.name;
 
         // test is just for testing dont use in production
@@ -1350,7 +1351,7 @@ experiment('API Route Tests', () => {
     test('6.GET.1 API /page/owner/PK/pk/* GET (Owner, PrmaryKey) api_admin, 200', async () => {
 
         // Goal: delete one page by owner and primarykey
-        // Strategy: Using a user_token, insert dummy adoptee, and then remove it.
+        // Strategy:
         // Role: api_admin
         const page_get_data = {
             "owners":{
@@ -1363,24 +1364,24 @@ experiment('API Route Tests', () => {
             },
             "data": [
                 {
-                    "pk": "page_id#testpage",
+                    "pk": "page#testpage",
                     "sk": "name#title",
                     "tk": "value#test-page",
-                    "form": {"page_id":"testpage", "name":"title", "value": "Test-Page"},
+                    "form": {"id":"testpage", "name":"title", "value": "Test-Page"},
                     "owner": "duckduckgoose"
                 },
                 {
-                    "pk": "page_id#testpage",
+                    "pk": "page#testpage",
                     "sk": "name#subtitle",
                     "tk": "value#test-test-test",
-                    "form": {"page_id":"testpage", "name":"subtitle", "value": "test-test-test"},
+                    "form": {"id":"testpage", "name":"subtitle", "value": "test-test-test"},
                     "owner": "duckduckgoose"
                 },
                 {
-                    "pk": "page_id#testpage",
+                    "pk": "page#testpage",
                     "sk": "name#description",
                     "tk": "value#once-upon-a-time",
-                    "form": {"page_id":"testpage", "name":"description", "value": "Once-upon-a-time"},
+                    "form": {"id":"testpage", "name":"description", "value": "Once-upon-a-time"},
                     "owner": "duckduckgoose"
                 }
             ]
@@ -1399,7 +1400,7 @@ experiment('API Route Tests', () => {
         const secret = process.env.JWT_SECRET;
         let token = `Bearer ${Jwt.token.generate(payload, secret)}`;
 
-        let id =  page_get_data.data[0].form.page_id;
+        let id =  page_get_data.data[0].form.id;
         // test is just for testing dont use in production
         const a_url = `/page/${encodeURI(owner)}/PK/${encodeURI(id)}`;
 
@@ -1444,24 +1445,24 @@ experiment('API Route Tests', () => {
             },
             "data": [
                 {
-                    "pk": "page_id#testpage",
+                    "pk": "page#testpage",
                     "sk": "name#title",
                     "tk": "value#test-page",
-                    "form": {"page_id":"testpage", "name":"title", "value": "Test-Page"},
+                    "form": {"id":"testpage", "name":"title", "value": "Test-Page"},
                     "owner": "duckduckgoose"
                 },
                 {
-                    "pk": "page_id#testpage",
+                    "pk": "page#testpage",
                     "sk": "name#subtitle",
                     "tk": "value#test-test-test",
-                    "form": {"page_id":"testpage", "name":"subtitle", "value": "test-test-test"},
+                    "form": {"id":"testpage", "name":"subtitle", "value": "test-test-test"},
                     "owner": "duckduckgoose"
                 },
                 {
-                    "pk": "page_id#testpage",
+                    "pk": "page#testpage",
                     "sk": "name#description",
                     "tk": "value#once-upon-a-time",
-                    "form": {"page_id":"testpage", "name":"description", "value": "Once-upon-a-time"},
+                    "form": {"id":"testpage", "name":"description", "value": "Once-upon-a-time"},
                     "owner": "duckduckgoose"
                 }
             ]
@@ -1480,7 +1481,7 @@ experiment('API Route Tests', () => {
         // console.log('Page owner ', payload);
         const owner = payload.key; // page_get_data.data[0].owner ;// 'duckduckgoose';
 
-        let id =  page_get_data.data[0].form.page_id;
+        let id =  page_get_data.data[0].form.id;
 
         // test is just for testing dont use in production
         const a_url = `/page/${encodeURI(owner)}/PK/${encodeURI(id)}`;
@@ -1528,24 +1529,24 @@ experiment('API Route Tests', () => {
             },
             "data": [
                 {
-                    "pk": "page_id#testpage",
+                    "pk": "page#testpage",
                     "sk": "name#title",
                     "tk": "value#test-page",
-                    "form": {"page_id":"testpage", "name":"title", "value": "Test-Page"},
+                    "form": {"id":"testpage", "name":"title", "value": "Test-Page"},
                     "owner": "duckduckgoose"
                 },
                 {
-                    "pk": "page_id#testpage",
+                    "pk": "page#testpage",
                     "sk": "name#subtitle",
                     "tk": "value#test-test-test",
-                    "form": {"page_id":"testpage", "name":"subtitle", "value": "test-test-test"},
+                    "form": {"id":"testpage", "name":"subtitle", "value": "test-test-test"},
                     "owner": "duckduckgoose"
                 },
                 {
-                    "pk": "page_id#testpage",
+                    "pk": "page#testpage",
                     "sk": "name#description",
                     "tk": "value#once-upon-a-time",
-                    "form": {"page_id":"testpage", "name":"description", "value": "Once-upon-a-time"},
+                    "form": {"id":"testpage", "name":"description", "value": "Once-upon-a-time"},
                     "owner": "duckduckgoose"
                 }
             ]
@@ -1560,7 +1561,7 @@ experiment('API Route Tests', () => {
         // console.log('payload ', payload);
         const secret = process.env.JWT_SECRET;
         let token = `Bearer ${Jwt.token.generate(payload, secret)}`;
-        let id =  page_get_data.data[0].form.page_id;
+        let id =  page_get_data.data[0].form.id;
         // test is just for testing dont use in production
         const a_url = `/page/${encodeURI(owner)}/PK/${encodeURI(id)}`;
 
@@ -1606,24 +1607,24 @@ experiment('API Route Tests', () => {
             },
             "data": [
                 {
-                    "pk": "page_id#testpage",
+                    "pk": "page#testpage",
                     "sk": "name#title",
                     "tk": "value#test-page",
-                    "form": {"page_id":"testpage", "name":"title", "value": "Test-Page"},
+                    "form": {"id":"testpage", "name":"title", "value": "Test-Page"},
                     "owner": "duckduckgoose"
                 },
                 {
-                    "pk": "page_id#testpage",
+                    "pk": "page#testpage",
                     "sk": "name#subtitle",
                     "tk": "value#test-test-test",
-                    "form": {"page_id":"testpage", "name":"subtitle", "value": "test-test-test"},
+                    "form": {"id":"testpage", "name":"subtitle", "value": "test-test-test"},
                     "owner": "duckduckgoose"
                 },
                 {
-                    "pk": "page_id#testpage",
+                    "pk": "page#testpage",
                     "sk": "name#description",
                     "tk": "value#once-upon-a-time",
-                    "form": {"page_id":"testpage", "name":"description", "value": "Once-upon-a-time"},
+                    "form": {"id":"testpage", "name":"description", "value": "Once-upon-a-time"},
                     "owner": "duckduckgoose"
                 }
             ]
@@ -1639,7 +1640,7 @@ experiment('API Route Tests', () => {
         const secret = process.env.JWT_SECRET;
         let token = `Bearer ${Jwt.token.generate(payload, secret)}`;
 
-        let pk =  page_get_data.data[0].form.page_id;
+        let pk =  page_get_data.data[0].form.id;
         let sk =  page_get_data.data[0].form.name;
 
         // test is just for testing dont use in production
@@ -1665,6 +1666,7 @@ experiment('API Route Tests', () => {
 
     });
 
+
     // ---------------------------------
     // Page Post admin
     // ---------------------------------
@@ -1682,7 +1684,7 @@ experiment('API Route Tests', () => {
         const secret = process.env.JWT_SECRET;
         let token = Jwt.token.generate(payload, secret);
 
-        let form = {"page_id":"testpage", "name":"title", "value": "Test-Page"};
+        let form = {"id":"testpage", "name":"title", "value": "Test-Page"};
 
         token = `Bearer ${token}`;
 
@@ -1717,7 +1719,7 @@ experiment('API Route Tests', () => {
         const secret = process.env.JWT_SECRET;
         let token = Jwt.token.generate(payload, secret);
 
-        let form = {"page_id":"testpage", "name":"subtitle", "value": "Test-Page"};
+        let form = {"id":"testpage", "name":"subtitle", "value": "Test-Page"};
 
         token = `Bearer ${token}`;
 
@@ -1746,7 +1748,6 @@ experiment('API Route Tests', () => {
     // ---------------------------------
     // lib/routes/page_route_put
 
-
     test('6.PUT.1 API /page/owner/PK/pk/sk title PUT api_admin, 200', async () => {
 
             // Goal: page
@@ -1765,24 +1766,24 @@ experiment('API Route Tests', () => {
                 },
                 "data": [
                     {
-                        "pk": "page_id#testpage",
+                        "pk": "page#testpage",
                         "sk": "name#title",
                         "tk": "value#test-page",
-                        "form": {"page_id":"testpage", "name":"title", "value": "Test-Page"},
+                        "form": {"id":"testpage", "name":"title", "value": "Test-Page"},
                         "owner": "duckduckgoose"
                     },
                     {
-                        "pk": "page_id#testpage",
+                        "pk": "page#testpage",
                         "sk": "name#subtitle",
                         "tk": "value#test-test-test",
-                        "form": {"page_id":"testpage", "name":"subtitle", "value": "test-test-test"},
+                        "form": {"id":"testpage", "name":"subtitle", "value": "test-test-test"},
                         "owner": "duckduckgoose"
                     },
                     {
-                        "pk": "page_id#testpage",
+                        "pk": "page#testpage",
                         "sk": "name#description",
                         "tk": "value#once-upon-a-test",
-                        "form": {"page_id":"testpage", "name":"description", "value": "Once-upon-a-test"},
+                        "form": {"id":"testpage", "name":"description", "value": "Once-upon-a-test"},
                         "owner": "duckduckgoose"
                     }
                 ]
@@ -1790,7 +1791,7 @@ experiment('API Route Tests', () => {
             // [Token values ]
             const key = data.data[0].owner;
             const user = data.owners[key].username;
-            // const id = data.data[0].form.page_id;
+            // const id = data.data[0].form.id;
 
             const secret = process.env.JWT_SECRET;
 
@@ -1803,9 +1804,11 @@ experiment('API Route Tests', () => {
             const token = `Bearer ${Jwt.token.generate(payload, secret)}`;
             // console.log('token ', token);
             // [Any value can be changed]
-            const pk = data.data[0].pk;
-            const sk = data.data[0].sk;
-            const changeForm = {"page_id":"testpage", "name":"title", "value": "title-change"};
+            // const pk = data.data[0].pk;
+            // const sk = data.data[0].sk;
+            const pk = data.data[0].pk.replace('page#','');
+            const sk = data.data[0].sk.replace('name#', '');
+            const changeForm = {"id":"testpage", "name":"title", "value": "title-change"};
             // [Start the test]
             const aurl = `/page/${encodeURIComponent(owner)}/PK/${encodeURIComponent(pk)}/${encodeURIComponent(sk)}`;
             // console.log('page PUT aurl ', aurl);
@@ -1826,7 +1829,7 @@ experiment('API Route Tests', () => {
 
             expect(res.statusCode).to.equal(200);
             expect(res.result.status).to.equal('200');
-            expect(res.result.updation.pk).to.equal('page_id#testpage');
+            expect(res.result.updation.pk).to.equal('page#testpage');
             expect(res.result.updation.sk).to.equal('name#title');
             expect(res.result.updation.tk).to.equal('value#title-change');
 
@@ -1860,24 +1863,24 @@ experiment('API Route Tests', () => {
             },
             "data": [
                 {
-                    "pk": "page_id#testpage",
+                    "pk": "page#testpage",
                     "sk": "name#title",
                     "tk": "value#test-page",
-                    "form": {"page_id":"testpage", "name":"title", "value": "Test-Page"},
+                    "form": {"id":"testpage", "name":"title", "value": "Test-Page"},
                     "owner": "duckduckgoose"
                 },
                 {
-                    "pk": "page_id#testpage",
+                    "pk": "page#testpage",
                     "sk": "name#subtitle",
                     "tk": "value#test-test-test",
-                    "form": {"page_id":"testpage", "name":"subtitle", "value": "test-test-test"},
+                    "form": {"id":"testpage", "name":"subtitle", "value": "test-test-test"},
                     "owner": "duckduckgoose"
                 },
                 {
-                    "pk": "page_id#testpage",
+                    "pk": "page#testpage",
                     "sk": "name#description",
                     "tk": "value#once-upon-a-test",
-                    "form": {"page_id":"testpage", "name":"description", "value": "Once-upon-a-test"},
+                    "form": {"id":"testpage", "name":"description", "value": "Once-upon-a-test"},
                     "owner": "duckduckgoose"
                 }
             ]
@@ -1885,7 +1888,7 @@ experiment('API Route Tests', () => {
         // [Token values ]
         const key = data.data[0].owner;
         const user = data.owners[key].username;
-        // const id = data.data[0].form.page_id;
+        // const id = data.data[0].form.id;
 
         const secret = process.env.JWT_SECRET;
 
@@ -1898,9 +1901,10 @@ experiment('API Route Tests', () => {
         const token = `Bearer ${Jwt.token.generate(payload, secret)}`;
         // console.log('token ', token);
         // [Any value can be changed]
-        const pk = data.data[1].pk;
-        const sk = data.data[1].sk;
-        const changeForm = {"page_id":"testpage", "name":"subtitle", "value": "subtitle-change"};
+
+        const pk = data.data[1].pk.replace('page#','');
+        const sk = data.data[1].sk.replace('name#', '');
+        const changeForm = {"id":"testpage", "name":"subtitle", "value": "subtitle-change"};
         // [Start the test]
         const aurl = `/page/${encodeURIComponent(owner)}/PK/${encodeURIComponent(pk)}/${encodeURIComponent(sk)}`;
         // console.log('page PUT aurl ', aurl);
@@ -1921,7 +1925,7 @@ experiment('API Route Tests', () => {
 
         expect(res.statusCode).to.equal(200);
         expect(res.result.status).to.equal('200');
-        expect(res.result.updation.pk).to.equal('page_id#testpage');
+        expect(res.result.updation.pk).to.equal('page#testpage');
         expect(res.result.updation.sk).to.equal('name#subtitle');
         expect(res.result.updation.tk).to.equal('value#subtitle-change');
 
@@ -1930,298 +1934,19 @@ experiment('API Route Tests', () => {
 
     });
 
+// ---------------------------------
+    // Page PUT SubTitle
     // ---------------------------------
-    // Page/Part Delete
-    // ---------------------------------
-    // lib/routes/page_part_route_delete
+    // lib/routes/page_route_put
 
-    // test('7.DELETE.1 API /page/part/owner/pk/sk, api_admin 200', async () => {});
-    /*
-    test('7.DELETE.1 API /page/part/owner/PK/pk (Owner, PrimaryKey) api_admin, 200', async () => {
 
-        // Goal: delete one page by owner and primarykey
-        // Strategy: Using a user_token, insert dummy adoptee, and then remove it.
-        // Role: api_admin
-        const page_delete_data = {
-            "owners":{
-                "duckduckgoose":{
-                    "username":"adopter@user.com",
-                    "displayname":"A",
-                    "password":"a1A!aaaa",
-                    "scope": "api_admin"
-                }
-            },
-            "data": [
-                {
-                    "pk": "page_id#testpage",
-                    "sk": "name#title",
-                    "tk": "value#test-page",
-                    "form": {"page_id":"testpage", "name":"title", "value": "Test-Page"},
-                    "owner": "duckduckgoose"
-                },
-                {
-                    "pk": "page_id#testpage",
-                    "sk": "name#subtitle",
-                    "tk": "value#test-test-test",
-                    "form": {"page_id":"testpage", "name":"subtitle", "value": "test-test-test"},
-                    "owner": "duckduckgoose"
-                },
-                {
-                    "pk": "page_id#testpage",
-                    "sk": "name#description",
-                    "tk": "value#once-upon-a-time",
-                    "form": {"page_id":"testpage", "name":"description", "value": "Once-upon-a-time"},
-                    "owner": "duckduckgoose"
-                }
-            ]
-        };
-
-        const user = page_delete_data.owners[page_delete_data.data[0].owner].username;
-        const owner = page_delete_data.data[0].owner ; // 'duckduckgoose';
-        // const lapse_in_millisec = 5000; // 5 seconds
-
-        const payload = new AdminTokenPayload(user,
-            owner)
-            .payload();
-
-        const secret = process.env.JWT_SECRET;
-        let token = `Bearer ${Jwt.token.generate(payload, secret)}`;
-
-        const pk = page_delete_data.data[0].form.page_id;
-        const sk = page_delete_data.data[0].form.name;
-
-        // test is just for dev dont use in production
-
-        const a_url = `/page/part/${owner}/PK/${encodeURIComponent(pk)}/${encodeURIComponent(sk)}`;
-
-        // console.log('page delete a_url ', a_url);
-
-        const res = await server.inject({
-            method: 'delete',
-            url: a_url,
-            headers: {
-                authorization: token,
-                debug: false,
-                test: JSON.stringify(page_delete_data)
-            }
-        });
-
-        // console.log('TEST API /page/<owner>/PK/<pk> DELETE', res.result);
-
-        expect(res.result.status).to.equal('200');
-        expect(res.result.deletion).to.exist();
-        expect(res.result.deletion).to.not.equal([]);
-
-    });
-    */
-    // ---------------------------------
-    // Page/Part Get
-    // ---------------------------------
-    // lib/routes/page_part_route_get
-    /*
-    test('7.GET.1 API /page/part/owner/PK/pk/sk (Owner, PrmaryKey) api_admin, 200', async () => {
-
-        // Goal: delete one page by owner and primarykey
-        // Strategy: Using a user_token, insert dummy adoptee, and then remove it.
-        // Role: api_admin
-        const page_get_data = {
-            "owners":{
-                "duckduckgoose":{
-                    "username":"adopter@user.com",
-                    "displayname":"A",
-                    "password":"a1A!aaaa",
-                    "scope": "api_admin"
-                }
-            },
-            "data": [
-                {
-                    "pk": "page_id#testpage",
-                    "sk": "name#title",
-                    "tk": "value#test-page",
-                    "form": {"page_id":"testpage", "name":"title", "value": "Test-Page"},
-                    "owner": "duckduckgoose"
-                },
-                {
-                    "pk": "page_id#testpage",
-                    "sk": "name#subtitle",
-                    "tk": "value#test-test-test",
-                    "form": {"page_id":"testpage", "name":"subtitle", "value": "test-test-test"},
-                    "owner": "duckduckgoose"
-                },
-                {
-                    "pk": "page_id#testpage",
-                    "sk": "name#description",
-                    "tk": "value#once-upon-a-time",
-                    "form": {"page_id":"testpage", "name":"description", "value": "Once-upon-a-time"},
-                    "owner": "duckduckgoose"
-                }
-            ]
-        };
-
-        const user = page_get_data.owners[page_get_data.data[0].owner].username;
-        const owner = page_get_data.data[0].owner ;// 'duckduckgoose';
-        // const lapse_in_millisec = 5000; // 5 seconds
-
-        const payload = new AdminTokenPayload(user,
-            owner)
-            .payload();
-
-        const secret = process.env.JWT_SECRET;
-        let token = `Bearer ${Jwt.token.generate(payload, secret)}`;
-
-        // let id =  page_get_data.data[0].form.page_id;
-        const pk = page_get_data.data[0].pk;
-        const sk = page_get_data.data[0].sk;
-
-        // test is just for testing dont use in production
-        const a_url = `/page/part/${encodeURI(owner)}/PK/${encodeURI(pk)}/${encodeURI(sk)}`;
-
-        // console.log('page get a_url ', a_url);
-
-        const res = await server.inject({
-            method: 'get',
-            url: a_url,
-            headers: {
-                authorization: token,
-                debug: false,
-                test: JSON.stringify(page_get_data)
-            }
-        });
-        // console.log('TEST API /page/<owner>/PK/<pk> GET', res.result);
-
-        expect(res.result.status).to.equal('200');
-        expect(res.result.selection).to.exist();
-        expect(res.result.selection).to.not.equal([]);
-
-    });
-    */
-    // ---------------------------------
-    // Page/Part Post
-    // ---------------------------------
-    // lib/routes/page_part_route_post
-    /*
-    test('7.POST.1   API /page/part/owner POST , api_admin, 200', async () => {
-        //  change /pages to POST
-
-        const owner = 'duckduckgoose';
-        const username = 'adopter@user.com';
-
-        const payload = new AdminTokenPayload(username, owner).payload();
-
-        const secret = process.env.JWT_SECRET;
-        let token = Jwt.token.generate(payload, secret);
-
-        let form = {"page_id":"testpage", "name":"title", "value": "Test-Page"};
-
-        token = `Bearer ${token}`;
-
-        const res = await server.inject({
-            method: 'post',
-            url: `/page/${encodeURI(owner)}`,
-            headers: {
-                authorization: token,
-                accept: "application/json",
-                'Content-Type': 'application/json',
-                rollback: true
-            },
-            payload: form,
-        });
-
-        // console.log('response API /page POST', res.result);
-
-        expect(res.result.status).to.equal('200');
-        // expect(res.result.selection).to.exist();
-        // expect(res.result.selection).to.not.equal([]);
-
-    });
-    */
-    // ---------------------------------
-    // Page/Part POST Duplicate
-    // ---------------------------------
-    // lib/routes/page_part_route_post
-    /*
-    test('7.POST.2 API /page/part/owner POST Duplicate, api_admin, 409', async () => {
-        //  change /pages to POST
-
-        const data = {
-            "owners":{
-                "duckduckgoose":{
-                    "username":"adopter@user.com",
-                    "displayname":"A",
-                    "password":"a1A!aaaa",
-                    "scope": "api_admin"
-                }
-            },
-            "data": [
-                {
-                    "pk": "page_id#testpage",
-                    "sk": "name#title",
-                    "tk": "value#test-page",
-                    "form": {"page_id":"testpage", "name":"title", "value": "Test-Page"},
-                    "owner": "duckduckgoose"
-                },
-                {
-                    "pk": "page_id#testpage",
-                    "sk": "name#subtitle",
-                    "tk": "value#test-test-test",
-                    "form": {"page_id":"testpage", "name":"subtitle", "value": "test-test-test"},
-                    "owner": "duckduckgoose"
-                },
-                {
-                    "pk": "page_id#testpage",
-                    "sk": "name#description",
-                    "tk": "value#once-upon-a-time",
-                    "form": {"page_id":"testpage", "name":"description", "value": "Once-upon-a-time"},
-                    "owner": "duckduckgoose"
-                }
-            ]
-        };
-        const owner = 'duckduckgoose';
-        const username = 'adopter@user.com';
-
-        const payload = new AdminTokenPayload(username, owner).payload();
-
-        const secret = process.env.JWT_SECRET;
-        let token = Jwt.token.generate(payload, secret);
-        let test = JSON.stringify(data);  // pass false for no test and JSON.stringify(data) for testing data
-
-        let i = 0;
-        let form = data.data[i].form;
-
-        token = `Bearer ${token}`;
-
-        const res = await server.inject({
-            method: 'post',
-            url: `/page/${encodeURI(owner)}`,
-            headers: {
-                authorization: token,
-                accept: "application/json",
-                'Content-Type': 'application/json',
-                rollback: true,
-                test: test
-            },
-            payload: form
-        });
-
-        // console.log('response API /page POST', res.result);
-
-        expect(res.result.status).to.equal('409');
-
-    });
-    */
-    // ---------------------------------
-    // Page/Part PUT Title
-    // ---------------------------------
-    // lib/routes/page_part_route_put
-/*
-
-    test('7.PUT.1 API /page/part/owner/PK PUT api_admin(TOKEN,OWNER,PRIMARYKEY,JSONB), 200', async () => {
+    test('6.PUT.1 API /page/owner/PK/pk/sk pk, sk, title, and subtitle PUT api_admin, 200', async () => {
 
         // Goal: page
         // Strategy:
         // - post a page, then update the page.value, rollback
         // [data]
-        console.log('page PUT 1');
+        // console.log('page PUT 1');
         const data = {
             "owners":{
                 "duckduckgoose":{
@@ -2233,24 +1958,24 @@ experiment('API Route Tests', () => {
             },
             "data": [
                 {
-                    "pk": "page_id#testpage",
+                    "pk": "page#testpage",
                     "sk": "name#title",
                     "tk": "value#test-page",
-                    "form": {"page_id":"testpage", "name":"title", "value": "Test-Page"},
+                    "form": {"id":"testpage", "name":"title", "value": "Test-Page"},
                     "owner": "duckduckgoose"
                 },
                 {
-                    "pk": "page_id#testpage",
+                    "pk": "page#testpage",
                     "sk": "name#subtitle",
                     "tk": "value#test-test-test",
-                    "form": {"page_id":"testpage", "name":"subtitle", "value": "test-test-test"},
+                    "form": {"id":"testpage", "name":"subtitle", "value": "test-test-test"},
                     "owner": "duckduckgoose"
                 },
                 {
-                    "pk": "page_id#testpage",
+                    "pk": "page#testpage",
                     "sk": "name#description",
                     "tk": "value#once-upon-a-test",
-                    "form": {"page_id":"testpage", "name":"description", "value": "Once-upon-a-test"},
+                    "form": {"id":"testpage", "name":"description", "value": "Once-upon-a-test"},
                     "owner": "duckduckgoose"
                 }
             ]
@@ -2258,7 +1983,7 @@ experiment('API Route Tests', () => {
         // [Token values ]
         const key = data.data[0].owner;
         const user = data.owners[key].username;
-        // const id = data.data[0].form.page_id;
+        // const id = data.data[0].form.id;
 
         const secret = process.env.JWT_SECRET;
 
@@ -2269,15 +1994,16 @@ experiment('API Route Tests', () => {
         // [User token...generate]
         const payload = new AdminTokenPayload(user, key).payload();
         const token = `Bearer ${Jwt.token.generate(payload, secret)}`;
-console.log('token ', token);
+        // console.log('token ', token);
         // [Any value can be changed]
-        const pk = data.data[0].pk;
-        const sk = data.data[0].sk;
-        const changeForm = {"page_id":"testpage", "name":"title", "value": "Test-Page-change"};
+
+        const pk = data.data[1].pk.replace('page#','');
+        const sk = data.data[1].sk.replace('name#', '');
+        const changeForm = {"id":"testpagex", "name":"subtitlex", "value": "subtitle-x"};
         // [Start the test]
-        const aurl = `/page/${encodeURI(owner)}/PK/${encodeURI(pk)}/${encodeURI(sk)}`;
-        console.log('page PUT aurl ', aurl);
-        console.log('page PUT form ', changeForm);
+        const aurl = `/page/${encodeURIComponent(owner)}/PK/${encodeURIComponent(pk)}/${encodeURIComponent(sk)}`;
+        // console.log('page PUT aurl ', aurl);
+        // console.log('page PUT form ', changeForm);
         const res = await server.inject({
             method: 'put',
             url: aurl,
@@ -2289,18 +2015,19 @@ console.log('token ', token);
             payload: changeForm
         });
 
-        console.log('page PUT res ', res.result);
+        // console.log('page PUT res ', res.result);
         // console.log('res PUT ', res.result.updation.form.scope);
 
         expect(res.statusCode).to.equal(200);
         expect(res.result.status).to.equal('200');
-        expect(res.result.updation.pk).to.equal('page_id#testpage');
-        expect(res.result.updation.sk).to.equal('name#title');
+        expect(res.result.updation.pk).to.equal('page#testpagex');
+        expect(res.result.updation.sk).to.equal('name#subtitlex');
+        expect(res.result.updation.tk).to.equal('value#subtitle-x');
+
         expect(res.result.updation.form).to.equal(changeForm);
         // expect(res.result.updation.owner).to.equal('duckduckgoose');
 
     });
-*/
 
 });
 

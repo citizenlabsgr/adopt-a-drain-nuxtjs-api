@@ -110,31 +110,39 @@ Docker:
 ## Run Tests
 
 # Data
-pk, sk, and tk values are lowercase 
-pk + sk must be unique value
-constant value pattern "const#TITLE" 
+* pk, sk, and tk values are lowercase 
+* pk + sk must be unique value
+* constant value pattern "const#TITLE"
 
+## Database Style
 
-## Data Style
-  Record
+Record Abstract
+```
+    pk: "<group-type>#<group-name>"
+    sk: "name#<name-string>"
+    tk: "value#<value-string>"
+    form: {"id": "<group-name>", "name": "<name-string>", "value": "<value-string>"}
+    owner: "<owner>"
+    created: "<datetime>"
+    updated: "<datatime>"
+    active: <boolean>
+```
+* Note: <group-type> is provided by a db stored procedure 
 
-    pk: "page_id#about"
+Record Example
+```
+    pk: "page#about"
     sk: "name#title"
     tk: "value#this-is-us"
-    form: {"page_id": "about", "name": "title", "value": "This-is_Us"}
-    owner: <owner>
-    created: <datetime>
-    updated: <datatime>
+    form: {"id": "about", "name": "title", "value": "This-is_Us"}
+    owner: "duckduckgoose"
+    created: "2022-08-09 15:07:00.54991+00"
+    updated: "2022-08-09 15:07:00.54991+00"
     active: true
+```
+* Note: The page <group-type> comes from the page(token TOKEN, owner OWNER_ID, form JSONB) stored procedure 
 
-Keys
-* __pk__ pattern is \<formKey>#\<formKeyValue>
-* __sk__ pattern is \<formKey>#\<formKeyValue>
-* __tk__ pattern is \<formKey>#\<formKeyValue>
-* __form__ pattern is
-  * id:id-value, 
-  * name:name-value, 
-  * value:value
+
 
 # Functions
 ## Delete Function

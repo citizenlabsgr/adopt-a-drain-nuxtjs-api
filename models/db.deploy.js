@@ -86,12 +86,13 @@ const FunctionDocumentGetToi = require(`./db/document/${document_version}/functi
 const FunctionDocumentPostToj = require(`./db/document/${document_version}/function_document_post_toj.js`);
 
 // Page
-let page_version = '000';
+let page_version = '001';
 const FunctionPageDeleteTop = require(`./db/page/${page_version}/function_page_delete_top.js`);
 const FunctionPageGetTop = require(`./db/page/${page_version}/function_page_get_top.js`);
 const FunctionPagePostToj = require(`./db/page/${page_version}/function_page_post_toj.js`);
 const FunctionPagePutTopj = require(`./db/page/${page_version}/function_page_put_topj.js`);
 
+// Setup
 
 const DatabaseUrl = require('../lib/plugins/postgres/database_url.js');
 
@@ -105,6 +106,8 @@ const DatabaseUrl = require('../lib/plugins/postgres/database_url.js');
 const documentFolder = `${__dirname}/documents`;
 console.log('documentFolder ',documentFolder);
 const SetupRunner = require('../aad_admin/lib/runner.js');
+const BreakdownSetup = require('../aad_admin/lib/breakdown_setup.js');
+
 const BreakdownDocs = require('../aad_admin/lib/breakdown_docs.js');
 const StoreDocs = require('../aad_admin/lib/store_docs.js');
 const Util = require('../aad_admin/lib/util.js');
@@ -268,8 +271,10 @@ const setupRunner =  new SetupRunner(true)
                   .setConnectionString(DB_URL)
                   ;
 setupRunner
-  .add(new BreakdownDocs({fileList: fileList, documentFolder: documentFolder}))
-  .add(new StoreDocs(setupRunner.getOutputFrom(0)))
+    .add(new BreakdownSetup({fileList: fileList, documentFolder: documentFolder}))
+    .add(new StoreDocs(setupRunner.getOutputFrom(0)))
+    .add(new BreakdownDocs({fileList: fileList, documentFolder: documentFolder}))
+    .add(new StoreDocs(setupRunner.getOutputFrom(1)))
   ;
 
 const debug = false;

@@ -45,44 +45,58 @@ module.exports = class BreakdownDocs extends Step {
       this.addGlyph('     |','     |');
 
       for (let i in this.getInputs().fileList) {
+          let doc_name = this.getInputs().fileList[i];
 
-        let doc_name = this.getInputs().fileList[i];
-        // let doc = this.getInputs().fileList[i].replace('.','_');
-        let doc = this.getInputs().fileList[i];
-        let form0 = {"doc_id":`${doc_name}`, "p": 0, "i": `${this.padLeft('0')}`, "w":`${doc_name}`};
+          if (doc_name.endsWith('.document.md')) {
+              // console.log('filename ', this.getInputs().fileList[i]);
 
-        this.getOutputs().documents[doc]=[];
-        // this.getOutputs().documents[doc].push(chelate0);
-        this.getOutputs().documents[doc].push(form0);
+              // let doc = this.getInputs().fileList[i].replace('.','_');
+              let doc = this.getInputs().fileList[i];
+              let form0 = {"doc_id": `${doc_name}`, "p": 0, "i": `${this.padLeft('0')}`, "w": `${doc_name}`};
 
-        // read file
+              this.getOutputs().documents[doc] = [];
+              // this.getOutputs().documents[doc].push(chelate0);
+              this.getOutputs().documents[doc].push(form0);
 
-        let data = new Util().readFile(this.getInputs().documentFolder, this.getInputs().fileList[i]);
+              // read file
 
-        // break up file
-        data = data.split('\n');
-        let wordPos = 1;
-        let paraPos = 1;
-        for (let p in data) {
-          let words = data[p].split(' ');
+              let data = new Util().readFile(this.getInputs().documentFolder, this.getInputs().fileList[i]);
 
-          for (let w in words) {
-            let word = words[w];
+              // break up file
+              data = data.split('\n');
+              let wordPos = 1;
+              let paraPos = 1;
+              for (let p in data) {
+                  let words = data[p].split(' ');
 
-            let form = {"doc_id":`${doc_name}`,
-                        "p": paraPos,
-                        "i": `${this.padLeft(wordPos.toString())}`,
-                        "w":`${word}`};
+                  for (let w in words) {
+                      let word = words[w];
 
-            this.getOutputs().documents[doc].push(form);
-            wordPos++;
-          } // words
-          paraPos++;
-        } // paragraphs
+                      let form = {
+                          "doc_id": `${doc_name}`,
+                          "p": paraPos,
+                          "i": `${this.padLeft(wordPos.toString())}`,
+                          "w": `${word}`
+                      };
+                      /*
+                      name and value form
+                      let form = {
+                          "doc_id": `${doc_name}`,
+                          "name":"#p#${paraPos}.${this.padLeft(wordPos.toString())}",
+                          "value":"${word}"
+                      };
+                      */
 
-        // stash words
-        this.addGlyph('     |',`     + <--- [Wordify] <--- [Paragraphify] <--- (${this.getInputs().fileList[i]})`);
+                      this.getOutputs().documents[doc].push(form);
+                      wordPos++;
 
+                  } // words
+                  paraPos++;
+              } // paragraphs
+
+              // stash words
+              this.addGlyph('     |', `     + <--- [Wordify] <--- [Paragraphify] <--- (${this.getInputs().fileList[i]})`);
+        } // if
       } // documents
 
 
