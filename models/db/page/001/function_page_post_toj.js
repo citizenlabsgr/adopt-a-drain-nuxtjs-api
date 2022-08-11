@@ -17,9 +17,11 @@ module.exports = class FunctionAdopterPost extends Step {
     this.sk = "name";
     this.tk = "value";
     this.sql = `
+    -- POST
     CREATE OR REPLACE FUNCTION ${this.name}(${this.params})  RETURNS JSONB AS $$
     
         Declare result JSONB; 
+        Declare groupId TEXT := 'page';
         Declare chelate JSONB := '{"pk":"${this.pk}", 
                                    "sk":"${this.sk}", 
                                    "tk":"${this.tk}", 
@@ -48,7 +50,6 @@ module.exports = class FunctionAdopterPost extends Step {
     --   owner := format('(%s)',uuid_generate_v4())::OWNER_ID;
     -- end if;
    
-
     -- [* Validate form parameter]
     
       if form is NULL then
@@ -78,6 +79,10 @@ module.exports = class FunctionAdopterPost extends Step {
     -- [* Assemble Data]
     
       chelate := base_${this.baseVersion}.chelate(chelate, form);
+      
+    -- [* Replace pk value with groupId prefix and form value]  
+
+      chelate := chelate || format('{"pk":"%s#%s"}', groupId, form->>'id')::JSONB;
 
     -- [* Execute insert]
     
