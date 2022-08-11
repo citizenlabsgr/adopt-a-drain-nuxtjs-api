@@ -88,7 +88,7 @@ module.exports = class BreakdownSetup extends Step {
               // 1. abc: abc1-abc
               const rNV = new RegExp('^[0-9][\\. ]+[a-zA-Z_]+[:][ ]+[a-zA-Z0-9\\-\\!\\.\\?\\"\']+');
               let key = '';
-              let idName = '';
+              // let idName = '';
               // const re = new RegExp('ab+c');
               // let item = {"page_id": "", "name": "", "value": ""};
 
@@ -99,7 +99,7 @@ module.exports = class BreakdownSetup extends Step {
                   if (data[p].match(rStart)) {
                       let s = data[p].split(':');
                       // console.log('s ', s);
-                      idName = s[0].split(' ')[1].replace('-','').toLowerCase();
+                      // idName = s[0].split(' ')[1].replace('-','').toLowerCase();
                       key = s[1].trim().toLowerCase();
                       // console.log('key', key);
                       // console.log('idName', idName);
@@ -113,8 +113,8 @@ module.exports = class BreakdownSetup extends Step {
                       // console.log('n', n);
                       let n = s[0].trim().toLowerCase();
                       let v = s[1].trim();
-                      let form = JSON.parse(`{"id": "${idName}#${key}", "name": "${n}", "value": "${v}"}`);
-
+                      let form = JSON.parse(`{"id": "${key}", "name": "${n}", "value": "${v}"}`);
+                      // let form = JSON.parse(`{"id": "${idName}#${key}", "name": "${n}", "value": "${v}"}`);
                       // let form = JSON.parse(`{"${idName}_id": "${key}", "name": "${n}", "value": "${v}"}`);
 
                       if (n === 'item') {
