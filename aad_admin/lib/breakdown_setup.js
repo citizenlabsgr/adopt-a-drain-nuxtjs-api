@@ -1,6 +1,7 @@
 'use strict';
-const Step = require('./step.js');
+// const Step = require('./step.js');
 const Util = require('./util.js');
+const EnableDb = require("./enable_db");
 /*
 Goal: Setup Name and Value Pairs
 Strategy:
@@ -16,8 +17,8 @@ Breakdown files into individual name value pairs
 	    raise notice 'About %', api_0_0_1.page(admin_token, owner::OWNER_ID, form::JSONB);
 
 ## Page: About
-1. id: opportunities
-2. title: Opportunities
+1. id: opportunity
+2. title: Opportunity
 3. subtitle: We-care-about-what-you-want-to-do.
 4. description: Are-you-a-programmer-with-Nuxtjs-experience-who-wants-to-help-improve-and-maintain-the-Adopt-a-Drain-application?-Dont-be-shy!-We-are-always-seeking-assistance-with-the-code!-Get-involved-and-follow-our-GitHub-page.
 5. item: Beginners-and-Experts
@@ -25,8 +26,10 @@ Breakdown files into individual name value pairs
 
 // BreakdownSetup <- Step <- Graph
 
-module.exports = class BreakdownSetup extends Step {
-    constructor(inputObject) {
+// module.exports = class BreakdownSetup extends Step {
+module.exports = class BreakdownSetup extends EnableDb {
+
+        constructor(inputObject) {
       super();
       this.setInputs(inputObject);
       this.setOutputs(
@@ -56,6 +59,19 @@ module.exports = class BreakdownSetup extends Step {
       return str;
     }
 
+    async dropGroup(functionName, documentName) {
+        // console.log('dropGroup ',functionName, documentName);
+        await this.deleteGroup(`${functionName}_del`, documentName);
+        // await this.deleteGroup(documentName, 'document_del');
+
+        // this.addGlyph('     |',`     + <--- [drop] <--- (${documentName})`);
+        return this;
+    }
+    async insertNameValue(functionName, pageForm) {
+        // console.log(`insertNameValue ${functionName} ${JSON.stringify(pageForm)} `);
+        await this.insertForm(pageForm, functionName);
+        return this;
+    }
     async process() {
 
       this.addGlyph(this.pad(`   [${this.getIdx()}. ${this.getClassName()}] `,'.'), `   [Validate Inputs]`,`   source: ${this.getSource()}`) ;
@@ -81,13 +97,14 @@ module.exports = class BreakdownSetup extends Step {
               let data = new Util().readFile(this.getInputs().documentFolder, this.getInputs().fileList[i]);
               data = data.split('\n');
               // console.log('data ', data);
+
               // ## Page: abddddd-lk-3
-              // const rStart = new RegExp('^#{2} +[P][a][g][e]: +[a-zA-z\\.\\-\\?\\!\\_]+');
               const rStart = new RegExp('^#{2} +[A-Z][a-zA-Z]+: +[a-zA-z\\.\\-\\?\\!\\_]+');
 
               // 1. abc: abc1-abc
               const rNV = new RegExp('^[0-9][\\. ]+[a-zA-Z_]+[:][ ]+[a-zA-Z0-9\\-\\!\\.\\?\\"\']+');
               let key = '';
+              let functionName = '';
               // let idName = '';
               // const re = new RegExp('ab+c');
               // let item = {"page_id": "", "name": "", "value": ""};
@@ -98,14 +115,16 @@ module.exports = class BreakdownSetup extends Step {
                   // if (data[p].trim().startsWith('## Page:')) {
                   if (data[p].match(rStart)) {
                       let s = data[p].split(':');
+                      functionName = s[0].split(' ')[1].trim().toLowerCase();
                       // console.log('s ', s);
                       // idName = s[0].split(' ')[1].replace('-','').toLowerCase();
                       key = s[1].trim().toLowerCase();
                       // console.log('key', key);
                       // console.log('idName', idName);
                       itemCnt = 0;
-                      this.addGlyph('     |', `     + <--- [Pageify] <-- [${key}] <--- (${this.getInputs().fileList[i]})`);
-
+                      // this.addGlyph('     |', `     + <--- [Pageify] <-- [${key}] <--- (${this.getInputs().fileList[i]})`);
+                      // this.addGlyph('     |', `     + <--- [drop] <--- (${functionName}#${key})`);
+                      // await this.dropGroup(functionName, key);
                   } else if (data[p].match(rNV)) {
                       // console.log('nameValue ', key.toLowerCase(), data[p]);
                       let s = data[p].split('.');
@@ -116,13 +135,15 @@ module.exports = class BreakdownSetup extends Step {
                       let form = JSON.parse(`{"id": "${key}", "name": "${n}", "value": "${v}"}`);
                       // let form = JSON.parse(`{"id": "${idName}#${key}", "name": "${n}", "value": "${v}"}`);
                       // let form = JSON.parse(`{"${idName}_id": "${key}", "name": "${n}", "value": "${v}"}`);
+                      this.addGlyph('     |', `     + <--- [insert] <--- (${n}:${v})`);
 
                       if (n === 'item') {
 
                           form.name = `${form.name}_${itemCnt}`;
                           itemCnt++;
                       }
-                      this.getOutputs().documents[doc].push(form);
+                      // this.getOutputs().documents[doc].push(form);
+                      await this.insertNameValue(functionName, form);
 
                       // console.log( form);
                       // console.log( {"page_id": \`${key}\`, "name": "${n[0].trim().toLowerCase()}", "value": "${n[1].trim()}"\`});
