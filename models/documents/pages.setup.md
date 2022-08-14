@@ -118,8 +118,12 @@ AAD looks for a specific set of \<name> and uses
 
 ## Page:  Opportunities
 
-1. id: opportunities
-2. title: Opportunities
+* Pages without a list will be deleted
+* Opportunities will be deleted
+
+## Page:  Opportunity
+1. id: opportunity
+2. title: Opportunity
 3. subtitle: We-care-about-what-you-want-to-do.
 4. description: Are-you-a-programmer-with-Nuxtjs-experience-who-wants-to-help-improve-and-maintain-the-Adopt-a-Drain-application?-Dont-be-shy!-We-are-always-seeking-assistance-with-the-code!-Get-involved-and-follow-our-GitHub-page.
 5. item: Beginners-and-Experts 
