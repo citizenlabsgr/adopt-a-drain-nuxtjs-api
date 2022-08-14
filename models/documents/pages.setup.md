@@ -116,14 +116,9 @@ AAD looks for a specific set of \<name> and uses
 5. item: LGROW
 6. item: CitizenLabs
 
-## Page:  Opportunities
-
-* Pages without a list will be deleted
-* Opportunities will be deleted
-
 ## Page:  Opportunity
 1. id: opportunity
-2. title: Opportunity
+2. title: Opportunities
 3. subtitle: We-care-about-what-you-want-to-do.
 4. description: Are-you-a-programmer-with-Nuxtjs-experience-who-wants-to-help-improve-and-maintain-the-Adopt-a-Drain-application?-Dont-be-shy!-We-are-always-seeking-assistance-with-the-code!-Get-involved-and-follow-our-GitHub-page.
 5. item: Beginners-and-Experts 
@@ -144,7 +139,7 @@ AAD looks for a specific set of \<name> and uses
 3. subtitle: Because,-because,-because.
 4. description: Getting to know you
 
-## Page: Sponsors
+## Page: Sponsor
 
 1. id: sponsor
 2. title: Sponsors
@@ -153,10 +148,10 @@ AAD looks for a specific set of \<name> and uses
 5. item: Lower-Grand-River-Organization-of-Watersheds
 6. item:CitizenLabs
 
-## Page: Stats
+## Page: Statistic
 
-1. id: stats
-2. title: stats
+1. id: statistic
+2. title: Statistics
 3. subtitle: How-much-do-we-care?
 4. description: Thank You
 5. item: Drain-Adopters
