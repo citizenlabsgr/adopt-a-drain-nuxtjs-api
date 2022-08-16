@@ -103,6 +103,9 @@ module.exports = class BreakdownSetup extends EnableDb {
 
               // 1. abc: abc1-abc
               const rNV = new RegExp('^[0-9][\\. ]+[a-zA-Z_]+[:][ ]+[a-zA-Z0-9\\-\\!\\.\\?\\"\']+');
+              // 1. count: ABC
+              const rCnt = new RegExp('^[0-9]+[\\.][ ]+[c][o][u][n][t][:][ ]+[A-Z]+');
+
               let key = '';
               let functionName = '';
               // let idName = '';
@@ -110,10 +113,11 @@ module.exports = class BreakdownSetup extends EnableDb {
               // let item = {"page_id": "", "name": "", "value": ""};
 
               for (let p in data) {
-                  // console.log('page ', data[p].match(rStart));
+                  // console.log('page ',data[p], data[p].match(rCnt));
+                  console.log('page ',data[p]);
 
                   // if (data[p].trim().startsWith('## Page:')) {
-                  if (data[p].match(rStart)) {
+                  if (data[p].match(rStart)) { // ## Page: abddddd-lk-3
                       let s = data[p].split(':');
                       functionName = s[0].split(' ')[1].trim().toLowerCase();
                       // console.log('s ', s);
@@ -125,7 +129,22 @@ module.exports = class BreakdownSetup extends EnableDb {
                       // this.addGlyph('     |', `     + <--- [Pageify] <-- [${key}] <--- (${this.getInputs().fileList[i]})`);
                       // this.addGlyph('     |', `     + <--- [drop] <--- (${functionName}#${key})`);
                       // await this.dropGroup(functionName, key);
-                  } else if (data[p].match(rNV)) {
+                  }  else  if (data[p].match(rCnt))  { // 1. count: ABC
+                      // console.log('page ',data[p], data[p].match(rCnt));
+                      let s = data[p].split('.');
+                      s = s[1].split(':');
+                      let n = s[0].trim().toLowerCase();
+                      let v = s[1].trim();
+                      let form = JSON.parse(`{"id": "${key}", "name": "${n}", "value": "${v}"}`);
+                      this.addGlyph('     |', `     + <--- [insert] <--- (${n}:${v})`);
+                      if (n === 'count') {
+
+                          form.name = `${form.name}_${itemCnt}`;
+
+                      }
+                      await this.insertNameValue(functionName, form);
+
+                  } else if (data[p].match(rNV)) { // 1. abc: abc1-abc
                       // console.log('nameValue ', key.toLowerCase(), data[p]);
                       let s = data[p].split('.');
                       s = s[1].split(':');

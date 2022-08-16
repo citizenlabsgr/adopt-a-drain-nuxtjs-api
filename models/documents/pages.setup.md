@@ -59,7 +59,8 @@ Example
  4. item_title: Contributing-Organizations
  5. item: LGROW
  6. item: CitizenLabs
-
+ 7. item: count(USER)
+ 
 ```
 Goes to 
 ```
@@ -69,6 +70,7 @@ Goes to
 {"id": "about", "name": "item_title", "value": "Contributing-Organizations"},
 {"id": "about", "name": "item0", "value": "LGROW"},
 {"id": "about", "name": "item1", "value": "CitizenLabs"},
+{"id": "about", "name": "item", "value": "count(USER)"}
 
 ```
 * notice: _page_ in _page_id_ is built from the Header \<name> 
@@ -104,6 +106,10 @@ AAD looks for a specific set of \<name> and uses
 * description: \<value>
 * item_title: \<value>
 * item: \<value>
+
+## Count
+Simple statistics can be calculated by placing either
+count(USER) or count(ADOPTEE) in the \<value> position
 
 # AAD Settings
 
@@ -155,5 +161,8 @@ AAD looks for a specific set of \<name> and uses
 3. subtitle: How-much-do-we-care?
 4. description: Thank You
 5. item: Drain-Adopters
-6. item: Adopted-Drains
+6. item: count(USER)
+7. item: Adopted-Drains
+8. item: count(ADOPTEE)
+
 
