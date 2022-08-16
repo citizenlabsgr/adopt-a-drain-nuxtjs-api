@@ -21,6 +21,7 @@ const TypeIdentity = require('./db/type_identity_001.js');
 const TypeToken = require('./db/type_token_001.js');
 const TypeMbr = require('./db/type_mbr_001.js');
 const TypePrimaryKey = require('./db/type_primarykey_001.js');
+const TypeSecondaryKey = require('./db/type_secondarykey_001.js');
 
 let base_version = '005';
 const FunctionAlgorithmSign = require(`./db/base/${base_version}/function_algorithm_sign.js`);
@@ -34,6 +35,9 @@ const FunctionQuery = require(`./db/base/${base_version}/function_query.js`);
 const FunctionQueryMbr = require(`./db/base/${base_version}/function_query_mbr.js`);
 
 const FunctionSign = require(`./db/base/${base_version}/function_sign.js`);
+
+const FunctionTally = require(`./db/base/${base_version}/function_tally.js`);
+
 const FunctionUpdate = require(`./db/base/${base_version}/function_update.js`);
 const FunctionUpdateJOP = require(`./db/base/${base_version}/function_update_jop.js`);
 
@@ -86,7 +90,7 @@ const FunctionDocumentGetToi = require(`./db/document/${document_version}/functi
 const FunctionDocumentPostToj = require(`./db/document/${document_version}/function_document_post_toj.js`);
 
 // Page
-let page_version = '001';
+let page_version = '003';
 const FunctionPageDeleteTop = require(`./db/page/${page_version}/function_page_delete_top.js`);
 const FunctionPageGetTop = require(`./db/page/${page_version}/function_page_get_top.js`);
 const FunctionPagePostToj = require(`./db/page/${page_version}/function_page_post_toj.js`);
@@ -191,7 +195,8 @@ const runner = new SqlRunner(DB_URL)
        .add(new TypeToken('api', apiVersion))
        .add(new TypeMbr('api', apiVersion))
         .add(new TypePrimaryKey('api', apiVersion))
-       .add(new Comment('Base Schema Table '))
+        .add(new TypeSecondaryKey('api', apiVersion))
+        .add(new Comment('Base Schema Table '))
        .add(new Table001('base',baseVersion))
        .add(new Comment('Base Schema Functions '))
 
@@ -210,7 +215,9 @@ const runner = new SqlRunner(DB_URL)
        .add(new FunctionQueryMbr('base', baseVersion))
 
        .add(new FunctionSign('base', baseVersion))
-       .add(new FunctionUpdate('base', baseVersion))
+        .add(new FunctionTally('base', baseVersion))
+
+        .add(new FunctionUpdate('base', baseVersion))
         .add(new FunctionUpdateJOP('base', baseVersion))
        .add(new FunctionValidateChelate('base', baseVersion))
        .add(new FunctionValidateCredentials('base', baseVersion))
@@ -224,6 +231,7 @@ const runner = new SqlRunner(DB_URL)
 
        .add(new FunctionSignup('api', apiVersion))
        .add(new FunctionSignin('api', apiVersion))
+
        // Adopter
        .add(new FunctionAdopterDeleteToi('api', apiVersion, baseVersion))
        .add(new FunctionAdopterGetToi('api', apiVersion, baseVersion))
