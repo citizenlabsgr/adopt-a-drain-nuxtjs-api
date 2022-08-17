@@ -1,3 +1,4 @@
+/*
 'use strict';
 
 const EnableDb = require('./enable_db.js');
@@ -56,3 +57,4 @@ module.exports = class StoreItem extends EnableDb {
   }
 
 };
+*/

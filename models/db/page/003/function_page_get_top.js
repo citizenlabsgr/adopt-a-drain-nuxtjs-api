@@ -91,7 +91,7 @@ module.exports = class FunctionDocumentGetToi extends Step {
     */
 
     `;
-    console.log('CreateFunction \n ', this.sql);
+    // console.log('CreateFunction \n ', this.sql);
   }
   getName() {
     return `.${this.name}(${this.params}) .${this.method} .${this.role} .${this.desc}.`;

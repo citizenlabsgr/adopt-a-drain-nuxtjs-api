@@ -1,6 +1,7 @@
 'use strict';
 const Step = require('./step.js');
 const Util = require('./util.js');
+// const EnableDb = require("./enable_db");
 /*
 Goal: Fit documents into a single table
 Strategy:
@@ -95,7 +96,7 @@ module.exports = class BreakdownDocs extends Step {
               } // paragraphs
 
               // stash words
-              this.addGlyph('     |', `     + <--- [Wordify] <--- [Paragraphify] <--- (${this.getInputs().fileList[i]})`);
+              this.addGlyph('     |', `     + <--- [Wordify ${wordPos}] <--- [Paragraphify ${paraPos}] <--- (${this.getInputs().fileList[i]})`);
         } // if
       } // documents
 

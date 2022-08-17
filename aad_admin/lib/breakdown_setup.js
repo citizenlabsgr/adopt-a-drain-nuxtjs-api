@@ -28,8 +28,7 @@ Breakdown files into individual name value pairs
 
 // module.exports = class BreakdownSetup extends Step {
 module.exports = class BreakdownSetup extends EnableDb {
-
-        constructor(inputObject) {
+    constructor(inputObject) {
       super();
       this.setInputs(inputObject);
       this.setOutputs(
@@ -83,7 +82,7 @@ module.exports = class BreakdownSetup extends EnableDb {
           // find all the name and value pairs
 
           if (doc_name.endsWith('.setup.md')) {
-              console.log('setup filename ', this.getInputs().fileList[i]);
+              // console.log('setup filename ', this.getInputs().fileList[i]);
 
               // let doc = this.getInputs().fileList[i].replace('.','_');
               let doc = this.getInputs().fileList[i];
@@ -114,7 +113,7 @@ module.exports = class BreakdownSetup extends EnableDb {
 
               for (let p in data) {
                   // console.log('page ',data[p], data[p].match(rCnt));
-                  console.log('page ',data[p]);
+                  // console.log('page ',data[p]);
 
                   // if (data[p].trim().startsWith('## Page:')) {
                   if (data[p].match(rStart)) { // ## Page: abddddd-lk-3

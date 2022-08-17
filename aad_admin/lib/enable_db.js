@@ -52,7 +52,7 @@ module.exports = class EnableDb extends Step {
         this.result = res.rows[0][functionName];
         await this.client.query('COMMIT');
       } catch(err) {
-        console.error('err ', err);
+        console.error('EnableDB err ', err);
         this.setError(err);
         await this.client.query('ROLLBACK');
       }
@@ -105,6 +105,7 @@ module.exports = class EnableDb extends Step {
         // let res = await this.client.query(queryObj).catch(() => {console.error('error B QUERY');});
         let res = await this.client.query(queryObj);
         // console.log('insertChelate 8');
+          // console.log('q ', q);
 
         // console.log('res ', JSON.stringify(res));
         this.result = res.rows[0][functionName];
@@ -113,17 +114,17 @@ module.exports = class EnableDb extends Step {
         await this.client.query('COMMIT');
         // console.log('insertChelate out');
 
-
       } catch(err) {
         this.setError(err);
 
-        console.error(this.getClassName(), ' err ', err);
+        console.error(`EnableDb insertForm err ${err}`);
         // console.log('EnableDb insertChelate Rollback');
         //         await this.client.query('ROLLBACK').catch(() => {console.error('error D ROLLBACK');});
 
         await this.client.query('ROLLBACK');
         // throw new Error(err);
       }
+      // console.log('enable_db insertForm result', this.result);
       return this.result;
     }
 };
