@@ -15,14 +15,14 @@ module.exports = class FunctionDocumentDeleteToi extends Step {
 
     this.baseKind='base';
     this.baseVersion=baseVersion;
-    this.params = 'token TOKEN, owner_key OWNER_ID, id IDENTITY';
+    this.params = 'token TOKEN, owner_key OWNER_ID, id PRIMARYKEY';
 
     this.method = 'DELETE';
     this.sql = `CREATE OR REPLACE FUNCTION ${this.name}(${this.params})  RETURNS JSONB AS $$
         Declare result JSONB;
         Declare criteria JSONB ='{"pk":"${this.pk}", "sk":"*"}'::JSONB;
         BEGIN
-          -- [Function: get api_${this.version}.document given user_token TOKEN, owner_key OWNER_ID, id IDENTITY]
+          -- [Function: get api_${this.version}.document given user_token TOKEN, owner_key OWNER_ID, id PRIMARYKEY]
           -- [Description: get an existing api_${this.version}.document]
           -- [Note: Only the owner can delete]
           -- [Validate id parameter]
@@ -41,7 +41,7 @@ module.exports = class FunctionDocumentDeleteToi extends Step {
 
           -- [Assemble Data]
 
-          criteria := criteria || format('{"pk":"${this.pk}#%s"}', id.id)::JSONB;
+          criteria := criteria || format('{"pk":"${this.pk}#%s"}', id.pk)::JSONB;
 
           -- [Execute delete]
 
@@ -65,10 +65,10 @@ module.exports = class FunctionDocumentDeleteToi extends Step {
         $$ LANGUAGE plpgsql;
 
     /* Doesnt work in Hobby
-    grant EXECUTE on FUNCTION ${this.name}(TOKEN, OWNER_ID, IDENTITY) to ${this.role};
+    grant EXECUTE on FUNCTION ${this.name}(TOKEN, OWNER_ID, PRIMARYKEY) to ${this.role};
     */
     `;
-    console.log('Create\n', this.sql);
+    // console.log('Create\n', this.sql);
   }
   getName() {
     return `.${this.name}(${this.params}) .${this.method} .${this.role} .${this.desc} .`;

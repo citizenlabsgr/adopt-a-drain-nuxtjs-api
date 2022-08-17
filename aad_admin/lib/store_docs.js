@@ -30,6 +30,7 @@ module.exports = class StoreDocs extends EnableDb {
   }
 
   async insertWord(wordForm) {
+    // console.log('insertWord ', wordForm);
     await this.insertForm(wordForm, 'document');
     return this;
   }
@@ -55,7 +56,7 @@ module.exports = class StoreDocs extends EnableDb {
     // console.log('process 1');
 
     // Drop existing document
-    /*
+
     for (let i in this.getInputs().documents) {
         // for (let fn of Object.keys(this.getInputs().documents)) {
         if (i.endsWith('.document.md')) {
@@ -83,7 +84,7 @@ module.exports = class StoreDocs extends EnableDb {
 
         }
     }
-    */
+
     // console.log('process 2');
 
     // insert fresh copy of document
