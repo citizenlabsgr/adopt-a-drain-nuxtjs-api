@@ -41,23 +41,23 @@ module.exports = class BreakdownDocs extends Step {
     }
 
     async process() {
-
+      // process files ending in ".document.md" into lines
+      // process lines into words
+      // doc_id: <docName>, name: <paragraphNo>.<wordNo>, value: <word>
+      // pk:doc_id#<docName> , sk: name#<paragraphNo>.<wordNo>, tk: value#<word>
       this.addGlyph(this.pad(`   [${this.getIdx()}. ${this.getClassName()}] `,'.'), `   [Validate Inputs]`,`   source: ${this.getSource()}`) ;
       this.addGlyph('     |','     |');
-
+      // process files into lines
       for (let i in this.getInputs().fileList) {
-          let doc_name = this.getInputs().fileList[i];
+          let docName = this.getInputs().fileList[i];
 
-          if (doc_name.endsWith('.document.md')) {
-              // console.log('filename ', this.getInputs().fileList[i]);
+          if (docName.endsWith('.document.md')) {
 
-              // let doc = this.getInputs().fileList[i].replace('.','_');
               let doc = this.getInputs().fileList[i];
-              let form0 = {"doc_id": `${doc_name}`, "p": 0, "i": `${this.padLeft('0')}`, "w": `${doc_name}`};
+              // let form0 = {"doc_id": `${docName}`, "p": 0, "i": `${this.padLeft('0')}`, "w": `${docName}`};
 
               this.getOutputs().documents[doc] = [];
-              // this.getOutputs().documents[doc].push(chelate0);
-              this.getOutputs().documents[doc].push(form0);
+              // this.getOutputs().documents[doc].push(form0);
 
               // read file
 
@@ -65,38 +65,40 @@ module.exports = class BreakdownDocs extends Step {
 
               // break up file
               data = data.split('\n');
-              let wordPos = 1;
-              let paraPos = 1;
+
+              let paraNo = 0; // 1;
+              let wordCount = 0;
               for (let p in data) {
                   let words = data[p].split(' ');
-
+                  let wordNo = 0; // 1;
                   for (let w in words) {
                       let word = words[w];
 
                       let form = {
-                          "doc_id": `${doc_name}`,
-                          "p": paraPos,
-                          "i": `${this.padLeft(wordPos.toString())}`,
-                          "w": `${word}`
+                          "id": `${docName}`,
+                          "name": `${this.padLeft(paraNo.toString())}.${this.padLeft(wordNo.toString())}`,
+                          "value": `${word}`
                       };
                       /*
-                      name and value form
                       let form = {
-                          "doc_id": `${doc_name}`,
-                          "name":"#p#${paraPos}.${this.padLeft(wordPos.toString())}",
-                          "value":"${word}"
+                          "doc_id": `${docName}`,
+                          "p": paraNo,
+                          "i": `${this.padLeft(wordNo.toString())}`,
+                          "w": `${word}`
                       };
-                      */
 
+                       */
+                      // console.log('form ', form);
                       this.getOutputs().documents[doc].push(form);
-                      wordPos++;
+                      wordNo++;
+                      wordCount++;
 
                   } // words
-                  paraPos++;
+                  paraNo++;
               } // paragraphs
 
               // stash words
-              this.addGlyph('     |', `     + <--- [Wordify ${wordPos}] <--- [Paragraphify ${paraPos}] <--- (${this.getInputs().fileList[i]})`);
+              this.addGlyph('     |', `     + <--- [Wordify ${wordCount}] <--- [Paragraphify ${paraNo}] <--- (${this.getInputs().fileList[i]})`);
         } // if
       } // documents
 

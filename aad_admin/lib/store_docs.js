@@ -53,13 +53,14 @@ module.exports = class StoreDocs extends EnableDb {
   async process() {
     this.addGlyph(this.pad(`   [${this.getIdx()}. ${this.getClassName()}] `,'.'), `   [Clear Data]`,`   source: ${this.getSource()}`);
     this.addGlyph('     |','     |');
-    // console.log('process 1');
+    // console.log('StoreDocs process 1');
 
     // Drop existing document
 
     for (let i in this.getInputs().documents) {
         // for (let fn of Object.keys(this.getInputs().documents)) {
         if (i.endsWith('.document.md')) {
+          // console.log('StoreDocs process 2 drop');
 
           let functionName = 'document';
           this.addGlyph('     |', `     + <--- [drop] <--- (document: ${i})`);
@@ -94,7 +95,7 @@ module.exports = class StoreDocs extends EnableDb {
 
     for (let i in this.getInputs().documents) {
       // console.log('process 2.2', Object.keys(this.getInputs().documents));
-      console.log('process inputs i ', i);
+      // console.log('process inputs i ', i);
 
       // Documents
 
@@ -115,28 +116,7 @@ module.exports = class StoreDocs extends EnableDb {
         }
 
       } else if (i.endsWith('.setup.md')) {  // Setup Document
-        /*
-        let functionName = 'page';
 
-        for (let i in this.getInputs().documents) {
-          let lastItemId = '';
-          for (let k of this.getInputs().documents[i]) {
-            let itemId = k.id; // this.getInputs().documents[i][k];
-
-            // let itemId = k.page_id; // this.getInputs().documents[i][k];
-
-            if (lastItemId !== itemId) {
-              lastItemId = itemId;
-              this.addGlyph('     |', `     + <--- [insert] <--- (${itemId})`);
-            }
-            //             console.log('process functionName ', functionName, this.getInputs().documents[i][k]);
-            // console.log('process functionName ', functionName, k);
-            await this.insertNameValue(functionName, k);
-            // await this.insertNameValue(functionName, this.getInputs().documents[i][k]);
-
-          }
-        }
-        */
         // console.log(' found ',i);
       }
       // console.log('process 3');

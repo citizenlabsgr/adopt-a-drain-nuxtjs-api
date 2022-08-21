@@ -80,6 +80,7 @@ module.exports = class EnableDb extends Step {
         // [Get pk from request.payload]
         let q = `select * from api_0_0_1.${functionName}($1::TOKEN,$2::OWNER_ID,$3::JSONB)`;
         // console.log('q ', q);
+        // console.log('form', form);
         // console.log('insertForm 3');
 
         // [ User into the database]
