@@ -26,7 +26,6 @@ The parsing script reads each line of this document looking for lines that start
     or
     <number>.  
 
-    
 Two patterms
 ```
 Header
