@@ -84,7 +84,7 @@ const FunctionAdopteePostToj = require(`./db/adoptee/${adoptee_version}/function
 const FunctionAdopteePutToij = require(`./db/adoptee/${adoptee_version}/function_adoptee_put_toij.js`);
 
 // Document
-let document_version = '001';
+let document_version = '002';
 const FunctionDocumentDeleteToi = require(`./db/document/${document_version}/function_document_delete_toi.js`);
 const FunctionDocumentGetToi = require(`./db/document/${document_version}/function_document_get_toi.js`);
 const FunctionDocumentPostToj = require(`./db/document/${document_version}/function_document_post_toj.js`);

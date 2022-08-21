@@ -981,31 +981,46 @@ experiment('API Route Tests', () => {
             },
             "data": [
               {
-                  "pk": "doc_id#toutest",
-                  "sk": "i#00000",
-                  "tk": "w#terms-of-use",
-                  "form": {"doc_id":"toutest","p":0, "i":"00000","w": "Terms-of-Use"},
+                  "pk": "id#toutest",
+                  "sk": "name#00000.00000",
+                  "tk": "value#Terms",
+                  "form": {"id":"toutest", "name":"00000.00000", "value": "Terms"},
+                  "owner": "duckduckgoose"
+              },
+                {
+                    "pk": "id#toutest",
+                    "sk": "name#00000.00001",
+                    "tk": "value#of",
+                    "form": {"id":"toutest","name":"00000.00001","value": "of"},
+                    "owner": "duckduckgoose"
+                },
+                {
+                    "pk": "id#toutest",
+                    "sk": "name#00000.00002",
+                    "tk": "value#Use",
+                    "form": {"id":"toutest","name":"00000.00002","value": "Use"},
+                    "owner": "duckduckgoose"
+                },
+
+              {
+                  "pk": "id#toutest",
+                  "sk": "name#00001.00000",
+                  "tk": "value#TOU",
+                  "form": {"id":"toutest","name": "00001.00000","value": "TOU"},
                   "owner": "duckduckgoose"
               },
               {
-                  "pk": "doc_id#toutest",
-                  "sk": "i#00001",
-                  "tk": "w#tou",
-                  "form": {"doc_id":"toutest","p": 1,"i": "00001","w": "TOU"},
+                  "pk": "id#toutest",
+                  "sk": "name#00002.00000",
+                  "tk": "value##",
+                  "form": {"id":"toutest", "name":"00002.00000","value": "#"},
                   "owner": "duckduckgoose"
               },
               {
-                  "pk": "doc_id#toutest",
-                  "sk": "i#00002",
-                  "tk": "w##",
-                  "form": {"doc_id":"toutest","p":2,"i":"00002","w": "#"},
-                  "owner": "duckduckgoose"
-              },
-              {
-                  "pk": "doc_id#toutest",
-                  "sk": "i#00003",
-                  "tk": "w##",
-                  "form": {"doc_id":"toutest","p":2,"i":"00003","w": "Terms"},
+                  "pk": "id#toutest",
+                  "sk": "name#00002.00001",
+                  "tk": "value#Terms",
+                  "form": {"id":"toutest", "name":"00002.00001", "value": "Terms"},
                   "owner": "duckduckgoose"
               }
             ]
@@ -1083,10 +1098,9 @@ experiment('API Route Tests', () => {
             owner: key
           },
           payload: {
-            "doc_id":"tou",
-            "p":0,
-            "i":"00000",
-            "w": "Terms-of-Use"
+            "id":"tou",
+            "name":"00000.00000",
+            "value": "Terms"
           },
         });
 
